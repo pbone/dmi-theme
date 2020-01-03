@@ -1,0 +1,140 @@
+//
+// Event Registration Layout
+//
+
+article[about="/event-registration-success"] {
+
+  .view-mode-full .field-node--field-paragraph > .field-items > .field-item:first-child > section > .row,
+  .view-mode-full .field-node--field-paragraph > .field-items > .field-item:first-child > section > .row > .columns > .field-paragraph--field-child-elements > .field-items > .row {
+    max-width: 100%;
+
+    .row {
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    .row .row {
+      max-width: 73.75rem !important;
+      margin-right: auto !important;
+      margin-left: auto !important;
+    }
+  }
+
+  .view-mode-full .field-node--field-paragraph > .field-items > .field-item:first-child > section > .row > .columns,
+  .view-mode-full .field-node--field-paragraph > .field-items > .field-item:first-child > section > .row > .columns > .field-paragraph--field-child-elements > .field-items > .row > .column {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .field-node--field-location-map {
+    @include breakpoint(medium) {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 40vw;
+    }
+    @include breakpoint(large) { width: 45vw; }
+  }
+
+  .field-node--field-location-map .field-items,
+  .field-node--field-location-map .field-item,
+  .field-node--field-location-map .geolocation-formatter-map-wrapper,
+  .field-node--field-location-map .geolocation-google-map {
+    @include breakpoint(medium) {
+      height: 100% !important;
+    }
+  }
+
+  .event-map {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    p + .addeventatc {
+      margin-top: .5rem;
+      margin-bottom: 2rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+  }
+
+  .event-map:not(.event-map--empty) {
+    @include breakpoint(medium) {
+      min-height: 400px;
+    }
+  }
+
+  .event-map:not(.event-map--empty) .row {
+    @include breakpoint(medium) {
+      height: 100%;
+    }
+  }
+
+
+  .event-map:not(.event-map--empty) .columns.medium-7 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    @include breakpoint(medium) {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      padding-right: 1.5rem;
+    }
+    @include breakpoint(large) {
+      padding-right: 5rem;
+    }
+  }
+
+  .event-map.event-map--empty {
+    padding: 2.5rem 0;
+    @include breakpoint(medium) {
+      padding: 4rem 0;
+    }
+  }
+
+  .addeventatc {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0.85em 4em;
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 5px;
+    transition: box-shadow 0.25s ease-out;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    background-color: #036DB2;
+    color: #fefefe !important;
+    font-family: inherit;
+    margin-bottom: 0 !important;
+
+    .copyx {
+      display: none;
+    }
+  }
+
+  .addeventatc_icon {
+    display: none;
+    color: #fefefe !important;
+  }
+
+  .addeventatc_dropdown {
+    width: 100%;
+  }
+
+  .addeventatc_dropdown,
+  .addeventatc_dropdown span {
+    background-color: #EAF7FD;
+    padding-bottom: 5px;
+    color: #036DB2;
+    font-weight: 500;
+  }
+
+  .addeventatc_dropdown span:hover {
+    background-color: #e1f3fc;
+  }
+
+}

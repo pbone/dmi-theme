@@ -1,0 +1,9 @@
+//
+// Body States
+//
+
+body {
+  &.is-unscrollable {
+    overflow-y: hidden;
+  }
+}

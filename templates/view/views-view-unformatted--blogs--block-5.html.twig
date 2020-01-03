@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+
+<div class="row blog-border">
+	<div class="column small-12">
+		<div class="blog--use-cases">
+			<div class="mask"></div>
+			<h2 class="{{ view.getTitle()|clean_class }}">{{ view.getTitle() }}
+			</h2>
+		</div>
+
+		<div class="row m-card--image-style-larger-spot m-card--text-style-small m-card--bg-white blog--card-container--use-case">
+
+			{% for row in rows %}
+				{%
+                set row_classes = [
+                default_row_class ? 'views-row', 'medium-6', 'column', 'small-12', 'card-number-' ~ loop.index,
+            ]
+            %}
+				<div{{row.attributes.addClass(row_classes)}}>
+					{{ row.content }}
+					{#<!--div class="blog-image--mask2"></div-->#}
+				</div>
+			{% endfor %}
+
+
+		</div>
+	</div>
+	<div class="line-use-case-1"></div>
+		<div class="line-use-case-2"></div>
+</div>

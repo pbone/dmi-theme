@@ -1,0 +1,133 @@
+//
+// LAYOUT: Logo Bar
+// Create layout count based on child item count (MAX 6)
+//
+
+// BASE
+
+.m-bar.l-bar {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// COUNTER (Default)
+
+// 1 Items
+.l-bar--1 {
+  max-width: 350px;
+
+  .m-bar-item {
+    @include breakpoint(medium) {
+      padding-bottom: 0;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+// 2 Items
+.l-bar--2 {
+  max-width: 600px;
+
+  .m-bar-item {
+    @include breakpoint(medium) {
+      padding-bottom: 0;
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+}
+
+// 3 Items
+.l-bar--3 {
+  max-width: 800px;
+
+  .m-bar-item {
+    @include breakpoint(medium) {
+      padding-bottom: 0;
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+    }
+  }
+}
+
+// 4 Items
+.l-bar--4 {
+  max-width: 900px;
+
+  .m-bar-item {
+    @include breakpoint(medium) {
+      padding-bottom: 0;
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+  }
+}
+
+// 5 Items
+.l-bar--5 {
+  @include breakpoint(medium) {
+    padding-bottom: 0;
+    flex: 0 0 20%;
+    max-width: 100%;
+  }
+}
+
+// 6 Items
+.l-bar--6 {
+  @include breakpoint(medium) {
+    padding-bottom: 0;
+    flex: 0 0 16.666%;
+    max-width: 100%;
+  }
+}
+
+
+// Alt Style
+// When logo bar is placed inside a split column 60/40, 40/60, 50/50
+
+.row > .column.medium-6 + .column.medium-6,
+.row > .column.medium-5 + .column.medium-7,
+.row > .column.medium-7 + .column.medium-5 {
+  align-self: center;
+
+  .l-bar {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    // Adds gap when child item is odd count
+    &:after {
+      content: "";
+      flex: auto;
+    }
+  }
+
+  .l-bar .m-bar-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-bottom: 15px;
+
+    &:nth-child(odd) {
+      @include flex-align(right, middle);
+      padding-left: 0;
+      padding-right: 15px;
+    }
+    &:nth-child(even) {
+      @include flex-align(left, middle);
+      padding-right: 0;
+      padding-left: 15px;
+    }
+
+    &:first-child { padding-left: 0; }
+    // &:last-child { padding-right: 0; }
+    // &:nth-last-child(2) {padding-right: 15px}
+
+    // Remove seperator lines
+    &:before,
+    &:after { content: none; }
+  }
+
+
+
+}

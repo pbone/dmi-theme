@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Theme override of a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+{% if q is not empty %}
+  {#
+    This ensures that, if clean URLs are off, the 'q' is added first,
+    as a hidden form element, so that it shows up first in the POST URL.
+  #}
+  {{ q }}
+{% endif %}
+
+<div class="l-filter-main row">
+  <div class="columns small-12 medium-7">
+
+    <div class="m-filter-group">
+
+      <div class="m-filter-group-label">{{ 'Filter by'|trans }}</div>
+
+      <div class="m-filter">
+        {{ form.field_industry }}
+        <div class="m-filter-select">
+          <a class="m-filter-button"><span><svg class="i-arrow-down" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15 7"><path fill="none" stroke="#007ac9" d="M5.5 0.5L0.5 0.5 7.5 6.5 14.5 0.5 9.5 0.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <ul class="m-filter-select-list custom-select-options is-collapsed"></ul>
+        </div>
+      </div>
+
+      <div class="m-filter">
+        {{ form|without('field_industry') }}
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,63 @@
+//
+// LAYOUT: Feature and Image
+//
+
+
+// BASE
+
+.l-feature-image {
+  position: relative;
+}
+
+
+// SECTION
+
+.l-feature-image .column {
+  align-self: flex-start !important;
+}
+
+// ELEMENT
+
+.l-feature-image h3 {
+  margin-bottom: 1rem;
+  @include breakpoint(medium) { margin-bottom: 2rem; }
+}
+
+.l-feature-image p {
+  margin-bottom: 1rem;
+  @include breakpoint(medium) { margin-bottom: 2rem; }
+}
+
+.l-feature-image .m-list {
+  margin-bottom: 1rem;
+  @include breakpoint(medium) { margin-bottom: 1.5rem; }
+}
+
+.l-feature-image:not(.l-feature-image--reverse) img {
+  @include breakpoint(small only) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+// VARIANT
+
+.l-feature-image--reverse {
+
+  .column:first-child {
+    @include breakpoint(small only) { order: 2; }
+  }
+
+  .column:last-child {
+    @include breakpoint(small only) {
+      order: 1;
+    }
+  }
+
+  .column:last-child img {
+    @include breakpoint(small only) {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+}

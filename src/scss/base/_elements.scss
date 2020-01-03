@@ -1,0 +1,17 @@
+//
+// Elements
+//
+
+
+body, main#main {
+  overflow-x: hidden;
+}
+
+body, html {
+  @include breakpoint(medium only) { font-size: 89%; }
+}
+
+h6 {
+  font-weight: 800;
+  text-transform: uppercase;
+}

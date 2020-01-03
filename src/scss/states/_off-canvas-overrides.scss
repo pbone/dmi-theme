@@ -1,0 +1,29 @@
+
+
+body.user-logged-in {
+  .close-button {
+  //  top: 8.5rem;
+  }
+}
+
+
+.off-canvas {
+  background: transparent;
+
+  &.is-open {
+    background: transparent;
+    height: inherit!important;
+  }
+
+}
+
+.position-top.is-open ~ .off-canvas-content {
+
+  transform: translateY(425px)!important;
+}
+.position-top.is-transition-push::after {
+  box-shadow: none;
+}
+
+
+

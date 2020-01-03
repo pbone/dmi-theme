@@ -1,0 +1,50 @@
+//
+// Inputs
+//
+
+// Base
+.m-input {
+  position: relative;
+}
+
+#edit-search-api-fulltext {
+  font-size: rem-calc(14px);
+  margin-bottom: 0;
+  padding: .875rem;
+}
+
+
+// Search - Inner
+// with button inside text field
+.m-input--search-inner {
+
+  .form-item {
+    input {
+      border-right: 0;
+      box-shadow: none;
+
+      &:focus + .m-input-group-button {
+        border: 0;
+        border-top: 1px solid #8a8a8a;
+        border-right: 1px solid #8a8a8a;
+        border-bottom: 1px solid #8a8a8a;
+        background-color: #fefefe;
+        outline: none;
+        margin-right: 0;
+        transition: box-shadow .5s,border-color .25s ease-in-out;
+      }
+    }
+  }
+
+  .m-input-group-button {
+    background: $white;
+    border-top: 1px solid $color-medium-grey;
+    border-right: 1px solid $color-medium-grey;
+    border-bottom: 1px solid $color-medium-grey;
+    transition: box-shadow .5s, border-color .25s ease-in-out;
+  }
+
+  .m-button--search {
+    margin-right: 0;
+  }
+}

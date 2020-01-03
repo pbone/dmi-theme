@@ -1,0 +1,59 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% set common_classes = [
+'m-section',
+'m-section--padding-top-medium',
+'m-section--padding-bottom-medium',
+'l-section--padded',
+'l-section',
+'l-section--outcomes-list'
+] %}
+
+{% set section_classes = common_classes %}
+
+{% set term %}
+    {{ title }}
+{% endset %}
+
+{% set list %}
+    <ul class="m-list m-list--layout-one m-list--icon">
+
+        {% for row in rows %}
+            {% set row_classes = [
+            default_row_class ? 'views-row',
+            ] %}
+            <li {{ row.attributes.addClass(row_classes) }}>
+                {{ row.content }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endset %}
+
+<section class="{{ section_classes|join(' ') }}">
+    <div class="l-section-main row {% if (row_direction == 'right') %}l-section--reverse {% endif %}">
+
+        <div class="columns small-12 medium-6">
+            {{ term }}
+        </div>
+
+        <div class="columns small-12 medium-6">
+            {{ list }}
+        </div>
+
+    </div>
+</section>

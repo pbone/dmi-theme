@@ -1,0 +1,26 @@
+//
+// LAYOUT: Translated Blocks
+//
+
+// DRUPAL FIX
+body.lang-es,
+body.lang-en-au,
+body.lang-br,
+body.lang-de,
+body.lang-it,
+body.lang-mx,
+body.lang-nl,
+body.lang-pt,
+body.lang-es,
+body.lang-sv,
+body.lang-fr-ch,
+body.lang-de-ch,
+body.lang-it-ch,
+body.lang-en-gb {
+
+  //.m-wysiwyg { display: block; }
+
+}
+
+//- This needs to be applied to ALL WYSIWYGs for IE
+.m-wysiwyg { display: block; }

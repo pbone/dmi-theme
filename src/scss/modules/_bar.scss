@@ -1,0 +1,120 @@
+//
+// MODULE: Bar
+// See (layout/bar.scss) for layout styling based on child item count (MAX 6)
+//
+
+
+// BASE
+
+.m-bar {
+  margin: 0;
+  list-style: none;
+  @include flex;
+  @include flex-align(center, middle);
+  flex-flow: row wrap;
+}
+
+// ELEMENTS
+
+.m-bar-item {
+  position: relative;
+  padding: 0 25px 25px;
+  @include flex;
+  flex: 0 0 50%;
+  max-width: 50%;
+  @include breakpoint(medium) {
+    padding-bottom: 0;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+
+  &:first-child:before,
+  &:after {
+    content: '';
+    border: 1px solid $color-blue;
+    height: 22px;
+    position: absolute;
+  }
+
+  &:before { left: 0; }
+  &:after { right: 0; }
+
+  &:nth-child(odd) {
+    @include flex-align(right, middle);
+    @include breakpoint(small only) { padding-left: 0; }
+  }
+  &:nth-child(even) {
+    @include flex-align(left, middle);
+    @include breakpoint(small only) { padding-right: 0; }
+  }
+
+  &:nth-child(even), &:nth-child(odd) {
+    @include breakpoint(medium) {
+      @include flex-align(center, null);
+    }
+  }
+
+  @include breakpoint(small only) {
+    &:before,
+    &:first-child:before,
+    &:after { content: none; }
+    &:nth-child(odd):after {
+      content: '';
+      border: 1px solid $color-blue;
+      height: 22px;
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  &:nth-child(odd) {
+    padding-right: 25px;
+  }
+
+  // Adds padding to first and last items to edges
+
+  //&:first-child { padding-left: 0; }
+  //&:last-child { padding-right: 0; }
+
+  //@include breakpoint(medium) {
+  //  &:first-child { padding-left: 25px; }
+  //  &:last-child { padding-right: 25px; }
+  //}
+  //@include breakpoint(large) {
+  //  &:first-child { padding-left: 50px; }
+  //  &:last-child { padding-right: 50px; }
+  //}
+
+}
+
+ul.l-bar--6 {
+  li.m-bar-item {
+    @include breakpoint(medium) {
+      padding-bottom: 0;
+      flex: 0 0 16%;
+      max-width: 16%;
+      padding: 0 10px 10px;
+    }
+  }
+  li.m-bar-item:before, li.m-bar-item:after {
+    content: none;
+  }
+}
+
+.m-bar-item > * {
+  display: block;
+}
+
+// Logo Black and White Display
+.logo-bw {
+  .m-bar-item {
+    &:first-child:before,
+    &:after {
+      content: none;
+      border: none;
+      height: 0px;
+      position: absolute;
+    }
+
+  }
+}

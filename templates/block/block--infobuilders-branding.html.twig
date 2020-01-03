@@ -1,0 +1,59 @@
+{#
+/**
+ * @file
+ * Theme override for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ */
+#}
+
+
+
+{% block content %}
+
+  {% if site_logo %}
+    <!-- Logo + Menu -->
+    <div class="m-header-left">
+      <ul class="menu">
+        <!-- Logo -->
+        <li class="m-menu-logo">
+          <div>
+            <span class="visually-hidden">{{ site_name }}</span>
+              {# need language switching here - intl homepages have /home after the language prefix #}
+            {% if (language_id == 'en') %}
+               <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
+            {% else %}
+                 <a href="/{{ language_id }}/home" title="{{ 'Home'|t }}" rel="home">
+             {% endif %}
+                   {{ get_svg('i-logo') }}
+            </a>
+
+          </div>
+        </li>
+        <!-- Menu -->
+        <li class="m-menu-hamburger">
+          <a id="mobile-nav-trigger" href="#">
+            <div class="i-hamburger">
+              <div class="i-hamburger-box">
+                <div class="i-hamburger-inner"></div>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if site_name %}
+    <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">{{ site_name }}</a>
+  {% endif %}
+
+  {{ site_slogan }}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+global:
+  version: 1.x
+
+  css:
+    base:
+      css/infobuilders.css: {}
+  js:
+    bower_components/foundation-sites/dist/js/foundation.min.js: {}
+    js/infobuilders.min.js: {}
+
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/modernizr
+
+fontawsome:
+  header: true
+
+  js:
+    //kit.fontawesome.com/a068f7a827.js: { type: external }
+
+infographic:
+  header: true
+
+  css:
+    theme:
+      css/infographic.css: {}
+  js:
+    //ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js:
+      { type: external }
+    js/infographic.js: {}
+
+aos:
+  css:
+    theme:
+      aos/aos.css: {}
+
+  js:
+    aos/aos.js: {}
+    aos/aosinit.js: {}
+
+instagramauth:
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/instafeed.js/1.4.1/instafeed.min.js:
+      { type: external }
+    js/instagramauth.js: {}

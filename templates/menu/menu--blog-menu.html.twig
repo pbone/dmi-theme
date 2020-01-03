@@ -1,0 +1,238 @@
+{#
+/**
+ * @file
+ * Theme override to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ */
+#}
+{% import _self as menus %}
+
+{#
+      We call a macro which calls itself to render the full tree.
+      @see http://twig.sensiolabs.org/doc/tags/macro.html
+    #}
+
+<!-- Primary Navigation -->
+{{ menus.menu_links(items, attributes, 0, 0) }}
+
+	{% macro menu_links(items, attributes, menu_level, menuId) %}
+	{% import _self as menus %}
+
+		{% if items %}
+
+			{% spaceless %}
+
+				{% if menu_level == 0 %}
+					<ul{{attributes.addClass('menu','m-menu--primary')}} data-dropdown-menu>
+				{% elseif menu_level == 1 %}
+					<div{{attributes.addClass('dropdown-pane','bottom')}} id="{{ menuId }}" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true; vOffset:21">
+					{% endif %}
+
+					{% for item in items %}
+
+						{% set itemClasses = '' %}
+						{% set itemId = '' %}
+						{% set linkClasses = '' %}
+						{% set linkId = '' %}
+
+						{% set itemId = item.url.getOption('item_attributes')['id']|clean_class %}
+
+
+						{% if item.url.getOption('item_attributes')['class'] is not null %}
+							{% set itemClasses = [item.url.getOption('item_attributes')['class']] %}
+						{% endif %}
+
+						{% set linkId = item.url.getOption('attributes')['id']|clean_class %}
+
+						{% set linkClasses = item.url.getOption('attributes')['class'] %}
+
+						{% set linkTitle = item.url.getOption('attributes')['title']|trans %}
+
+						{% if item.in_active_trail %}
+							{% if linkClasses[0] is not null %}
+								{% set linkClasses = linkClasses|merge(['active-trail']) %}
+							{% else %}
+								{% set linkClasses = ['active-trail'] %}
+							{% endif %}
+						{% endif %}
+
+						{% if menu_level == 0 %}
+
+							{% if itemClasses[0] is not null and item.title != 'Get started' and item.title != 'Search' %}
+								{% set itemClasses = [
+                    'm-menu-link',
+                    'm-menu-link-blog',
+                    'm-menu-mega--light-grey'
+                ] %}
+							{% endif %}
+
+							{% set menuId = item.title|lower|replace(' ', '-') %}
+
+							<li{{item.attributes.addClass(itemClasses)}} {% if itemId %} id="{{ itemId }}" {% endif %}>
+
+								{% if item.url.getRouteName() != '<nolink>' %}
+									<a href="{{ item.url }}" {% if linkId %} id="{{ linkId }}" {% endif %} {% if linkClasses is not empty %} class="{{ linkClasses|join(' ') }}" {% endif %} title="{{ item.title }}" data-toggle="{{ menuId }}">
+									{% else %}
+
+										<a {% if linkId %} id="{{ linkId }}" {% endif %} {% if linkClasses is not empty %} class="{{ linkClasses|join(' ') }}" {% endif %} title="{{ item.title }}" data-toggle="{{ menuId }}">
+										{% endif %}
+										{% if item.title == 'Search' %}
+											<span class="search-text">{#{ item.title }#}</span>
+											<span>{{ get_svg('i-search') }}</span>
+										{% else %}
+											{{ item.title }}
+											{% if item.title != 'Get started' %}
+												<span>{{ get_svg('i-arrow-right') }}</span>
+											{% endif %}
+										{% endif %}
+									</a>
+
+								{% endif %}
+
+								{% if menu_level == 1 and loop.index == 1 %}
+									<div class="row m-menu-mega-top">
+										<div class="columns medium-12">
+											<div class="m-link m-menu-mega-nav m-menu-mega-nav--main">
+												<a {{ item.attributes.addClass('m-link-text') }} href="{{ item.url }}">
+													{{ item.title }}
+													<span>
+														{{ get_svg('i-arrow-right') }}
+													</span>
+												</a>
+											</div>
+										</div>
+									</div>
+								{% elseif menu_level == 1 and loop.index == 2 %}
+									<div class="row m-menu-mega-bottom">
+									{% endif %}
+
+									{% if menu_level == 1 and loop.index >= 2 %}
+
+										{% set columnCount = '' %}
+
+										{% if loop.length - 1 == 3 %}
+											{% set columnCount = '4' %}
+										{% elseif loop.length - 1 == 4 %}
+											{% set columnCount = '3' %}
+										{% endif %}
+
+										<div class="column medium-{{ columnCount }}">
+											<div class="m-menu-mega-nav m-menu-mega-nav--description">
+												<a {{ item.attributes }} href="{{ item.url }}">{{ item.title }}</a>
+												{% if item.url is not empty and item.url.getOption('attributes')['title'] is not empty %}
+													<p>
+														{#{ item.url.getOption('attributes')['title']}#}
+														{{ linkTitle }}</p>
+												{% endif %}
+											</div>
+										{% endif %}
+
+										{% if menu_level == 2 %}
+											{% if item.url.isExternal %}
+												<div class="m-menu-mega-nav m-menu-mega-nav--description">
+													<a {{ item.attributes }} href="{{ item.url }}">{{ item.title }}</a>
+													<p>
+														{#{ item.url.getOption('attributes')['title']}#}
+														{{ linkTitle }}</p>
+												</div>
+
+											{% elseif item.url.isRouted() and item.url.getRouteName() != '<nolink>' %}
+												<div class="m-menu-mega-nav m-menu-mega-nav--description">
+													<a {{ item.attributes }} href="{{ item.url }}">{{ item.title }}</a>
+													<p>
+														{#{ item.url.getOption('attributes')['title']}#}
+														{{ linkTitle }}</p>
+												</div>
+
+											{% else %}
+												{% if item.below %}
+													<div class="m-menu-mega-nav m-menu-mega-nav--featured">
+														<h6>{{ item.title }}</h6>
+														<ul>
+														{% endif %}
+													{% endif %}
+
+												{% endif %}
+
+												{% if menu_level == 3 %}
+													<li>
+														<a {{ item.attributes }} href="{{ item.url }}">{{ item.title }}</a>
+													</li>
+													{% if loop.last %}
+													</ul>
+												</div>
+											{% endif %}
+										{% endif %}
+
+
+										{% if item.below %}
+											{{ menus.menu_links(item.below, attributes, menu_level + 1, menuId) }}
+										{% endif %}
+
+
+										{% if menu_level == 1 and loop.index >= 2 %}
+										</div>
+									{% endif %}
+
+									{% if menu_level == 1 and loop.last %}
+									</div>
+								{% endif %}
+
+
+								{% if menu_level == 0 %}
+									{% if item.below %}
+									</div>
+								{% endif %}
+							</li>
+						{% endif %}
+
+					{% endfor %}
+
+
+					{% if menu_level == 0 %}
+
+
+						<li id="subscribe" class="m-menu-button m-menu-link m-menu-link-blog m-menu-mega--light-grey" role="menuitem">
+
+
+							<a href="#" class="m-button--secondary  m-button vidLink" title="Subscribe" data-open="sub1">
+								{{ 'Subscribe'|trans }}</a>
+
+
+							<a href="/blog/all" class="m-button  m-button--hollow view-all" target="">
+								{{ 'View All'|trans }}
+
+							</a>
+						</li>
+
+
+					</li>
+
+
+				</ul>
+
+				<!--Start Modal Reveal-->
+				<div class="small reveal openVideo" id="sub1" data-reveal data-reset-on-close="true">
+					<div class="responsive-embed widescreen">
+						<script type="text/javascript" src="https://pem.informationbuilders.com/dcjs/296602/464/dc.js"></script>
+					</div>
+					<button class="close-button" data-close aria-label="Close reveal" type="button">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<!--End Modal Reveal-->
+
+			{% endif %}
+
+		{% endspaceless %}
+
+	{% endif %}
+{% endmacro %}

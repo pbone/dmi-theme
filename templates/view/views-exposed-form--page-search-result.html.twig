@@ -1,0 +1,55 @@
+{#
+/**
+ * @file
+ * Theme override of a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+
+{% if q is not empty %}
+  {#
+    This ensures that, if clean URLs are off, the 'q' is added first,
+    as a hidden form element, so that it shows up first in the POST URL.
+  #}
+  {{ q }}
+{% endif %}
+
+  <header class="m-feature m-feature--search">
+    <div class="row">
+      <div class="column small-12">
+
+        <div class="m-feature-bg"></div>
+
+        <div class="m-feature-content">
+          <h1 class="m-feature-title">{{ 'Your search results'|trans }}</h1>
+          <div class="m-input-group m-input-group--search">
+            {{ form.keys }}
+            {{ form.actions }}
+          </div>
+          {% if form.summary['#markup'] is not empty %}
+            <p>{{ form.summary['#markup'] }}</p>
+          {% else %}
+            <div class="no-result">{{ "We're sorry. No matches were found for your search."|trans }}</div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <section class="m-section m-section--bg-white">
+   <div class="row">
+     <div class="column small-12">
+
+       <div class="l-filter l-filter--full">
+         {{ form|without('keys', 'actions', 'summary') }}
+       </div>
+
+     </div>
+   </div>
+  </section>
+

@@ -1,0 +1,518 @@
+//
+// MODULE: Menu
+//
+
+// Primary
+.m-menu--primary {
+  flex-wrap: wrap;
+
+  @include breakpoint(small only) {
+    padding-top: 3rem;
+  }
+
+  @include breakpoint(medium only) {
+    padding-top: 4rem;
+  }
+
+  @include breakpoint(large) {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+}
+
+.m-menu--primary>li {
+  font-weight: 600;
+  width: 100%;
+
+  @include breakpoint(large) {
+    padding: 0 1rem;
+    width: auto;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.m-menu--primary>li>a {
+  @include breakpoint(medium down) {
+    display: block;
+  }
+
+  @include breakpoint(large) {
+    padding: 0.7rem 0;
+    position: relative;
+  }
+}
+
+.m-menu--primary>.m-menu-link {
+  @include breakpoint(medium down) {
+    border: 0;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(-90deg, $color-purple 27%, $color-blue 60%) 1;
+  }
+}
+
+.m-menu--primary>.m-menu-link a {
+  @include breakpoint(medium down) {
+    padding: 1.125rem 1rem;
+  }
+}
+
+// Button
+.m-menu--primary>li.m-menu-button.m-menu-link {
+  @include breakpoint(small only) {
+    border: none;
+    margin-top: 1rem;
+  }
+
+  @include breakpoint(medium only) {
+    display: none;
+  }
+
+  &>a {
+    padding: 0.85em 0;
+    width: 100%;
+    justify-content: center;
+
+    @include breakpoint(large) {
+      padding: 0.7em 2.5em;
+    }
+  }
+}
+
+li.m-menu-button.m-menu-link a svg {
+  display: none;
+}
+
+// Secondary
+.m-menu--secondary {
+  flex-wrap: wrap;
+
+  @include breakpoint(large) {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+
+  // Prevent FOUC
+  .m-menu--secondary {
+    display: none;
+  }
+}
+
+.m-menu--secondary>li {
+  font-weight: 400;
+  background: $color-white;
+
+  .br,
+  .mx,
+  .nl-be,
+  .sv {
+    display: none;
+  }
+}
+
+.m-menu--secondary .dropdown {
+  z-index: 2;
+}
+
+.m-menu--secondary>li:last-child a {
+  @include breakpoint(large) {
+    padding-right: 0;
+  }
+}
+
+.m-header-left li.m-menu-button {
+  display: none;
+
+  @include breakpoint(medium only) {
+    display: inline-block;
+    right: 90px;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+
+    a {
+      padding: 0.7em 2.5em;
+    }
+  }
+}
+
+// Mobile Menu
+.m-menu--mobile {
+  @include breakpoint(large) {
+    display: none;
+  }
+}
+
+.m-menu--mobile>li {
+  font-weight: 600;
+}
+
+.m-menu--mobile>li>a {
+  @include breakpoint(large) {
+    padding: 0.7rem 0;
+    position: relative;
+  }
+}
+
+.m-menu--mobile>.m-menu-link {
+  @include breakpoint(medium down) {
+    border: 0;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-image: linear-gradient(-90deg, $color-purple 27%, $color-blue 60%) 1;
+  }
+}
+
+.m-menu--mobile>.m-menu-link a {
+  @include breakpoint(medium down) {
+    padding: 1.125rem 1rem;
+  }
+}
+
+// Menu Items
+.m-menu--primary li,
+.m-menu--secondary li,
+.m-menu--mobile li {
+  @include breakpoint(medium down) {
+    display: block;
+    background: transparent;
+  }
+}
+
+.m-menu--primary>li>a,
+.m-menu--secondary>li>a,
+.m-menu--mobile>li>a {
+  font-size: 1rem;
+}
+
+.m-menu--secondary>li>a+ul a {
+  font-size: 1rem;
+}
+
+// Search
+.m-menu--search {
+  margin-bottom: 0.325rem;
+
+  @include breakpoint(large) {
+    display: none;
+    margin-bottom: 0;
+  }
+}
+
+.m-menu--search>li {
+  @include breakpoint(medium down) {
+    display: block;
+    width: 100%;
+
+    .m-input-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.m-menu--search .m-input-group-field {
+  max-width: 100%;
+}
+
+// Elements
+
+// Logo
+li.m-menu-logo {
+  float: left;
+  display: inline-block;
+  padding: 0;
+  z-index: 2;
+
+  @include breakpoint(large) {
+    float: none;
+    position: absolute;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+li.m-menu-logo h1 {
+  margin-bottom: 0;
+  font-size: 0;
+}
+
+li.m-menu-logo a {
+  display: inline-block;
+  position: relative;
+  font-size: 0;
+}
+
+li.m-menu-logo .i-logo,
+li.m-menu-logo .i-summit {
+  width: 100px;
+  transition: width 0.3s ease;
+
+  @include breakpoint(medium) {
+    width: 148px;
+  }
+
+  @include breakpoint(large) {
+    width: 175px;
+  }
+}
+
+li.m-menu-logo .i-summit {
+  width: 160px;
+  transition: width 0.3s ease;
+
+  @include breakpoint(medium) {
+    width: 200px;
+  }
+
+  @include breakpoint(large) {
+    width: 280px;
+  }
+}
+
+li.m-menu-logo .i-summita,
+li.m-menu-logo .i-summitb,
+li.m-menu-logo .i-summitc {
+  width: 160px;
+  transition: width 0.3s ease;
+
+  @include breakpoint(medium) {
+    width: 200px;
+  }
+
+  @include breakpoint(large) {
+    width: 300px;
+  }
+}
+
+// Hamburger
+li.m-menu-hamburger {
+  float: right;
+  position: absolute;
+  right: 15px;
+
+  @include breakpoint(medium) {
+    right: 20px;
+  }
+
+  @include breakpoint(large) {
+    display: none !important;
+  }
+}
+
+li.m-menu-hamburger>a {
+  padding: 6px;
+
+  @include breakpoint(medium) {
+    padding: 15px;
+  }
+}
+
+// Hamburger icon
+.i-hamburger {
+  font: inherit;
+  display: inline-block;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition-timing-function: linear;
+  transition-duration: 0.15s;
+  transition-property: opacity, filter;
+  text-transform: none;
+  color: inherit;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+
+  &-box {
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 24px;
+  }
+
+  &-inner {
+    top: 50%;
+    display: block;
+    margin-top: -2px;
+    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition-duration: 75ms;
+
+    &,
+    &:after,
+    &:before {
+      display: block;
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 3px;
+      background-color: $primary-color;
+      transition-property: transform;
+      border-radius: 0;
+    }
+
+    &:before {
+      transition: top 75ms ease 0.12s, opacity 75ms ease;
+      top: -8px;
+    }
+
+    &:after {
+      transition: bottom 75ms ease 0.12s,
+        transform 75ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      bottom: -8px;
+    }
+  }
+
+  &.is-active &-inner {
+    transition-delay: 0.12s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: rotate(45deg);
+
+    &:before {
+      top: 0;
+      transition: top 75ms ease, opacity 75ms ease 0.12s;
+      opacity: 0;
+    }
+
+    &:after {
+      bottom: 0;
+      transition: bottom 75ms ease,
+        transform 75ms cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+// Search
+li.m-menu-search {
+  display: none;
+
+  @include breakpoint(large) {
+    display: table-cell;
+  }
+}
+
+li.m-menu-search a:after {
+  content: "";
+  position: absolute;
+  bottom: -17px;
+  background: $color-purple;
+  width: 100%;
+  height: 0;
+  transition: height 0.3s ease;
+}
+
+li.m-menu-search a.is-active:after {
+  height: 10px;
+}
+
+li.m-menu-search .i-search {
+  width: 22px;
+  height: 22px;
+  padding: 1px 1px;
+
+  >* {
+    stroke-width: 8;
+    stroke: $color-dark-blue;
+  }
+}
+
+// Menu Link
+li.m-menu-link span {
+  float: right;
+
+  @include breakpoint(large) {
+    display: none;
+  }
+}
+
+// Menu Link - Right Arrow
+li.m-menu-link .i-arrow-right {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  float: none;
+  top: -0.1em;
+  margin-left: 10px;
+  fill: none;
+  stroke: $primary-color;
+  width: 7.5px;
+  height: 17.5px;
+  transition: margin-left 0.25s ease-out;
+}
+
+.m-header.is-stuck {
+  @include breakpoint(large) {
+    padding: 0.875rem 0.5rem;
+  }
+
+  .m-menu--secondary {
+    @include breakpoint(large) {
+      display: none;
+    }
+  }
+
+  .i-logo {
+    width: 107px;
+  }
+
+  .i-summita,
+  .i-summitb,
+  .i-summitc {
+    width: 180px;
+  }
+
+
+  li.m-menu-hamburger>a {
+    padding: 10px 15px;
+  }
+}
+
+//Hide main menu on resource pages(forms) as per CB,TW
+body.node--type-resource,
+body.page-sub-type-no-main-navigation {
+  .m-menu--primary {
+    visibility: hidden;
+  }
+
+  p.m-feature-category {
+    a {
+      color: #fefefe;
+      text-decoration: none;
+    }
+  }
+}
+
+//CTA Button hiding
+header {
+
+  li.iway-8,
+  li.embedded-analytics-contact {
+    display: none !important;
+  }
+
+  &.cta-iway-8 {
+    li#default {
+      display: none;
+    }
+
+    li.iway-8 {
+      display: block !important;
+    }
+  }
+
+  &.cta-embedded-analytics-contact {
+    li#default {
+      display: none;
+    }
+
+    li.embedded-analytics-contact {
+      display: block !important;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+//
+// MODULE: Event
+//
+
+// Base
+.m-event {
+  margin: 0 0 1rem;
+  list-style: none;
+
+  li:last-child { margin-bottom: 0; }
+}
+
+.m-event,
+.m-event li {
+  margin-bottom: 1.25rem;
+  @include breakpoint(medium) { margin-bottom: 1.25rem; }
+}
+
+
+// ELEMENTS
+
+.m-event-title {
+  font-weight: 700;
+  margin: 0;
+}
+
+.m-event-detail {
+  font-size: rem-calc(25px);
+  margin: 0;
+}

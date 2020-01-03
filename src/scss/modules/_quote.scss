@@ -1,0 +1,80 @@
+//
+// MODULE: Quote
+//
+
+// Base
+.m-quote {
+  position: relative;
+  color: $color-grey;
+}
+
+
+// SECTIONS
+
+
+// ELEMENTS
+
+.m-quote-phrase {
+  font-size: rem-calc(20px);
+  @include breakpoint(medium) { font-size: rem-calc(24px); }
+  @include breakpoint(large) { font-size: rem-calc(30px); }
+}
+
+.m-quote-phrase p {
+
+  &:last-child { margin-bottom: 0; }
+
+  &:before,
+  &:after {
+    position: relative;
+    display: inline-block;
+  }
+  &:before {
+    content: '\201C';
+    left: 0;
+    padding-right: 5px;
+  }
+  &:after {
+    content: '\201D';
+    right: 0;
+  }
+}
+
+.m-quote-phrase + .m-quote-tag { margin-top: 40px; }
+
+.m-quote-tag {
+  position: relative;
+  font-size: 1rem;
+}
+
+.m-quote .m-circle-text { width: 100%; }
+
+
+// VARIANT
+
+// Middle
+.m-quote--middle {
+  @include breakpoint(medium) {
+    align-items: flex-start;
+    display: flex;
+  }
+}
+
+.m-quote--middle .m-circle {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) {
+    align-self: center;
+    display: flex;
+    flex-shrink: 1;
+    height: 250px;
+    margin: 0;
+  }
+}
+
+.m-quote--middle .m-quote-phrase {
+  align-self: center;
+  max-width: 950px;
+  @include breakpoint(medium) {
+    padding-left: 40px;
+  }
+}

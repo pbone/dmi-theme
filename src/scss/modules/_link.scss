@@ -1,0 +1,95 @@
+//
+// MODULE: Link
+//
+
+// Base
+.m-link {
+  float: left;
+  width: 100%;
+}
+
+// Text
+.m-link-text {
+  font-size: 1rem;
+  color: $primary-color;
+  display: inline-block;
+  position: relative;
+}
+
+// Arrow
+.m-link .i-arrow-right,
+.m-link .i-arrow-down {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  float: none;
+  top: -.1em;
+  fill: none;
+  stroke: $primary-color;
+  @include breakpoint(medium only) { margin-left: 5px; }
+}
+
+.m-link .i-arrow-right {
+  width: 6px;
+  height: 14px;
+  margin-left: 4px;
+  transition: margin-left .25s ease-out;
+}
+
+.m-link .i-arrow-down {
+  width: 14px;
+  height: 6px;
+  margin-left: 10px;
+  transition: top .25s ease-out;
+}
+
+// Contain
+.m-link--contain {
+  border: 1px solid $primary-color;
+  line-height: 1;
+  text-align: left;
+
+  span { float: right; }
+  .i-arrow-right,
+  .i-arrow-down {
+    left: 0;
+    margin-left: 0;
+  }
+  .i-arrow-right {
+    transition: left .25s ease-out;
+  }
+
+  .m-link-text {
+    line-height: 1;
+    padding: 1em 1.5em;
+    width: 100%;
+  }
+}
+
+// Alignment
+.m-link--left,
+.m-link.content-position-left { text-align: left; }
+.m-link--center,
+.m-link.content-position-center { text-align: center; }
+.m-link--right,
+.m-link.content-position-right { text-align: right; }
+
+// Hover - normal
+.m-link:not(.m-link--contain) a {
+  &:hover, &:focus {
+    .i-arrow-right {
+      margin-left: 6px;
+      @include breakpoint(medium only) { margin-left: 8px; }
+    }
+    .i-arrow-down { top: 0; }
+  }
+}
+
+// Hover - container
+.m-link.m-link--contain {
+  &:hover, &:focus {
+    .i-arrow-right { left: 3px; }
+    .i-arrow-down { bottom: 2px; }
+  }
+}

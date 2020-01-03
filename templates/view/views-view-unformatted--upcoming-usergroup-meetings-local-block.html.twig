@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+
+<section class="l-section-header m-section m-section--bg-white">
+    <div class="row">
+        <div class="column small-12">
+            <div class="event-headers m-card">
+                <div class="m-card-section">
+                    <div class="row">
+                        <div class="column">
+                          {{ "User Group"|trans }}
+                        </div>
+                        <div class="column">
+                          {{ "Date"|trans }}
+                        </div>
+                        <div class="column">
+                          {{ "Contact"|trans }}
+                        </div>
+                        <div class="column"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="column small-12">
+            <div class="m-card--border m-card--border-theme-4">
+
+              {% for row in rows %}
+                {{ row.content }}
+              {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+

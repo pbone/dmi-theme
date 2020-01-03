@@ -1,0 +1,51 @@
+body.page-sub-type-partners-overview {
+  .m-card-description {
+    p {
+     // text-align: left!important;
+    }
+  }
+
+  .paragraph--type--image-and-features {
+    .column {
+
+     //git @include flex-align(center, middle);
+      align-self:center !important;
+      .m-text {
+        @include flex-align-self(middle);
+      }
+    }
+  }
+
+  section.title-with-hr {
+
+    .field-paragraph--field-section-title {
+      h2 {
+        border: 0;
+        border-bottom-width: 3px;
+        border-bottom-style: solid;
+        border-image: linear-gradient(-90deg, #00a0df 27%, #912ba7 60%) 1;
+        padding: .5rem .5rem .875rem;
+        margin-bottom: rem-calc(30);
+      }
+    }
+    hr {
+      border: 0;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-image: linear-gradient(-90deg, #00b2f0 27%, #00b2f0 60%) 1;
+      //padding: .5rem .5rem .875rem;
+      margin-bottom: rem-calc(50);
+
+    }
+
+    hr.grad {
+      border: 0;
+      border-bottom-width: 3px;
+      border-bottom-style: solid;
+      border-image: linear-gradient(-90deg, #00a0df 27%, #912ba7 60%) 1;
+      margin-bottom: rem-calc(51);
+
+    }
+  }
+
+}

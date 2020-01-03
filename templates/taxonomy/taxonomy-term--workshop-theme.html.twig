@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Theme override to display a taxonomy term.
+ *
+ * Available variables:
+ * - url: URL of the current term.
+ * - name: Name of the current term.
+ * - content: Items for the content of the term (fields and description).
+ *   Use 'content' to print them all, or print a subset such as
+ *   'content.description'. Use the following code to exclude the
+ *   printing of a given child element:
+ *   @code
+ *   {{ content|without('description') }}
+ *   @endcode
+ * - attributes: HTML attributes for the wrapper.
+ * - page: Flag for the full page state.
+ * - term: The taxonomy term entity, including:
+ *   - id: The ID of the taxonomy term.
+ *   - bundle: Machine name of the current vocabulary.
+ * - view_mode: View mode, e.g. 'full', 'teaser', etc.
+ *
+ * @see template_preprocess_taxonomy_term()
+ */
+#}
+
+{% set classes = [
+  view_mode ? 'taxonomy--view-mode--' ~ view_mode|clean_class,
+  'columns'
+]%}
+
+<div class="m-feature m-feature--general m-section--padding-top-small m-section--padding-bottom-small m-section--sep-btm">
+    <div class="row row-header">
+        <div class="column small-12">
+            <p class="m-feature-category">
+              {{ 'Workshop'|trans }}
+            </p>
+            <h1 class="m-feature-title">
+              {{ name }}
+            </h1>
+        </div>
+    </div>
+
+    <div class="row row-content">
+        <div class="small-12 medium-6 column">
+            <div class="m-wysiwyg">
+              {{ content.description }}
+            </div>
+        </div>
+        <div class="small-12 medium-6 column">
+          {{ content.field_image }}
+        </div>
+    </div>
+</div>

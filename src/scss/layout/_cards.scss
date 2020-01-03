@@ -1,0 +1,62 @@
+//
+// LAYOUT: Cards
+// Used on Content Cards
+//
+
+// BASE
+
+.l-cards {
+  margin: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+
+// VARIANTS
+
+// Three
+.l-cards--three .m-card,
+.l-cards--three .gap {
+  width: grid-item-width(1, 1.5rem);
+  @include breakpoint(medium) { width: grid-item-width(3, 1.5rem); }
+}
+
+// Two
+.l-cards--two .m-card,
+.l-cards--two .gap {
+  width: grid-item-width(1, 1.5rem);
+  @include breakpoint(medium) { width: grid-item-width(2, 1.5rem); }
+}
+
+// One
+.l-cards--one { justify-content: center; }
+.l-cards--one .m-card:not(.m-card--search),
+.l-cards--one .gap {
+  width: 100%;
+  max-width: 554px;
+  //width: grid-item-width(1, 1.5rem);
+  //@include breakpoint(medium) { width: grid-item-width(1, 1.5rem); }
+}
+
+
+// Full
+.l-cards--full { justify-content: center; }
+.l-cards--full .m-card:not(.m-card--search),
+.l-cards--full .gap {
+  width: 100%;
+ // max-width: 554px;
+  //width: grid-item-width(1, 1.5rem);
+  //@include breakpoint(medium) { width: grid-item-width(1, 1.5rem); }
+}
+
+// Layout-2
+.m-card--layout-2 .l-cards--three {
+
+  .m-card {
+    @include breakpoint(medium) { margin-bottom: 0; }
+    &:last-child { @include breakpoint(small only) { margin-bottom: 0; } }
+  }
+
+}
+

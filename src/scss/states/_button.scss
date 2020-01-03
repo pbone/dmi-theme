@@ -1,0 +1,39 @@
+//
+// Button States
+//
+
+.m-button {
+
+  // Expanded
+  &.is-expanded,
+  &--expanded {
+    display: block;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  // Disabled
+  &.is-disabled,
+  &--disabled {
+    opacity: 1;
+    cursor: not-allowed;
+    box-shadow: none;
+    &:hover, &:focus {
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    // Primary & Secondary
+    &, &.m-button--primary, &.m-button--secondary {
+      background-color: $color-light-grey;
+      color: $color-grey;
+      &:hover, &:focus {
+        background-color: $color-light-grey;
+        color: $color-grey;
+      }
+    }
+
+  }
+
+}

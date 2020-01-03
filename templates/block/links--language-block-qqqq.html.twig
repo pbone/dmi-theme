@@ -1,0 +1,95 @@
+{#
+/**
+ * @file
+ * Theme override for a set of links.
+ *
+ * Available variables:
+ * - attributes: Attributes for the UL containing the list of links.
+ * - links: Links to be output.
+ *   Each link will have the following elements:
+ *   - title: The link text.
+ *   - href: The link URL. If omitted, the 'title' is shown as a plain text
+ *     item in the links list. If 'href' is supplied, the entire link is passed
+ *     to l() as its $options parameter.
+ *   - attributes: (optional) HTML attributes for the anchor, or for the <span>
+ *     tag if no 'href' is supplied.
+ * - heading: (optional) A heading to precede the links.
+ *   - text: The heading text.
+ *   - level: The heading level (e.g. 'h2', 'h3').
+ *   - attributes: (optional) A keyed list of attributes for the heading.
+ *   If the heading is a string, it will be used as the text of the heading and
+ *   the level will default to 'h2'.
+ *
+ *   Headings should be used on navigation menus and any list of links that
+ *   consistently appears on multiple pages. To make the heading invisible use
+ *   the 'visually-hidden' CSS class. Do not use 'display:none', which
+ *   removes it from screen readers and assistive technology. Headings allow
+ *   screen reader and keyboard only users to navigate to or skip the links.
+ *   See http://juicystudio.com/article/screen-readers-display-none.php and
+ *   http://www.w3.org/TR/WCAG-TECHS/H42.html for more information.
+ *
+ * @see template_preprocess_links()
+ */
+#}
+
+{% set lang_code = curr_lang() %}
+<nav role="navigation mylinks">
+  <ul class="menu m-menu--secondary dropdown" data-dropdown-menu data-hover-delay="10" role="menubar">
+    <li role="menuitem">
+      {% if lang_code %}
+        <a href="/{{ lang_code }}/support" title="title="{{ 'Home'|t }}" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/7696">{{ 'Blockchain'|trans }}</a>
+      {% else %}
+        <a href="/support" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/7696">{{ 'Blockchain'|trans }}</a>
+      {% endif %}
+    </li>
+    <li role="menuitem" class="is-dropdown-submenu-parent opens-right" aria-haspopup="true" aria-label="Worldwide Sites">
+      <a href="/about/world-wide-offices">Worldwide Sites</a>
+     {% if links and links|length > 1 -%}
+      <ul class="menu m-menu--secondary dropdown submenu is-dropdown-submenu first-sub vertical" data-dropdown-menu="ohknrn-dropdown-menu" data-hover-delay="10" data-submenu="" role="menubar">
+        {%- for item in links -%}
+          <li class="menuitem">
+            {%- if item.link -%}
+
+              <!--{{ item.link }} to do: remove this line without breaking the urls -->
+
+              {% if item.link['#options'].language.id == current_language %}
+                {% set classes = ['active'] %}
+              {% else %}
+                {% set classes = [''] %}
+              {% endif %}
+              {% set url = path(item.link['#url'].routeName, item.link['#url'].routeParameters, item.link['#url'].options) %}
+
+            {%- else -%}
+              {% set classes = ['disabled'] %}
+              {% set url = '#' %}
+            {%- endif -%}
+
+            <a href="{{ url }}"
+              {{ item.attributes.addClass(classes) }}
+              {{ item.attributes.setAttribute('title', item.text ) }}
+              {{ item.attributes.setAttribute('lang', item.link['#options'].language.id ) }}
+              {{ item.attributes.setAttribute('aria-label', item.text ) }}>
+              {{ item.text }}
+            </a>
+          </li>
+        {%- endfor -%}
+        <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+          {% if lang_code %}
+            <a href="/{{ lang_code }}/about/world-wide-offices" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="about/world-wide-offices">{{ 'Find your local office'|trans }}</a>
+          {% else %}
+            <a href="/about/world-wide-offices" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="about/world-wide-offices">{{ 'Find your local office'|trans }}</a>
+          {% endif %}
+        </li>
+      </ul>
+    {%- endif %}
+    </li>
+    <li role="menuitem">
+      {% if lang_code %}
+        <a href="/{{ lang_code }}/contact_us" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/136">{{ 'Contact Us'|t() }}</a>
+      {% else %}
+        <a href="/contact_us" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/136">{{ 'Contact Us'|t() }}</a>
+      {% endif %}
+      {{ 'here'| t() }}
+    </li>
+  </ul>
+</nav>

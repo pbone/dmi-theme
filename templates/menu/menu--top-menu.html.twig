@@ -1,0 +1,196 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{#
+{% import _self as menus %}
+
+&#123;&#35;
+  We call a macro which calls itself to render the full tree.
+  @see http://twig.sensiolabs.org/doc/tags/macro.html
+&#35;&#125;
+
+<!-- Navigation -->
+<div class="m-header-right">
+  <nav role="navigation">
+
+    <!-- Secondary Navigation -->
+    {{ menus.menu_links(items, attributes, 0) }}
+
+    {% macro menu_links(items, attributes, menu_level) %}
+    {% import _self as menus %}
+
+    {% if items %}
+
+    {% if menu_level == 0 %}
+    <ul{{ attributes.addClass('menu', 'm-menu--secondary', 'dropdown').setAttribute('data-dropdown-menu', '').setAttribute('data-hover-delay', '10') }}>
+      {% else %}
+      <ul{{ attributes.addClass('menu', 'm-menu--secondary', 'dropdown').setAttribute('data-dropdown-menu', '').setAttribute('data-hover-delay', '10') }}>
+        {% endif %}
+
+        {% for item in items %}
+
+          {% if item.below %}
+            <li {{ item.attributes }}>
+              <a href="{{ item.url }}">{{ item.title }}</a>
+              {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+            </li>
+          {% else %}
+            <li{{ item.attributes }}>
+
+              {% if menu_level > 0 %}
+                {% if item.url.isRouted() %}
+                  {% if item.url.getInternalPath() == "" %}
+                    <a href="/">{{ item.title }}</a>
+                  {% else %}
+                    {{ link(item.title, item.url) }}
+                  {% endif %}
+                {% else %}
+                  {{ link(item.title, item.url) }}
+                {% endif %}
+              {% else %}
+                {{ link(item.title, item.url) }}
+              {% endif %}
+
+            </li>
+          {% endif %}
+        {% endfor %}
+
+      </ul>
+
+      {% endif %}
+{% endmacro %}#}
+
+{# hardcoding top menu for now #}
+{% spaceless %}
+<div class="m-header-right"{{ item.attributes }}>
+  <nav role="navigation">
+
+    <!-- Secondary Navigation -->
+
+
+    <ul class="menu m-menu--secondary dropdown" data-dropdown-menu data-hover-delay="10" role="menubar">
+
+
+      <li role="menuitem"  class="is-dropdown-submenu-parent opens-right" aria-haspopup="true" aria-label="Our Services">
+        <a href="{{ path('entity.node.canonical', {'node': '7696'}) }}" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/7696">{{ 'Our Services'|trans }}</a>
+
+        <ul class="menu m-menu--secondary dropdown submenu is-dropdown-submenu first-sub vertical" data-dropdown-menu="ohknrn-dropdown-menu" data-hover-delay="10" data-submenu="" role="menubar">
+
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+
+          {% if language == 'de' %}
+              <a href="/de/edu" title="Customer Education" id="" name="" rel="" style="" target="" accesskey="">{{ 'Customer Education'|trans }}</a>  
+          {% elseif language == 'de-ch'%}
+              <a href="/de-ch/edu" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Customer Education'|trans }}</a>  
+          {% else %}
+              <a href="http://education.informationbuilders.com/" title="" id="" name="" rel="" style="" target="_blank" accesskey="">{{ 'Customer Education'|trans }}</a>              
+          {% endif %}                         
+
+          </li>
+          
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/support/wf_dev_center" title="" id="" name="" rel="" style="" target="" accesskey=""  data-drupal-link-system-path="node/8841">{{ 'Customer Community'|trans }}</a>                          </li>
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="http://forums.informationbuilders.com/eve/forums" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Focal Point Forums'|trans }}</a>                          </li>
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/professional-services" title="" id="" name="" rel="" style="" target="" accesskey=""  data-drupal-link-system-path="node/141">{{ 'Professional Services'|trans }}</a>                          </li>
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="https://techsupport.informationbuilders.com/public/tc-library.html" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Technical Content'|trans }}</a>                          </li>
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="https://techsupport.informationbuilders.com/" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Technical Support'|trans }}</a>     </li>
+
+
+        </ul>
+
+      <li role="menuitem" class="is-dropdown-submenu-parent opens-right" aria-haspopup="true" aria-label="Worldwide Sites">
+        <a href="{{ path('entity.node.canonical', {'node': '11306'}) }}">{{ 'Worldwide Sites'|trans }}</a>
+
+
+        <ul class="menu m-menu--secondary dropdown submenu is-dropdown-submenu first-sub vertical" data-dropdown-menu="ohknrn-dropdown-menu" data-hover-delay="10" data-submenu="" role="menubar">
+
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+
+            <a href="/en-au/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Australia'|trans }}</a></li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/pt-br/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Brazil'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/fr/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'France'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/de/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Germany'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/it/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Italy'|trans }}</a>  </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/es-mx/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Mexico'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/nl/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Netherlands'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/pt/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Portugal'|trans }}</a></li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/es/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Spain'|trans }}</a>  </li>
+
+         {#  as per Lucas on 7-22-2019, hide these nav itemes  
+         
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/fr-ch/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Switzerland - French'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/de-ch/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Switzerland - German'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/it-ch/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'Switzerland - Italian'|trans }}</a>  </li>
+
+                #}
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/en-gb/home" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/9011">{{ 'United Kingdom'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="/" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="<front>" class="is-active">{{ 'United States'|trans }}</a> </li>
+
+          <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+            <a href="{{ path('entity.node.canonical', {'node': '11306'}) }}" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Find your local office'|trans }}</a>
+          </li>
+
+
+        </ul>
+
+
+
+      </li>
+
+      <li role="menuitem">
+        <a href="{{ path('entity.node.canonical', {'node': '136'}) }}" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/136">{{ 'Contact Us'|trans }}</a>                          </li>
+
+    </ul>
+      {% endspaceless %}

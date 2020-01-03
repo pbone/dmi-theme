@@ -1,0 +1,106 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - block.subject: Block title.
+ * - content: Block content.
+ * - block.module: Module that generated the block.
+ * - block.delta: An ID for the block, unique within each module.
+ * - block.region: The block region embedding the current block.
+ * - classes: String of classes that can be used to style contextually through
+ *   CSS. It can be manipulated through the variable classes_array from
+ *   preprocess functions. The default values can be one or more of the following:
+ *   - block: The current template type, i.e., "theming hook".
+ *   - block-[module]: The module generating the block. For example, the user module
+ *     is responsible for handling the default user navigation block. In that case
+ *     the class would be "block-user".
+ * - title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ *
+ * Helper variables:
+ * - classes_array: Array of html class attribute values. It is flattened
+ *   into a string within the variable classes.
+ * - block_zebra: Outputs 'odd' and 'even' dependent on each block region.
+ * - zebra: Same output as block_zebra but independent of any block region.
+ * - block_id: Counter dependent on each block region.
+ * - id: Same output as block_id but independent of any block region.
+ * - is_front: Flags true when presented in the front page.
+ * - logged_in: Flags true when the current user is a logged-in member.
+ * - is_admin: Flags true when the current user is an administrator.
+ * - block_html_id: A valid HTML ID and guaranteed unique.
+ * - content_attributes: Raw HTML attributes for block content.
+ * - title_attributes: Raw HTML attributes for the block title tag.
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_block()
+ * @see template_process()
+ */
+#}
+{% if block.delta != 'main' %}
+{#<section{{ attributes }}>#}
+  {% endif %}
+
+  {{ title_prefix }}
+  {% if label %}
+    <h2 {{ title_attributes }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% if content_attributes|length %}
+  <div {{ content_attributes }}>
+    {% endif %}
+
+    <div class="m-header-right">
+      <nav role="navigation">
+
+        <!-- Secondary Navigation -->
+
+        <ul class="menu m-menu--secondary dropdown" data-dropdown-menu data-hover-delay="10" role="menubar">
+
+
+          <li role="menuitem"  class="is-dropdown-submenu-parent opens-right" aria-haspopup="true" aria-label="Our Services">
+            <a href="{{ path('entity.node.canonical', {'node': '7696'}) }}" title="" id="" name="" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/7696">{{ 'Our Services'|trans }}</a>
+
+            <ul class="menu m-menu--secondary dropdown submenu is-dropdown-submenu first-sub vertical" data-dropdown-menu="ohknrn-dropdown-menu" data-hover-delay="10" data-submenu="" role="menubar">
+
+
+              <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+                <a href="rbl/edu" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Customer Education'|trans }}</a>                          </li>
+              <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+                <a href="/support/wf_dev_center" title="" id="" name="" rel="" style="" target="" accesskey=""  data-drupal-link-system-path="node/8841">{{ 'Customer Community'|trans }}</a>                          </li>
+              <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+                <a href="http://forums.informationbuilders.com/eve/forums" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Focal Point Forums'|trans }}</a>                          </li>
+              <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+                <a href="/professional-services" title="" id="" name="" rel="" style="" target="" accesskey=""  data-drupal-link-system-path="node/141">{{ 'Professional Services'|trans }}</a>                          </li>
+              <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+                <a href="https://techsupport.informationbuilders.com/public/tc-library.html" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Technical Content'|trans }}</a>                          </li>
+              <li role="menuitem" class="is-submenu-item is-dropdown-submenu-item">
+                <a href="https://techsupport.informationbuilders.com/" title="" id="" name="" rel="" style="" target="" accesskey="">{{ 'Technical Support'|trans }}</a>     </li>
+
+
+            </ul>
+
+            <li role="menuitem" class="is-dropdown-submenu-parent opens-right" aria-haspopup="true" aria-label="Worldwide Sites">
+            {% block content %}
+              {{ content }}
+            {% endblock %}
+          </li>
+
+          <li role="menuitem">
+            <a href="{{ path('entity.node.canonical', {'node': '136'}) }}" title="" id="" name="yo" rel="" style="" target="" accesskey="" data-drupal-link-system-path="node/136">{{ 'Contact Us'|trans }}</a>                          </li>
+
+        </ul>
+
+        {% if content_attributes|length %}
+    </div>
+    {% endif %}
+
+    {% if block.delta != 'main' %}
+{#</section>#}
+{% endif %}

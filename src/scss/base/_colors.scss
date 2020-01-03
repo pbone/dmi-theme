@@ -1,0 +1,40 @@
+/**
+ * @file
+ * SCSS file for color variables.
+ *
+ * All color variables used in SCSS are defined in this file.
+ */
+
+/* Primary */
+$color-purple: #912BA7;
+$color-light-purple: #FDF4FF;
+$color-dark-purple: #480C55;
+
+/* Secondary */
+$color-blue: #00A0DF;
+$color-light-blue: #EAF7FD;
+$color-dark-blue: #036DB2;
+
+/* Action */
+$color-red: #D0021B;
+$color-yellow: #FFAE00;
+$color-green: #3ADB76;
+
+/* Neutral */
+$color-black: #0A0A0A;
+$color-white: #FFFFFF;
+
+/* Grey */
+$color-grey: #415D6B;
+$color-light-grey: #EBEBEB;
+$color-medium-grey: #CACACA;
+$color-dark-grey: #242B2D;
+
+/* Gradients */
+$gradient-blue-purple: linear-gradient(-90deg, $color-purple 27%, $color-blue 60%) 1;
+$gradient-purple-blue: linear-gradient(-90deg, $color-blue 27%, $color-purple 60%) 1;
+$gradient-white-light-blue: linear-gradient(-180deg, $color-white 51%, #DFF2FB 93%);
+$gradient-light-blue-purple: linear-gradient(-180deg, $color-light-blue 51%, #EADFF6 93%);
+
+/*blog */
+$blog-tag-background: #e8eced;

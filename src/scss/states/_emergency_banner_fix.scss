@@ -1,0 +1,56 @@
+header.m-no--video,  header.hero-campaign--aa {
+
+
+  // CUSTOM VIDEO FOR HOMEPAGE
+
+  .m-feature-bg {
+    @include breakpoint(medium) {
+      background-position: center;
+    }
+    // Prevents image from moving
+    @include breakpoint(large) {
+      max-width: 3000px;
+      background-size: 3000px auto;
+    }
+    @include breakpoint(xlarge) {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+
+
+  .m-feature-content {
+
+    @include breakpoint(medium) {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: auto;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 1440px;
+
+    }
+  }
+
+  .m-feature-video-text {
+    @include breakpoint(medium) {
+      float: right;
+      padding-top: 4rem;
+      padding-left: 40px;
+      max-width: 500px;
+    }
+    @include breakpoint(large) {
+      padding-top: 5rem;
+      padding-left: 100px;
+      max-width: 640px;
+    }
+  }
+
+
+
+
+}

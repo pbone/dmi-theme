@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+
+<div class="row">
+	<div class="column small-12">
+
+
+		<div
+			class="m-card--image-style-larger-spot m-card--text-style-small
+				    m-card--bg-white blog--card-container--news-events" style="background-image:url(/sites/default/themes/infobuilders/images/blog/news-sp.png">
+			{# hard-coding title, because, ampersand...   #}
+			<div class="blog--news-events">
+				<h2
+					class="{{ view.getTitle()|clean_class }}">
+					{#{ view.getTitle() }#}
+					News & Events
+				</h2>
+			</div>
+
+			{% for row in rows %}
+				{%
+                set row_classes = [
+                default_row_class ? 'views-row', 'card-number-' ~ loop.index,
+            ]
+            %}
+				<div{{row.attributes.addClass(row_classes)}}>
+					<h3>
+						{{ row.content }}
+					</h3>
+
+				</div>
+			{% endfor %}
+
+
+			<div class="gap"></div>
+
+		</div>
+	</div>
+</div>

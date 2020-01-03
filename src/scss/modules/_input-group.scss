@@ -1,0 +1,145 @@
+//
+// Input Group
+//
+
+// Base
+.m-input-group {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1rem;
+  align-items: stretch;
+
+  & > :last-child > * { border-radius: 0; }
+  & > :last-child > .m-button--primary,
+  & > :last-child > .m-button--secondary {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+
+// SECTIONS
+
+.m-input-group-field {
+  border-radius: 0;
+  flex: 1 1 0px;
+  height: auto;
+  min-width: 0;
+}
+
+.m-input-group-button {
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  text-align: center;
+  display: flex;
+  flex: 0 0 auto;
+
+  .ajax-progress {
+    position: absolute;
+    top: 8px;
+    color: #242B2D;
+    width: 140px;
+    text-align: right;
+    right: 45px;
+
+    .throbber {
+      display: none;
+    }
+  }
+
+  & + span {
+    position: absolute;
+    right: 1%;
+    top: 50%;
+    font-size: 0;
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 1;
+
+    .i-search {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+
+// ELEMENTS
+
+.m-input-group-button {
+  a,
+  input,
+  button,
+  label {
+    height: auto;
+    align-self: stretch;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 1rem;
+  }
+}
+
+.m-input-group-label,
+.m-input-group-field,
+.m-input-group-button {
+  a,
+  input,
+  button,
+  label {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+
+
+// VARIANTS
+
+// Search
+// with blue button
+
+.m-input-group--search {
+
+  .form-item input {
+    background: transparent;
+    border-color: $color-purple;
+    border-right: 0;
+    font-size: rem-calc(14px);
+    padding-left: 1rem;
+    height: 3rem;
+  }
+
+  .m-feature--search & .form-item input { color: rgba($color-white, 0.6); }
+  .m-feature--search & .form-item input:focus { color: $color-white; }
+
+  .m-input-group-button {
+    background-image: url("data:image/svg+xml,%3Csvg class='i-search' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20.42 23.67'%3E%3Cpath fill='none' stroke='%23FFFFFF' stroke-width='2' d='M9,16.74A7.93,7.93,0,0,1,1,8.87,7.93,7.93,0,0,1,9,1a7.93,7.93,0,0,1,8,7.87,7.8,7.8,0,0,1-2.75,5.94,2,2,0,0,0,.14,2.87l5.06,5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E");
+    background-color: $color-dark-blue;
+    background-size: 20px 20px;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .m-input-group-button .m-button {
+    background-color: $color-dark-blue;
+    width: 50px !important;
+    padding-right: 0;
+    padding-left: 0;
+    &:disabled {
+      opacity: 0;
+    }
+  }
+  .m-input-group-button .topic-search-button {
+    background-color: transparent;
+    width: 50px !important;
+    padding-right: 0;
+    padding-left: 0;
+    &:disabled {
+      opacity: 0;
+    }
+  }
+
+  .i-search path {
+    stroke: $color-white;
+  }
+
+}

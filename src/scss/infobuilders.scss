@@ -1,0 +1,196 @@
+/* @file
+ * This file is a custom file that loads all files. Each non-base layer
+ * can be disabled.
+ *
+ * Do not name this file "STARTER.scss". This file should be named
+ * THEMENAME.scss.
+ *
+ * This application file (THEMENAME.scss) is where all the partials are
+ * imported.
+ *
+ * Theme styles are categorized using SMACSS standards. They utilize
+ * categorization of styles into various categories. Those categories are the
+ * following:
+ *
+ * - Base: CSS reset/normalize plus HTML element styling.
+ * - Layout: Macro arrangement of a web page, including any grid systems.
+ * - Modules: Dictate minor layout modules or reusable elements.
+ * - States: Describe the appearance of a module in various states.
+ * - Theme: Specific customizations for your subtheme.
+ * For more information about this new Drupal css file standard, please review
+ * the following:
+ * - https://drupal.org/node/1887922
+ * - http://smacss.com/
+ */
+
+// Make sure the charset is set appropriately
+@charset 'utf-8';
+
+// Custom Utilities
+@import "base/mixins";
+@import "base/functions";
+@import "base/fonts";
+
+// Color Variables
+@import 'base/colors';
+
+//This is your _settings.scss file where you can override foundation variables.
+@import 'settings';
+
+// Core
+// The following imports bootstrap the theme.
+@import 'foundation';
+@import 'motion-ui';
+
+// Foundation Components
+
+// Pick and choose...
+@include foundation-global-styles;
+@include foundation-flex-grid;
+
+@include foundation-typography;
+@include foundation-forms;
+@include foundation-button;
+@include foundation-accordion;
+@include foundation-accordion-menu;
+@include foundation-badge;
+@include foundation-breadcrumbs;
+@include foundation-button-group;
+@include foundation-callout;
+@include foundation-card;
+@include foundation-close-button;
+@include foundation-menu;
+@include foundation-menu-icon;
+@include foundation-drilldown-menu;
+@include foundation-dropdown;
+@include foundation-dropdown-menu;
+@include foundation-responsive-embed;
+@include foundation-label;
+@include foundation-media-object;
+@include foundation-off-canvas;
+@include foundation-orbit;
+@include foundation-pagination;
+@include foundation-progress-bar;
+@include foundation-slider;
+@include foundation-sticky;
+@include foundation-reveal;
+@include foundation-switch;
+@include foundation-table;
+@include foundation-tabs;
+@include foundation-thumbnail;
+@include foundation-title-bar;
+@include foundation-tooltip;
+@include foundation-top-bar;
+
+@include foundation-visibility-classes;
+@include foundation-float-classes;
+@include foundation-flex-classes;
+
+//@include foundation-global-styles;
+//@include foundation-flex-grid;
+//@include foundation-typography;
+//
+//@include foundation-top-bar;
+//@include foundation-responsive-embed;
+//@include foundation-media-object;
+//
+//@include foundation-sticky;
+@include foundation-reveal;
+//@include foundation-visibility-classes;
+//@include foundation-float-classes;
+//@include foundation-flex-classes;
+
+@include motion-ui-transitions;
+@include motion-ui-animations;
+
+// Custom SCSS
+
+// Typography Utility
+@import "base/typography";
+
+// Base
+@import "base/drupal";
+@import "base/elements";
+@import "base/icons";
+
+// Layout
+// Each section of the document has it's own partial separated out to improve
+// developer experience. Additionally, grids can be declared in layouts as well.
+@import 'layout/awards';
+@import "layout/bar";
+@import "layout/cards";
+@import "layout/circle";
+@import "layout/filter";
+@import "layout/feature-image";
+@import "layout/press-release";
+@import "layout/form";
+@import 'layout/instagram';
+@import "layout/section";
+@import "layout/branch-page";
+@import "layout/columns";
+@import "layout/code-pre";
+@import "layout/events";
+@import "layout/events-registration";
+//@import "layout/lang-home-page";
+@import "layout/styleguide";
+@import "layout/partners";
+@import "layout/blog";
+@import "layout/g2-review";
+@import "layout/tables";
+@import "layout/cloud-trial";
+
+
+// Modules
+@import 'modules/button';
+@import 'modules/button-group';
+@import 'modules/link';
+@import 'modules/list';
+@import 'modules/chart';
+@import 'modules/quote';
+@import 'modules/callout';
+@import 'modules/contact';
+@import 'modules/award';
+@import 'modules/bar';
+@import 'modules/breadcrumb';
+@import 'modules/event';
+@import 'modules/filter';
+@import 'modules/filter-group';
+@import 'modules/circle';
+@import 'modules/feature';
+@import 'modules/card';
+@import 'modules/speaker';
+@import 'modules/accordion';
+@import 'modules/section';
+@import 'modules/footer';
+@import 'modules/text';
+@import 'modules/search';
+@import 'modules/pagination';
+@import 'modules/input';
+@import 'modules/input-group';
+@import 'modules/instagram';
+@import 'modules/contact-form';
+@import 'modules/wysiwyg';
+@import 'modules/header';
+@import 'modules/menu';
+@import 'modules/menu-mega';
+@import 'modules/dropdown';
+@import 'modules/box';
+@import 'modules/slick';
+@import 'modules/slick-theme';
+@import 'modules/testimonial';
+@import 'modules/overlay';
+@import 'modules/video';
+@import 'modules/image';
+@import 'modules/summit';
+@import 'modules/hero-banners';
+
+// States
+@import 'states/button';
+@import 'states/body';
+@import 'states/emergency_banner_fix';
+@import "states/off-canvas-overrides";
+@import "states/animations";
+
+
+// Moving this particular layout scss to bottom
+@import "layout/landing-page";

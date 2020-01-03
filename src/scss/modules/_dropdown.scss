@@ -1,0 +1,185 @@
+//
+// Dropdown
+//
+
+// Foundation for Sites by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+
+////
+/// @group dropdown-menu
+////
+
+/// Enables arrows for items with dropdown menus.
+/// @type Boolean
+$dropdownmenu-arrows: false;
+
+/// Sets dropdown menu arrow color if arrow is used.
+/// @type Color
+$dropdownmenu-arrow-color: $anchor-color;
+
+/// Sets dropdown menu arrow size if arrow is used.
+/// @type Length
+$dropdownmenu-arrow-size: 6px;
+
+/// Minimum width of dropdown sub-menus.
+/// @type Length
+$dropdownmenu-min-width: 200px;
+
+/// Background color for dropdowns.
+/// @type Color
+$dropdownmenu-background: $color-light-blue;
+
+/// Border for dropdown sub-menus.
+/// @type List
+$dropdownmenu-border: 1px solid $color-light-blue;
+
+// Border width for dropdown sub-menus.
+// Used to adjust top margin of a sub-menu if a border is used.
+// @type Length
+$dropdownmenu-border-width: nth($dropdownmenu-border, 1);
+
+@mixin dropdown-menu-direction($dir: horizontal) {
+  @if $dir == horizontal {
+    > li.opens-left {
+      > .is-dropdown-submenu {
+        top: 100%;
+        right: 0;
+        left: auto;
+      }
+    }
+    > li.opens-right {
+      > .is-dropdown-submenu {
+        top: 100%;
+        right: auto;
+        left: 0;
+      }
+    }
+  }
+  @else if $dir == vertical {
+    > li {
+      .is-dropdown-submenu {
+        top: 0;
+      }
+
+      &.opens-left {
+        > .is-dropdown-submenu {
+          right: 100%;
+          left: auto;
+        }
+      }
+
+      &.opens-right {
+        > .is-dropdown-submenu {
+          right: auto;
+          left: 100%;
+        }
+      }
+
+    }
+  }
+  @else {
+    @warn 'The direction used for dropdown-menu-direction() must be horizontal or vertical.';
+  }
+}
+
+.dropdown.menu {
+  @include dropdown-menu-direction(horizontal);
+
+  a { @include disable-mouse-outline; }
+  .no-js & ul { display: none; }
+  &.vertical { @include dropdown-menu-direction(vertical); }
+
+  @each $size in $breakpoint-classes {
+    @if $size != $-zf-zero-breakpoint {
+      @include breakpoint($size) {
+        &.#{$size}-horizontal {
+          @include dropdown-menu-direction(horizontal);
+        }
+
+        &.#{$size}-vertical {
+          @include dropdown-menu-direction(vertical);
+        }
+      }
+    }
+  }
+
+  &.align-right {
+    .is-dropdown-submenu.first-sub {
+      top: 100%;
+      right: 0;
+      left: auto;
+    }
+  }
+}
+
+.is-dropdown-menu.vertical {
+  width: 100px;
+  &.align-right { float: right; }
+}
+
+.is-dropdown-submenu-parent {
+  position: relative;
+
+  a::after {
+    position: absolute;
+    top: 50%;
+    #{$global-right}: 5px;
+    margin-top: -1 * $dropdownmenu-arrow-size;
+  }
+
+  &.opens-inner > .is-dropdown-submenu {
+    top: 100%;
+    @if $global-text-direction == 'rtl' {
+      right: auto;
+    }
+    @else {
+      left: auto;
+    }
+  }
+
+  &.opens-left > .is-dropdown-submenu {
+    right: 100%;
+    left: auto;
+  }
+
+  &.opens-right > .is-dropdown-submenu {
+    right: auto;
+    left: 100%;
+  }
+}
+
+.is-dropdown-submenu {
+  position: absolute;
+  top: 0;
+  #{$global-left}: 100%;
+  z-index: 1;
+  display: none;
+  min-width: $dropdownmenu-min-width;
+  border: $dropdownmenu-border;
+
+  @if (type-of($dropdownmenu-border-width) == 'number') {
+    .is-dropdown-submenu {
+      margin-top: (-$dropdownmenu-border-width);
+    }
+  }
+
+  > li { width: 100%; }
+
+  > li > a { background: $dropdownmenu-background; }
+
+  > li > a:hover { background: #e1f3fc; }
+
+  &.js-dropdown-active {
+    display: block;
+  }
+
+}
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a:after {
+  background-image: url(data:image/svg+xml,%3Csvg%20class%3D%22i-arrow-down%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2015%207%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23007ac9%22%20d%3D%22M5.5%200.5L0.5%200.5%207.5%206.5%2014.5%200.5%209.5%200.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E%0A);
+  background-size: cover;
+  border: 0;
+  width: 14px;
+  height: 6px;
+}

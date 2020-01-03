@@ -1,0 +1,79 @@
+body.page-sub-type-summit {
+  .m-card--layout-2 .l-cards--three {
+    .m-card {
+      @include breakpoint(medium) {
+        margin-bottom: rem-calc(25);
+      }
+
+      .m-card-section {
+        .m-card-image {
+          img {
+            border-radius: 50%;
+            background: #fff;
+            padding: rem-calc(6);
+          }
+        }
+      }
+    }
+
+    .m-card:nth-child(even) {
+      .m-card-section {
+        .m-card-image {
+          img {
+            border: 1px solid #006eb8;
+          }
+        }
+      }
+    }
+
+    .m-card:nth-child(odd) {
+      .m-card-section {
+        .m-card-image {
+          img {
+            border: 1px solid #4f0158;
+          }
+        }
+      }
+    }
+  }
+}
+
+body.section-summit {
+  .m-menu--secondary {
+    visibility: hidden;
+  }
+
+  .sessions {
+    @include breakpoint(medium) {
+      margin-top: rem-calc(30);
+    }
+
+    .session {
+      @include breakpoint(medium) {
+        margin-bottom: rem-calc(30);
+      }
+
+      @include breakpoint(small) {
+        margin-bottom: rem-calc(20);
+      }
+
+      .session--title {
+        h5 {
+          color: #912BA7;
+          font-weight: 400;
+        }
+
+        h1 {
+          color: #912BA7;
+          font-weight: 400;
+          font-size: rem-calc(32);
+
+        }
+      }
+    }
+  }
+
+  .logo-swap1 .is-active {
+    display: block;
+  }
+}

@@ -1,0 +1,73 @@
+//
+// LAYOUT: FORM
+//
+
+// Base
+.l-form,
+div.paragraph--type--form {
+  position: relative;
+
+  .columns {
+    -ms-flex-item-align: auto !important;
+    align-self: auto !important;
+  }
+
+  .columns:first-child {
+    @include breakpoint(medium) {
+      padding-right: 20px;
+    }
+
+    @include breakpoint(large) {
+      padding-right: 25px;
+    }
+  }
+
+  .columns:last-child {
+    @include breakpoint(medium) {
+      padding-left: 20px;
+    }
+
+    @include breakpoint(large) {
+      padding-left: 25px;
+    }
+  }
+
+  .m-box {
+    margin-bottom: 2rem;
+
+    @include breakpoint(medium) {
+      display: flex;
+      height: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  .columns:last-child .field-node--field-resource-file {
+    @include breakpoint(small only) {
+      justify-content: center;
+      display: flex;
+      flex: 1 0 auto;
+    }
+
+    .m-button {
+      @include breakpoint(small only) {
+        width: 100%;
+      }
+    }
+
+    &+.additional-info p {
+      margin-top: 1.5rem;
+    }
+  }
+
+  .m-event+h6 {
+    margin-bottom: 1.5rem;
+  }
+
+}
+
+
+.ajax-progress {
+  color: $white;
+  font-size: .875rem;
+}

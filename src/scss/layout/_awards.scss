@@ -1,0 +1,29 @@
+//
+// LAYOUT: Awards
+// Used on award module
+//
+
+// BASE
+
+.l-awards {
+  position: relative;
+}
+
+
+// SECTIONS
+
+.l-awards .m-award {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) { margin-bottom: 2rem; }
+  &:last-child { margin-bottom: 0; }
+}
+
+.l-awards .views-row {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) { margin-bottom: 2rem; }
+  &:last-child { margin-bottom: 0; }
+  .m-award { margin-bottom: 0; }
+}
+
+
+// ELEMENTS

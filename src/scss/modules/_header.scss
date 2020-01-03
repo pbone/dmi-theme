@@ -1,0 +1,124 @@
+//
+// Top Bar
+//
+
+// Base
+.m-header {
+  position: relative;
+  z-index: 10;
+  background: $color-white;
+  border: 0;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-image: $gradient-blue-purple;
+  padding: .5rem .5rem .875rem;
+  font-size: 0;
+  width: 100%;
+  @include clearfix;
+  @include breakpoint(medium down) { padding: 0; }
+}
+
+.nav-is-open .m-header {
+  border: none;
+  border-image: none;
+  @include breakpoint(medium down) {
+    overflow-y: auto;
+    min-height: 100%;
+    height: 100vh;
+  }
+
+  &-inner {
+    border: 0;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-image: $gradient-blue-purple;
+  }
+
+  &-left li.m-menu-button {
+    @include breakpoint(medium) {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  &-right {
+    @include breakpoint(medium down) {
+      padding-bottom: 1.5rem;
+    }
+  }
+}
+
+// SECTIONS
+.m-header-inner {
+  max-width: 73.75rem;
+  padding: 0 .625rem;
+  margin-right: auto;
+  margin-left: auto;
+  @include breakpoint(medium) { padding: 0 .9375rem; }
+}
+.m-header-title {
+  display: inline-block;
+  float: left;
+  padding: 0.5rem 1rem 0.5rem 0;
+  .m-menu--icon { bottom: 2px; }
+}
+.m-header-left {
+  @include breakpoint(medium down) {
+    display: inline-block;
+    float: none;
+    width: 100%;
+    padding: .875rem 0;
+  }
+}
+.m-header-right {
+  @include breakpoint(medium down) {
+    float: left;
+    position: absolute;
+    width: 100%;
+    top: auto;
+    right: 0;
+    padding: 1.875rem 1.325rem;
+    opacity: 0;
+    transition: opacity .3s 0s, visibility 0s .3s;
+    visibility: hidden;
+    &.is-active {
+      opacity: 1;
+      transition: opacity .3s 0s, visibility 0s 0s;
+      visibility: visible;
+    }
+  }
+  @include breakpoint(medium only) {
+    max-width: 640px;
+    margin: 0 auto;
+    left: 0;
+  }
+}
+// ELEMENTS
+.m-header-right nav {
+  @include breakpoint(medium down) {
+    @include flex;
+    flex-direction: column;
+  }
+}
+.m-header-right nav .m-menu--search {
+  @include breakpoint(medium down) { order: 1; }
+}
+.m-header-right nav .m-menu--primary {
+  @include breakpoint(medium down) { margin-bottom: .5rem; order: 2; }
+}
+.m-header-right nav .m-menu--secondary {
+  @include breakpoint(medium down) {
+    order: 3;
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+.m-header-right nav .m-menu--secondary .menu.vertical > li {
+  @include breakpoint(medium down) { text-align: left; }
+}
+// If adding seperate mobile menu...
+//.m-header-right nav .m-menu--mobile {
+//  @include breakpoint(medium down) { order: 2; }
+//}

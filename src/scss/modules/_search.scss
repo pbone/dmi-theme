@@ -1,0 +1,225 @@
+//
+// Search
+//
+
+// BASE
+.m-search {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: calc(100% - 50px);
+  margin: 0;
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity .3s 0s, visibility 0s .3s;
+  visibility: hidden;
+  &.is-active,
+  .nav-is-open & {
+    height: auto;
+    opacity: 1;
+    transition: opacity .3s 0s, visibility 0s 0s;
+    visibility: visible;
+  }
+  top: 50px;
+  @include breakpoint(medium down) { width: calc(100% - 40px); }
+  @include breakpoint(medium) { top: 70px; }
+  @include breakpoint(large) { top: 124px; width: 100%; }
+}
+
+
+// SECTIONS
+
+// Inner
+.m-search-inner {
+  max-width: 73.75rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 1.325rem;
+  @inlcude breakpoint(large) { padding: 2em 1.5rem; }
+}
+
+// Close
+.m-search-close {
+  display: none;
+  width: 100%;
+  text-align: right;
+  @include breakpoint(large) {
+    display: block;
+    margin-bottom: 4rem;
+  }
+}
+
+
+// ELEMENTS
+
+// Close Button
+.m-search-close a {
+  color: $color-white;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.m-search-close .i-close {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  float: none;
+  top: -.1em;
+  fill: $color-white;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  @include breakpoint(medium) {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+}
+// Description
+.m-search-description {
+  display: none;
+  width: 100%;
+  margin: 0 0 40px;
+  color: $color-white;
+  font-size: rem-calc(22px);
+  font-weight: 400;
+  text-align: center;
+
+  @include breakpoint(large) {
+    display: inline-block;
+    font-size: rem-calc(40px);
+    p {
+      font-size: rem-calc(22px);
+    }
+  }
+}
+// Search Form
+.m-search-form {
+  display: block;
+  //width: 100%;
+  margin: 40px auto 0;
+  padding: 0;
+  @include breakpoint(large) { margin: 50px auto 40px; }
+}
+// Search Form ID
+#search-block-form {
+  max-width: 602px;
+  margin: 0 auto;
+  @include breakpoint(large) {
+    padding: 0;
+    max-width: 770px;
+    margin-bottom: 50px;
+  }
+}
+
+// Search Input Group
+.m-search .m-input-group-field {
+  height: 44px;
+  @include breakpoint(large) {
+    height: 55px;
+  }
+}
+
+// Search Input Text
+.m-search input[type="search"] {
+  padding: .5rem .5rem .5rem 1rem;
+  background: $white;
+  border: 1px solid $color-medium-grey;
+  border-right: 0;
+  box-shadow: none;
+  @include breakpoint(large) {
+    padding: .5rem .5rem .5rem 1.5rem;
+  }
+}
+
+// Search Input Submit
+.m-search input.m-button {
+  padding-right: 0;
+  padding-left: 0;
+  @include breakpoint(medium down) {
+    background-image: url("data:image/svg+xml,%3Csvg class='i-search' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20.42 23.67'%3E%3Cpath fill='none' stroke='%23036db2' stroke-width='2' d='M9,16.74A7.93,7.93,0,0,1,1,8.87,7.93,7.93,0,0,1,9,1a7.93,7.93,0,0,1,8,7.87,7.8,7.8,0,0,1-2.75,5.94,2,2,0,0,0,.14,2.87l5.06,5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E");
+    background-color: $color-white;
+    background-size: 20px 20px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top: 1px solid $color-medium-grey;
+    border-right: 1px solid $color-medium-grey;
+    border-bottom: 1px solid $color-medium-grey;
+    color: $color-dark-blue;
+    width: 50px;
+    line-height: 0;
+    text-indent: -99999px;
+    transition: box-shadow .5s, border-color .25s ease-in-out;
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+  @include breakpoint(large) {
+    background-color: $color-purple;
+    color: $white;
+    width: 170px;
+    transition: background-color .3s;
+    &:hover,
+    &:focus {
+      background-color: $color-purple;
+      color: $white;
+    }
+  }
+}
+
+// Search
+// Used on search results page
+.m-feature--search {
+  margin-bottom: 2.5rem;
+  @include breakpoint(medium) { margin-bottom: 3.5rem; }
+  @include breakpoint(large) { margin-bottom: 5rem; }
+
+  .m-feature-bg { background: $color-dark-purple; }
+
+  .m-feature-content {
+    padding-top: rem-calc(50px);
+    padding-bottom: rem-calc(50px);
+    max-width: 800px;
+    @include breakpoint(medium) {
+      padding-bottom: rem-calc(80px);
+    }
+  }
+
+  p, .m-feature-title, .no-result, .form-item--error-message {
+    color: $color-white;
+  }
+
+  .m-feature-title {
+    text-transform: uppercase;
+    font-size: rem-calc(18px);
+    margin-bottom: 1.5rem;
+    @include breakpoint(medium) {
+      font-size: rem-calc(20px);
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .m-input-group--search {
+    margin-bottom: 1.5rem;
+    [type=search] { color: $color-white; }
+  }
+
+  .m-input-group-button {
+    height: 3rem;
+    margin-top: 5px;
+  }
+
+  .form-item--error-message {
+    font-weight: 700;
+  }
+}

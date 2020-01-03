@@ -1,0 +1,336 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: Full node entity.
+ *   - id: The node ID.
+ *   - bundle: The type of the node, for example, "page" or "article".
+ *   - authorid: The user ID of the node author.
+ *   - createdtime: Time the node was published formatted in Unix timestamp.
+ *   - changedtime: Time the node was changed formatted in Unix timestamp.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ *
+ * @todo Remove the id attribute (or make it a class), because if that gets
+ *   rendered twice on a page this is invalid CSS for example: two lists
+ *   in different view modes.
+ *
+ * @ingroup themeable
+ */
+#}
+
+
+<div
+    class="{{ eventType|clean_class }}">
+
+    {# Don't put that gradient overlay over the image please #}
+    {% if '1' in content.field_hide_image_overlay[0] %}
+        <header class="m-feature m-feature--event no-overlay">
+        {% else %}
+            <header class="m-feature m-feature--event">
+            {% endif %}
+            <div class="row">
+
+
+                <div class="columns small-12 medium-7">
+                    {% if content.field_image %}
+                        {% set backgroundImage = file_url(node.field_image.entity.fileuri) %}
+                    {% else %}
+                        {% set backgroundImage = '' %}
+                    {% endif %}
+                    {% set eventTypeTr = eventType %}
+
+                    <div class="m-feature-content" style="background-image:url('{{ backgroundImage }}');">
+
+                        <p class="m-feature-category">
+                            {% if isClosed and eventType == 'Webinar' or isClosed and eventType == 'Knowledge Share Webinar' %}
+                                {{ 'On Demand'|trans }}
+                            {% endif %}
+                            {{ eventTypeTr |trans }}</p>
+                        <h1 class="m-feature-title">{{ node.title.value }}</h1>
+                        <div class="m-feature-subtitle">{{ content.field_subtitle }}</div>
+                        {% if eventType != 'Seminar' %}
+                            <div class="m-feature-series">
+                                {{ eventSeriesTheme }}</div>
+                        {% endif %}
+                    </div>
+
+                </div>
+                <div class="columns small-12 medium-5">
+                    <div class="m-feature-location">
+                        <ul>
+                            {% if  isClosed %}
+
+                                <li>
+                                    {% if eventType == 'Webinar' or  eventType == 'Knowledge Share Webinar' %}
+                                        <span>{{ 'Thanks for your interest in this webinar – register below to view it any time.'|trans }}
+                                        </span>
+
+                                    {% elseif eventType == 'Virtual User Group Meeting' %}
+                                        <span>{{ 'Thanks for your interest in this webinar – register below to view it any time.'|trans }}</span>
+
+                                    {% elseif eventType == 'Knowledge Share Webinar' %}
+                                        <span>{{ 'Thanks for your interest in this webinar – register below to view it any time.'|trans }}</span>
+
+                                    {% endif %}
+
+                                </li>
+                            {% endif %}
+                            {% if not isClosed %}
+                                <li>
+                                    <span class="m-feature-location-label">{{ 'Date'|trans }}:</span>
+                                    <span>{{ customDate }}</span>
+                                </li>
+
+                                <li>
+                                    <span class="m-feature-location-label">{{ "Time"|trans }}:</span>
+                                    {% if sessionTimes %}
+                                        <span>
+                                            {% for time in sessionTimes %}
+                                                {{ time }}
+                                                {% if timezone %}
+                                                    {{ timezone }}
+                                                {% endif %}
+                                                {% if not loop.last %}<br/>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                    {% else %}
+                                        <span>{{ customTime }}
+                                            {% if timezone %}
+                                                {{ timezone }}
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                            {% if content.field_venue_name is not empty or node.field_address.value is not empty %}
+                                {% if eventType not in ['Virtual Forum', 'Webinar', 'Virtual User Group Meeting', 'Knowledge Share Webinar']  %}
+                                    {% if not isClosed %}
+                                        <li>
+                                            <span class="m-feature-location-label">{{ "Location"|trans }}:</span>
+                                            <span>{{ content.field_venue_name }}{{ content.field_address }}</span>
+                                        </li>
+
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            {% if node.field_check_in.value is not empty %}
+                                {% if eventType not in ['Webinar', 'Virtual User Group Meeting', 'Knowledge Share Webinar']  %}
+                                    {% if not isClosed %}
+                                        <li>
+                                            <span class="m-feature-location-label">{{ "Check-in"|trans }}:</span>
+                                            <span>{{ content.field_check_in }}</span>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            {% if contact is not empty %}
+                                <li>
+                                    <span class="m-feature-location-label">{{ 'Contact'|trans }}:</span>
+                                    <span>{{ contact }}</span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <section class="m-section l-form">
+            <article id="node-{{ node.id }}" {{ attributes.addClass('event') }}>
+
+                {{ title_prefix }}
+                {{ title_suffix }}
+
+                <div{{content_attributes.addClass('row')}}>
+
+                    <div class="columns small-12 medium-7">
+                        {{ content|without('field_image', 'field_subtitle', 'field_sessions', 'field_tax_contact', 'field_venue_name', 'field_address', 'field_suppress_form', 'field_sponsors', 'field_speakers', 'field_agenda', 'field_presentations', 'field_misc', 'field_status', 'field_check_in', 'field_presentation_file', 'sharethis', 'field_hide_image_overlay') }}
+
+                        {% if node.field_sponsors.value is not empty %}
+                            <p class="m-card-category">{{ "Sponsors"|trans }}</p>
+                            {{ content.field_sponsors }}
+                        {% endif %}
+                        {% if node.field_agenda.target_id is not empty or node.field_speakers.target_id is not empty or miscTabs or presentationTabs %}
+                            <div class="tabs-title-bar">
+                                <a href="#">
+                                    <span class="text">{{ "Agenda"|trans }}</span>
+                                    <span class="icon">
+                                        <svg class="i-arrow-down" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15 7">
+                                            <path fill="none" stroke="#007ac9" d="M5.5 0.5L0.5 0.5 7.5 6.5 14.5 0.5 9.5 0.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+
+                            <ul class="tabs" data-tabs id="event-tabs">
+                                {% if node.field_agenda.target_id is not empty %}
+                                    <li class="tabs-title">
+                                        <a data-tabs-target="#agendatab" href="#agendatab">{{ "Agenda"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if node.field_speakers.target_id is not empty %}
+                                    <li class="tabs-title">
+                                        <a data-tabs-target="#speakers" href="#speakers">{{ "Speakers"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if presentationTabs %}
+                                    <li class="tabs-title">
+                                        <a data-tabs-target="#misc-{{ presentationTabs[0].target_id }}" href="#presentation">{{ "Presentations"|trans }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if miscTabs %}
+                                    {% for misc in miscTabs %}
+                                        <li class="tabs-title">
+                                            <a data-tabs-target="#misc-{{ misc.target_id }}" href="#misc-{{ misc.target_id }}">{{ misc.title|trans }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+
+                            <div class="tabs-content" data-tabs-content="event-tabs">
+                                {% if node.field_agenda.target_id is not empty %}
+                                    <div class="tabs-panel" id="agendatab">
+                                        {{ content.field_agenda }}
+                                    </div>
+                                {% endif %}
+
+                                {% if node.field_speakers.target_id is not empty %}
+                                    <div class="tabs-panel" id="speakers">
+                                        {{ content.field_speakers }}
+                                    </div>
+                                {% endif %}
+
+                                {% if presentationTabs %}
+                                    <div class="tabs-panel presentation" id="presentation">
+                                        {% if node.field_presentation_file is not empty %}
+                                            {% set title = node.field_presentation_file.entity._referringItem.description %}
+                                            {% include directory ~ '/templates/macros/button.html.twig' with {'buttonStyle' : 'theme_1', 'url' : file_url(node.field_presentation_file.entity.getFileUri()), linkText: "Download Event Presentations", isExternal: true} %}
+                                            <p>{{ fileInfo }}</p>
+                                        {% endif %}
+
+                                        {% for presentation in presentationTabs %}
+                                            {{ drupal_entity('paragraph', presentation.target_id) }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                {% if miscTabs %}
+                                    {% for misc in miscTabs %}
+                                        <div class="tabs-panel" id="misc-{{ misc.target_id }}">
+                                            {{ drupal_entity('paragraph', misc.target_id) }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="columns small-12 medium-5" id="form-section">
+                        <div class="background-grey">
+                            {% if isClosed and eventType != 'Webinar' and eventType != 'Virtual User Group Meeting' and eventType != 'Knowledge Share Webinar'%}
+
+                                <div class="callout">
+                                    {{ content.field_status }}
+
+                                </div>
+
+
+                            {% endif %}
+                            {% if not isFull %}
+                                {% if node.field_suppress_form.value is not empty and node.field_external_registration is not empty %}
+                                    {% if node.field_tax_event_type.entity.name.value == "Conference" %}
+                                        <h4>{{ "Visit Conference Website"|trans }}</h4>
+                                    {% else %}
+                                        <h4>{{ "Register for the here? Event"|trans }}</h4>
+                                    {% endif %}
+                                {% else %}
+                                    <h4>{{ "Register Now"|trans }}</h4>
+                                {% endif %}
+                                {{ form }}{% endif %}
+                                {% if content.sharethis %}
+                                    {{ content.sharethis }}
+                                {% endif %}
+
+                                {% if (content.field_resource_file or content.field_resource_link) %}
+                                    {% if submitted %}
+                                        <div class="submission-message">{{ submission_message }}</div>
+                                        {# Make call out to Google analytics to track this submission (event tracking - Assigned to Al #}
+                                    {% endif %}
+                                    {% if not node.field_suppress_form.entity.value %}
+                                        {{ content.field_resource_file }}
+                                        {{ content.field_resource_link }}
+                                        {% if submitted %}
+                                            <div class="additional-info">{{ additional_info }}</div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="form-anchor-button">
+                                    {% if node.field_tax_event_type.entity.name.value == "Conference" %}
+                                        <a class="m-button m-button--secondary" href="#form-section">Visit Conference Website</a>
+                                    {% else %}
+                                        <a class="m-button m-button--secondary" href="#form-section">Register for this event</a>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </article>
+            </section>
+        </div>

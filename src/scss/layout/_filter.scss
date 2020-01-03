@@ -1,0 +1,119 @@
+//
+// LAYOUT: FILTERS
+// Used on Filters and Search Sections (H)
+//
+
+// Base
+.l-filter { position: relative; }
+
+
+// SECTIONS
+
+.l-filter .l-filter-search + .l-filter-main {
+  margin-top: rem-calc(30px);
+  @include breakpoint(large) { margin-top: rem-calc(50px); }
+}
+
+
+// ELEMENTS
+
+.l-filter .m-input--search { margin: 0 auto; }
+
+// No Search Results Message
+.l-filter + .no-results {
+  background-color: $color-light-grey;
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  @include breakpoint(medium) { margin-top: 5rem; }
+}
+
+// VARIANTS
+
+// H1
+.l-filter--h1 .m-input--search {
+  max-width: 770px;
+}
+
+// H2
+.l-filter--h2 .m-input--search {
+  max-width: 580px;
+}
+
+.l-filter--h2 .l-filter-search + .l-filter-main .columns:last-child .m-filter-group {
+  @include breakpoint(medium) { justify-content: flex-end; }
+}
+
+// H3
+.l-filter--h3 .m-filter-group {
+  @include breakpoint(medium) { align-items: center; }
+}
+
+
+// Search Filter
+// Used to shorten search input
+.l-filter--search {
+  .m-input-group--search {
+    max-width: 770px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// Search Filter (small)
+// Used to shorten search input
+.l-filter--search-small {
+  .m-input-group--search {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.l-filter-search-topic {
+  .m-input-group--search {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// Split filters
+// Used for filter inputs that are to be split
+.l-filter--split {
+  .l-filter-main .column:last-child .m-filter-group { @include breakpoint(medium) { justify-content: flex-end; }  }
+}
+
+// Full Width Filters
+// Used for filter by buttons on full-width column
+.l-filter--full {
+  max-width: 1050px;
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium only) { padding-right: 4rem; }
+  @include breakpoint(medium) {
+    margin-bottom: 3rem;
+  }
+
+  // Creates label - Filter by
+  .m-filter-group:before {
+    font-weight: 700;
+    @include breakpoint(medium) {
+      content: 'Filter by';
+      width: 100%;
+      max-width: 65px;
+    }
+    @include breakpoint(large) { max-width: 100px; }
+  }
+
+  .m-filter-group { align-items: center; }
+
+  // Used with cards layout
+  &.l-cards {
+    margin-bottom: 0;
+    @include breakpoint(medium) { padding-left: 65px; }
+    @include breakpoint(large) { padding-left: 100px; }
+  }
+
+}

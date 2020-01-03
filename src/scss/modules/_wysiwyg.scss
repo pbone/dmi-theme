@@ -1,0 +1,78 @@
+//
+// MODULE: WYSIWYG
+//
+
+
+// BASE
+
+.m-wysiwyg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .column.medium-6 > &,
+  .columns.medium-6 > &,
+  .column.medium-7 > &,
+  .columns.medium-7 > &,
+  .column.medium-5 > &,
+  .columns.medium-5 > & {  align-items: flex-start; }
+}
+
+// DRUPAL FIXES
+
+.m-wysiwyg > .field-paragraph--field-wysiwyg,
+.m-wysiwyg > h2,
+.m-wysiwyg > p,
+.m-wysiwyg > div {
+  width: 100%;
+}
+
+
+// SECTIONS
+
+.m-wysiwyg-flex {
+  flex: 1 0 auto;
+
+  // Push button down
+  + .m-button,
+  + .m-link {
+    float: none;
+    margin-top: 2.5rem;
+  }
+}
+
+// ELEMENTS
+
+// Title (H2)
+.m-wysiwyg .field-paragraph--field-title,
+.m-wysiwyg h2 {
+  font-size: 26px;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  @include breakpoint(medium) { font-size: 30px; }
+  @include breakpoint(large) { font-size: 40px; margin-bottom: 1.5rem; }
+}
+
+//smaller title in 80% width style
+.eighty_p {
+  .m-wysiwyg .field-paragraph--field-title,
+  .m-wysiwyg h2 {
+    @include breakpoint(large) { font-size: 38px; }
+  }
+}
+
+
+// Paragraph
+.m-wysiwyg p {
+  &:last-child { margin-bottom: 0; }
+}
+
+// WYSIWYG Field
+.m-wysiwyg .field-paragraph--field-wysiwyg p:last-child {
+  margin-bottom: 0;
+}
+
+// WYSIWYG Button
+.m-wysiwyg--button .field-name-field-button .m-button,
+.m-wysiwyg .m-button { margin-top: 2rem; }

@@ -1,0 +1,188 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * Available variables:
+ * - paragraph: Full paragraph entity.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - paragraph.getCreatedTime() will return the paragraph creation timestamp.
+ *   - paragraph.id(): The paragraph ID.
+ *   - paragraph.bundle(): The type of the paragraph, for example, "image" or "text".
+ *   - paragraph.getOwnerId(): The user ID of the paragraph author.
+ *   See Drupal\paragraphs\Entity\Paragraph for a full list of public properties
+ *   and methods for the paragraph object.
+ * - content: All paragraph items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - paragraphs: The current template type (also known as a "theming hook").
+ *   - paragraphs--type-[type]: The current paragraphs type. For example, if the paragraph is an
+ *     "Image" it would result in "paragraphs--type--image". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - paragraphs--view-mode--[view_mode]: The View Mode of the paragraph; for example, a
+ *     preview would result in: "paragraphs--view-mode--preview", and
+ *     default: "paragraphs--view-mode--default".
+ * - view_mode: View mode; for example, "preview" or "full".
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{% block paragraph %}
+    {% block content %}
+
+        {% if paragraph.field_theme.value == "light" %}
+            {% set featureTheme = "m-feature-theme--light" %}
+        {% elseif paragraph.field_theme.value == "dark" %}
+            {% set featureTheme = "m-feature-theme--dark" %}
+        {% else %}
+            {% set featureTheme = "" %}
+        {% endif %}
+
+        {% if content.field_mp4_video[0]['#markup'] is not empty %}
+            {% set featureVideo = 'm-feature--video' %}
+        {% else %}
+            {% set featureVideo = "" %}
+        {% endif %}
+
+
+
+
+        {% set classes = [
+            'paragraph',
+            'paragraph--type--' ~ paragraph.bundle|clean_class,
+            view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+            'm-feature',
+            'm-feature--' ~ featureType,
+            featureTheme,
+            featureVideo,
+            'hero-campaign--' ~ paragraph.field_hero_spot_campaign.value|clean_class,
+        ] %}
+
+
+
+        <header{{ attributes.addClass(classes) }}>
+            <div class="row">
+                <div class="columns">
+
+                    {% if featureType == 'h1' %}
+
+                        {% if content.field_mp4_video[0]['#markup'] is not empty %}
+                            <div class="m-feature-bg" data-interchange="[{{ headerSmallUri }}, small], [{{ headerMediumUri }}, medium], [{{ headerLargeUri }}, large]">
+                                <video playsinline muted id="feature-video">
+                                    <source src="{{ content.field_mp4_video[0]['#markup'] }}" type="video/mp4">
+                                    {% if headerMediumUri %}
+                                        <img src="{{ headerMediumUri }}" alt="Information Builders." />
+                                    {% endif %}
+                                </video>
+                            </div>
+                        {% else %}
+                            <div class="m-feature-bg" data-interchange="[{{ headerSmallUri }}, small], [{{ headerMediumUri }}, medium], [{{ headerLargeUri }}, large]">
+                                {% if paragraph.field_icon[0] %}
+                                    <span>{{ get_taxonomy_icon(paragraph.field_icon.value[0]['target_id']) }}</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                    {% else %}
+                        <div class="m-feature-bg" style="background-image:url({{ headerLargeUri }});">
+                            {% if paragraph.field_icon[0] %}
+                                <span>{{ get_taxonomy_icon(paragraph.field_icon.value[0]['target_id']) }}</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <div class="m-feature-content">
+
+
+                        {% if content.field_mp4_video[0]['#markup'] is not empty %}
+
+                        <div class="m-feature-video-text">
+                            {% endif %}
+
+                            {# This is for the quickfix removal of the video #}
+                            {% if (content.field_mp4_video[0]['#markup'] is empty)  %}
+
+                            <div class="m-feature-video-text">
+                                {% endif %}
+                                {# This is for the quickfix removal of the video #}
+
+                                {% if content.field_topic[0] %}
+                                    <p class="m-feature-category">{{ paragraph.field_topic.value }}</p>
+                                {% endif %}
+
+
+
+                                {% if content.field_title[0] %}
+                                    <h1 class="m-feature-title">{{ paragraph.field_title.value }}</h1>
+                                {% endif %}
+
+
+
+                                {% if content.field_subtitle[0] %}
+                                    <div class="m-feature-subtitle">
+                                        {{ content.field_subtitle }}
+
+                                    </div>
+                                {% endif %}
+
+
+                                {% if  paragraph.field_hero_spot_campaign.value == "iu" %}
+                                    <div class="wflogo-lockup">
+                                        {{ get_svg('i-wfbanner-lockup') }}
+                                    </div>
+                                {% endif %}
+
+
+                                {% if content.field_cta_link[0] %}
+                                    <div class="m-button-group">
+                                        {% if featureType == 'h1' %}
+                                            <a class="m-button" href="{{ content.field_cta_link[0]['#url'] }}">
+                                                {{ content.field_cta_link[0]['#title'] }}
+                                            </a>
+                                        {% else %}
+                                            <a class="m-button m-button--secondary" href="{{ content.field_cta_link[0]['#url'] }}">
+                                                {{ content.field_cta_link[0]['#title'] }}
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                {% if content.field_mp4_video[0]['#markup'] is not empty %}
+                            </div>
+
+                            {% endif %}
+
+                            {# This is for the quickfix removal of the video #}
+                            {% if (content.field_mp4_video[0]['#markup'] is empty) %}
+                        </div>
+                        {% endif %}
+                        {# This is for the quickfix removal of the video #}
+
+                        {# This is for the quickfix removal of the video #}
+                        {% if (content.field_mp4_video[0]['#markup'] is empty) %}
+
+                            <div id="feature-video"></div>
+                        {% endif %}
+                        {# This is for the quickfix removal of the video #}
+
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+
+
+    {% endblock %}
+{% endblock paragraph %}

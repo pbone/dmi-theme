@@ -1,0 +1,366 @@
+//
+// MODULE: Events
+//
+
+.event {
+
+  &.taxonomy {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+
+    .m-card-section {
+      .column {
+        align-self: center !important;
+      }
+    }
+  }
+
+  .columns:first-of-type {
+    padding-right: 0;
+  }
+  .columns:last-of-type {
+    padding-left: 0;
+  }
+
+  .m-box-inner {
+    border: none;
+    padding: 0;
+  }
+
+  .view-mode-full .field-node--field-event-description {
+    padding: 75px 40px 0;
+  }
+
+  .sponsor {
+    font-size: rem-calc(14px);
+    margin: 2.5rem 0 4rem;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    .m-card-category {
+      margin-bottom: 1rem;
+    }
+
+    img {
+      margin-bottom: 1rem;
+    }
+
+    p:not('.m-card-category') {
+      color: $color-black;
+    }
+  }
+
+  .tabs {
+    border: none;
+    font-size: rem-calc(14px);
+    margin-bottom: 2rem;
+    padding-left: 0;
+    padding-right: 0;
+    @include breakpoint(medium) {
+      background-color: $color-light-blue;
+      padding-left: rem-calc(40px);
+      padding-right: rem-calc(40px);
+    }
+
+    .tabs-title {
+      background-color: $color-light-blue;
+      float: none;
+      margin-bottom: 10px;
+      @include breakpoint(medium) {
+        float: left;
+        margin-bottom: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .tabs-title > a {
+      color: $color-grey;
+      font-size: 0.875rem;
+      position: relative;
+      @include breakpoint(small only) {
+        padding-left: 1rem;
+      }
+    }
+
+    .tabs-title > a:focus,
+    .tabs-title > a[aria-selected='true'] {
+      background-color: transparent;
+      color: $color-dark-blue;
+      font-weight: 700;
+      @include breakpoint(medium) {
+        border-bottom: 3px solid $color-dark-blue;
+      }
+
+      &:before {
+        @include breakpoint(small only) {
+          content: '';
+          background-color: $color-dark-blue;
+          position: absolute;
+          left: 0;
+          width: 3px;
+          top: 0;
+          bottom: 0;
+        }
+      }
+    }
+
+    .tabs-title > a:hover {
+      background-color: transparent;
+      color: $color-dark-blue;
+      @include breakpoint(medium) {
+        border-bottom: 3px solid $color-dark-blue;
+      }
+    }
+  }
+
+  .tabs-content {
+    border: none;
+  }
+
+  .paragraph--type--agenda-item {
+    .field-name-field-title {
+      color: $color-grey;
+      font-size: rem-calc(18px);
+      font-weight: 700;
+      @include breakpoint(medium) {
+        font-size: rem-calc(20px);
+      }
+    }
+
+    .field-name-field-wysiwyg {
+      p {
+        font-size: rem-calc(16px);
+      }
+    }
+  }
+
+  .paragraph--type--misc-tab {
+    .field-name-field-wysiwyg {
+      p {
+        font-size: rem-calc(16px);
+      }
+    }
+  }
+
+  .speaker {
+    > .columns:last-of-type {
+      padding-right: 0;
+    }
+
+    .columns .columns:last-of-type:not(:first-of-type) {
+      border-left: 1px solid #979797;
+    }
+
+    .field-node--field-image {
+      img {
+        border-radius: 50%;
+        width: 68px;
+        height: auto;
+      }
+    }
+
+    .m-card-title {
+      color: $color-grey;
+      display: block;
+      font-size: rem-calc(20px);
+      font-weight: 700;
+      margin: 10px 0 5px;
+    }
+
+    .field-name-field-bio {
+      border-bottom: 1px solid $color-light-grey;
+      color: $color-black;
+      font-size: rem-calc(14px);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      padding-right: 1rem;
+    }
+
+    .speaker-job {
+      font-size: rem-calc(12px);
+    }
+
+    .field-name-field-job-title, .field-name-field-job-title div {
+      display: inline;
+    }
+  }
+
+  .callout {
+    background: $color-light-purple;
+    border: 2px solid $color-purple;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .contact-message-form {
+    select, input:not([type="submit"]), textarea {
+      background-color: $color-white;
+    }
+  }
+
+}
+
+.field-name-field-start-date-and-time, .field-name-field-start-date-and-time div {
+  display: inline;
+}
+
+.l-form {
+  .background-grey {
+    background-color: #F7F7F7;
+    height: 100%;
+    padding: 75px 40px;
+  }
+
+  h4 {
+    margin-bottom: rem-calc(40px);
+  }
+}
+
+//- Agendas
+.timeline {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 60px;
+  padding-right: 40px;
+  position: relative;
+
+  &:before {
+    background-color: $color-purple;
+    content: '';
+    margin-left: -1px;
+    position: absolute;
+    top: .5rem;
+    left: 25px;
+    width: 1px;
+    height: 100%;
+  }
+
+  .arrow {
+    left: -44px;
+    position: absolute;
+    top: .5rem;
+    @include breakpoint(medium only) {
+      left: -44px;
+    }
+  }
+
+}
+
+.timeline-event {
+  position: relative;
+
+  &:first-of-type:before {
+    display: none;
+  }
+
+  &:before {
+    content: '';
+    width: 9px;
+    height: 8px;
+    background: $color-light-purple;
+    border: 1px solid $color-purple;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    position: absolute;
+    top: 12px;
+    left: -40px;
+  }
+
+  &:last-of-type:before {
+    content: '';
+    margin-left: -61px;
+    position: absolute;
+    top: .5rem;
+    left: 1.5625rem;
+    width: 1px;
+    height: 100%;
+    border: none;
+    background: $color-white;
+    border-radius: 0;
+  }
+}
+
+
+
+
+.presentation {
+
+  padding: rem-calc(40px) 0 rem-calc(40px) rem-calc(40px);
+
+  .field-name-field-title {
+    color: $color-grey;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .field-name-field-wysiwyg {
+    color: $color-black;
+    font-size: rem-calc(14px);
+    margin-bottom: 1rem;
+  }
+
+  .m-button {
+    margin: 0 0 rem-calc(20px);
+  }
+
+  .paragraph--type--presentation {
+    font-size: rem-calc(14px);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+
+    &:first-of-type {
+      border-top: 1px solid $color-light-grey;
+      padding-top: 2rem;
+    }
+
+    .speaker {
+      border-bottom: 1px solid $color-light-grey;
+      padding-bottom: 2rem;
+      margin-left: 0;
+      margin-right: 0;
+
+      .columns {
+        padding-right: 0;
+
+        &:first-of-type {
+          padding-left: 0;
+        }
+
+        &:last-of-type {
+          padding-left: 20px;
+        }
+      }
+
+      .field-node--field-image img {
+        width: 60px;
+      }
+
+      .field-node--field-logo {
+        border-left: 1px solid #979797;
+        padding: 10px 0 10px 25px;
+      }
+
+      .m-card-title {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .presented-by {
+    font-size: rem-calc(12px);
+    display: inline-block;
+    margin: 0 10px 0 0;
+  }
+
+  .field-name-field-image {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,44 @@
+//
+// MODULE: Contact
+//
+
+// BASE
+.m-contact {
+  position: relative;
+  margin: 0;
+  list-style: none;
+}
+
+
+// SECTION
+
+.m-contact li {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #00A0DF;
+  padding-bottom: 1rem;
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border: 0;
+  }
+}
+
+
+// ELEMENTS
+
+// Author Company
+.m-contact .field-name-field-author-company { }
+
+// Author Name
+.m-contact .field-name-field-tip-author-name { }
+
+// Author Phone
+.m-contact .field-name-field-phone {
+  color: $color-grey;
+  word-wrap: break-word;
+}
+
+// Author Email
+.m-contact .field-name-field-email {
+  word-wrap: break-word;
+}

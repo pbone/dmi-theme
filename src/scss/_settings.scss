@@ -1,0 +1,188 @@
+//  Infobuilders Settings
+//  -----------------------------
+//
+//  Table of Contents:
+//
+//   1. Colors
+//   2. Globals
+//   3. Breakpoints
+//   4. The Grid
+//   5. Base Typography
+//   6. Typography Helpers
+//   7. Button
+//  8. Media Object
+//  9. Responsive Embed
+//  10. Reveal
+
+@import 'util/util';
+
+// 1. Global
+// ---------
+
+$global-font-size: 100%;
+$global-width: rem-calc(1180);
+$global-lineheight: 1.5;
+$foundation-palette: (
+        primary: $color-dark-blue,
+        secondary: $color-purple,
+        success: $color-green,
+        warning: $color-yellow,
+        alert: $color-red,
+        blog: $blog-tag-background,
+);
+$body-background: $color-white;
+$body-font-color: $color-grey;
+$body-font-family: $font-open-sans;
+$body-antialiased: true;
+$global-margin: 1rem;
+$global-padding: 1rem;
+$global-weight-normal: normal;
+$global-weight-bold: bold;
+$global-radius: 0;
+$global-text-direction: ltr;
+$global-flexbox: true;
+$print-transparent-backgrounds: true;
+
+@include add-foundation-colors;
+
+// 2. Breakpoints
+// --------------
+
+$breakpoints: (
+        small: 0,
+        medium: 640px,
+        large: 1024px,
+        xlarge: 1180px,
+        xxlarge: 1400px,
+        mongo: 2200px
+);
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large);
+
+// 3. The Grid
+// -----------
+
+$grid-row-width: $global-width;
+$grid-column-count: 12;
+$grid-column-gutter: (
+        small: 40px,
+        medium: 35px,
+);
+$grid-column-align-edge: true;
+$block-grid-max: 8;
+
+// 5. Base Typography
+// ------------------
+
+$header-font-family: $body-font-family;
+$header-font-weight: $global-weight-normal;
+$header-font-style: normal;
+$font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
+$header-color: inherit;
+$header-lineheight: 1.4;
+$header-margin-bottom: 0.5rem;
+$header-styles: (
+        small: (
+                'h1': ('font-size': 28),
+                'h2': ('font-size': 26),
+                'h3': ('font-size': 19),
+                'h4': ('font-size': 18),
+                'h5': ('font-size': 17),
+                'h6': ('font-size': 14),
+        ),
+        medium: (
+                'h1': ('font-size': 44),
+                'h2': ('font-size': 34),
+                'h3': ('font-size': 31),
+                'h4': ('font-size': 25),
+                'h5': ('font-size': 20),
+                'h6': ('font-size': 14),
+        ),
+        large: (
+                'h1': ('font-size': 48),
+                'h2': ('font-size': 40),
+                'h3': ('font-size': 31),
+                'h4': ('font-size': 25),
+                'h5': ('font-size': 20),
+                'h6': ('font-size': 14),
+        ),
+);
+$header-text-rendering: optimizeLegibility;
+$small-font-size: 80%;
+$header-small-font-color: $color-medium-grey;
+$paragraph-lineheight: 1.6;
+$paragraph-margin-bottom: 1rem;
+$paragraph-text-rendering: optimizeLegibility;
+$code-color: $color-black;
+$code-font-family: $font-family-monospace;
+$code-font-weight: $global-weight-normal;
+$code-background: $color-light-grey;
+$code-border: 1px solid $color-medium-grey;
+$code-padding: rem-calc(2 5 1);
+$anchor-color: $primary-color;
+$anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
+$anchor-text-decoration: none;
+$anchor-text-decoration-hover: none;
+$hr-width: $global-width;
+$hr-border: 1px solid $color-medium-grey;
+$hr-margin: rem-calc(20) auto;
+$list-lineheight: $paragraph-lineheight;
+$list-margin-bottom: $paragraph-margin-bottom;
+$list-style-type: disc;
+$list-style-position: outside;
+$list-side-margin: 1.25rem;
+$list-nested-side-margin: 1.25rem;
+$defnlist-margin-bottom: 1rem;
+$defnlist-term-weight: $global-weight-bold;
+$defnlist-term-margin-bottom: 0.3rem;
+$blockquote-color: $color-dark-grey;
+$blockquote-padding: rem-calc(9 20 0 19);
+$blockquote-border: 1px solid $color-medium-grey;
+$cite-font-size: rem-calc(13);
+$cite-color: $color-dark-grey;
+$cite-pseudo-content: '\2014 \0020';
+$keystroke-font: $font-family-monospace;
+$keystroke-color: $color-black;
+$keystroke-background: $color-light-grey;
+$keystroke-padding: rem-calc(2 4 0);
+$keystroke-radius: $global-radius;
+$abbr-underline: 1px dotted $color-black;
+
+// 6. Typography Helpers
+// ---------------------
+
+$lead-font-size: $global-font-size * 1.25;
+$lead-lineheight: 1.6;
+$subheader-lineheight: 1.4;
+$subheader-color: $color-dark-grey;
+$subheader-font-weight: $global-weight-normal;
+$subheader-margin-top: 0.2rem;
+$subheader-margin-bottom: 0.5rem;
+$stat-font-size: 2.5rem;
+
+// 7. Button
+// ----------
+
+$button-padding: 0.85em 4em;
+$button-sizes: (
+        default: 1rem,
+);
+$button-palette: $foundation-palette;
+$button-transition: box-shadow 0.25s ease-out;
+
+// 8. Media Object
+// ----------------
+
+$mediaobject-margin-bottom: $global-margin;
+$mediaobject-section-padding: $global-padding;
+$mediaobject-image-width-stacked: 100%;
+
+// 9. Responsive Embed
+// --------------------
+
+$responsive-embed-margin-bottom: rem-calc(16);
+$responsive-embed-ratios: (
+        default: 4 by 3,
+        widescreen: 16 by 9,
+);
+

@@ -1,0 +1,5 @@
+
+// Grid item width
+@function grid-item-width($columns, $gutter) {
+  @return calc(#{100% / $columns} - #{($gutter * ($columns - 1)) / $columns});
+}

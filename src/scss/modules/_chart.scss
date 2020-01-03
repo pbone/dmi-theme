@@ -1,0 +1,190 @@
+//
+// Chart
+//
+
+// Base
+.m-chart {
+  width: 100%;
+  margin-bottom: 0;
+  border-radius: 0;
+  @include breakpoint(small only) {
+    tr,
+    th,
+    td {
+      display: block;
+    }
+
+    td {
+      border-top: 0;
+    }
+  }
+}
+
+//
+// ELEMENTS
+//
+
+.m-chart thead,
+.m-chart tbody,
+.m-chart tfoot {
+  border: 0;
+  background-color: $color-white;
+}
+
+// Caption
+.m-chart caption {
+  padding: rem-calc(28px 10px 30px);
+  font-weight: 700;
+}
+
+// Table head
+.m-chart thead {
+  background: $color-light-grey;
+  color: $color-black;
+}
+
+// Table foot
+.m-chart tfoot {
+  background: $color-light-grey;
+  color: $color-black;
+}
+
+// Table head and foot
+// Rows within head and foot
+.m-chart thead tr,
+.m-chart tfoot tr{
+  background: transparent;
+}
+
+// Table head and foot
+// Cells within head and foot
+.m-chart thead th,
+.m-chart tfoot td {
+  padding: rem-calc(28px 10px 30px);
+  font-weight: 700;
+  text-align: #{$global-left};
+}
+
+// Table rows
+.m-chart tbody th,
+.m-chart tbody td {
+  padding: rem-calc(28px 10px 30px);
+}
+
+// Even
+.m-chart tbody tr {
+  &:nth-child(even) {
+    background-color: transparent;
+  }
+}
+
+// Odd
+.m-chart tbody tr {
+  &:nth-child(odd) {
+    background-color: transparent;
+  }
+}
+
+.m-chart .m-chart-name,
+.m-chart .m-chart-date {
+  text-transform: uppercase;
+  font-weight: 700;
+  @include breakpoint(medium) { font-size: rem-calc(14px); }
+}
+
+.m-chart .m-chart-name {
+  @include breakpoint(small only) { padding-bottom: 10px; padding-top: 20px;}
+  @include breakpoint(medium) { padding-left: 35px; }
+  @include breakpoint(large) { padding-left: 100px; }
+}
+
+.m-chart .m-chart-date {
+  @include breakpoint(small only) { padding-bottom: 20px; padding-top: 0; }
+}
+
+.m-chart .m-chart-cta {
+  @include breakpoint(small only) { padding-bottom: 40px; padding-top: 0; }
+  @include breakpoint(medium) { padding-right: 35px; }
+  @include breakpoint(large) { padding-right: 100px; }
+}
+
+.m-chart .m-chart-cta .m-link {
+  @include breakpoint(small only) { text-align: left; }
+}
+
+.m-chart .m-chart-name,
+.m-chart .m-chart-date,
+.m-chart .m-chart-cta {
+  @include breakpoint(small only) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+//
+// VARIANTS
+//
+
+// Striped
+.m-chart.m-chart--striped-even tbody tr {
+  &:nth-child(even) {
+    border-bottom: 0;
+    background-color: $color-light-blue;
+  }
+}
+
+.m-chart.m-chart--striped-odd tbody tr {
+  &:nth-child(odd) {
+    background-color: $color-light-blue;
+  }
+}
+
+// Unstriped
+.m-chart.m-chart--unstriped tbody tr {
+  border-bottom: 0;
+  border-bottom: 2px solid $color-light-blue;
+  background-color: $color-white;
+}
+
+// Scroll
+
+.m-chart--scroll {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+// Hover
+
+//Darkens the table header rows on hover.
+.m-chart--hover thead tr:hover {
+  background-color: darken($color-light-grey, 2%);
+}
+
+//Darkens the non-striped table rows on hover.
+.m-chart--hover tbody tr:hover {
+  background-color: darken($color-white, 2%);
+}
+
+//Darkens the table footer rows on hover.
+.m-chart--hover tfoot tr:hover {
+  background-color: darken($color-light-grey, 2%);
+}
+
+// Hover (striped)
+
+// Even
+.m-chart--striped-even.m-chart--hover:not(.m-chart--unstriped) tr:nth-of-type(even):hover {
+  background-color: darken($color-light-blue, 2%);
+}
+.m-chart--striped-even.m-chart--hover:not(.m-chart--unstriped) tr:nth-of-type(odd):hover {
+  background-color: darken($color-white, 2%);
+}
+
+// Odd
+.m-chart--striped-odd.m-chart--hover:not(.m-chart--unstriped) tr:nth-of-type(odd):hover {
+  background-color: darken($color-light-blue, 2%);
+}
+.m-chart--striped-odd.m-chart--hover:not(.m-chart--unstriped) tr:nth-of-type(even):hover {
+  background-color: darken($color-white, 2%);
+}

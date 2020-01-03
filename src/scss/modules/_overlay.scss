@@ -1,0 +1,103 @@
+//
+// MODULE: Overlay
+//
+
+// Base
+.m-overlay {
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: opacity .3s 0s, visibility 0s .3s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 3;
+
+  // Active Fade-in
+  &.is-active,
+  body.is-active & {
+    opacity: 1;
+    transition: opacity .3s 0s, visibility 0s 0s;
+    visibility: visible;
+  }
+
+  // Background Colors
+  &--primary { background: $color-blue; }
+  &--secondary { background: $color-dark-purple; }
+  &--black { background: $color-black; }
+  &--white { background: $color-white; }
+  &--grey { background: $color-grey; }
+}
+
+
+// Foundation Reveal
+.reveal-overlay {
+  background-color: $color-dark-grey;
+  opacity: 0;
+  transition: opacity .3s 0s, visibility 0s .3s;
+  visibility: hidden;
+
+  .is-reveal-open & {
+    opacity: 1;
+    transition: opacity .3s 0s, visibility 0s 0s;
+    visibility: visible;
+  }
+}
+
+.reveal {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 5rem;
+  max-width: 73.75rem;
+  margin: 0 auto;
+  width: calc(100% - 2.5rem);
+  @include breakpoint(medium) { width: 75%; padding-top: 4rem; }
+  @include breakpoint(large) { width: 70%; }
+
+  // Close
+  .m-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    @include breakpoint(small only) { top: 30px; }
+    @include breakpoint(large) { top: 4px; }
+  }
+
+  // Close Button
+  .m-close a {
+    color: $color-white;
+    font-weight: 700;
+  }
+
+  .m-close .i-close {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    float: none;
+    top: -.1em;
+    fill: $color-white;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    @include breakpoint(medium) {
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+.openVideo {
+  padding: rem-calc(16);
+  background: #ffffff;
+
+  .responsive-embed {
+    @include breakpoint(small) { height: 100% }
+
+  }
+}

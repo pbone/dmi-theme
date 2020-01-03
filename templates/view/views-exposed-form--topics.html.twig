@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Theme override of a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+{% if q is not empty %}
+  {#
+    This ensures that, if clean URLs are off, the 'q' is added first,
+    as a hidden form element, so that it shows up first in the POST URL.
+  #}
+  {{ q }}
+{% endif %}
+
+<div class="l-filter-search-topic m-section--padding-bottom-small row">
+  <div class="column small-12">
+    <div class="m-input-group m-input-group--search">
+      {{ form.search_api_fulltext }}
+      {{ form.actions }}
+    </div>
+    {{ form|without('search_api_fulltext', 'field_industry', 'field_business', 'field_use_case', 'actions') }}
+  </div>
+</div>

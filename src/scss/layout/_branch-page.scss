@@ -1,0 +1,21 @@
+.node--type-branch-page {
+  .m-feature-subtitle {
+    .field-label {
+      font-weight: bold;
+    }
+    ul.m-list li {
+      padding-left: 0!important;
+      &:before {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        border: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
+}

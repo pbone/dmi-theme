@@ -1,0 +1,168 @@
+//
+// MODULE: Mega Menu
+//
+
+// Base
+.m-menu-mega {
+
+  &--purple .dropdown-pane { background-color: $color-dark-purple; }
+  &--purple .dropdown-pane .column:after { background: $color-white; }
+  &--purple .dropdown-pane p,
+  &--purple .dropdown-pane h6 { color: $color-white; }
+  &--purple .dropdown-pane .m-menu-mega-nav--featured li:after { color: $color-white; }
+
+  &--light-blue .dropdown-pane { background-color: $color-light-blue; }
+  &--light-blue .dropdown-pane .column:after { background: $color-grey; }
+  &--light-blue .dropdown-pane p,
+  &--light-blue .dropdown-pane h6 { color: $color-grey; }
+  &--light-blue .dropdown-pane .m-menu-mega-nav--featured li:after { color: $color-grey; }
+
+  &--dark-grey .dropdown-pane { background-color: $color-dark-grey; }
+  &--dark-grey .dropdown-pane .column:after { background: $color-white; }
+  &--dark-grey .dropdown-pane p,
+  &--dark-grey .dropdown-pane h6 { color: $color-white; }
+  &--dark-grey .dropdown-pane .m-menu-mega-nav--featured li:after { color: $color-white; }
+
+  &--light-grey .dropdown-pane { background-color: $color-light-grey; }
+  &--light-grey .dropdown-pane .column:after { background: $color-grey; }
+  &--light-grey .dropdown-pane p,
+  &--light-grey .dropdown-pane h6 { color: $color-grey; }
+  &--light-grey .dropdown-pane .m-menu-mega-nav--featured li:after { color: $color-grey; }
+}
+
+
+// SECTIONS
+
+// Dropdown
+.m-menu-mega .dropdown-pane {
+  width: 100%;
+  margin: 0 auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  border: 0;
+  padding: rem-calc(40px) 1rem rem-calc(50px);
+  opacity: 0;
+  transition: opacity .3s 0s, visibility 0s .3s;
+  @include breakpoint(medium down) { display: none; }
+
+  .dropdown-pane-inner { max-width: 73.75rem; margin: 0 auto; }
+  .menu { background: none; }
+  .is-stuck & { top: 77.375px !important; }
+}
+
+.m-menu-link.m-menu-mega .dropdown-pane span { @include breakpoint(large) { display: inline-block; } }
+
+
+// ELEMENTS
+
+.m-menu-mega a:after {
+  @include breakpoint(large) {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    background: $color-purple;
+    width: 100%;
+    height: 0;
+    left: 0;
+    transition: height .3s ease;
+  }
+}
+
+.m-menu-mega a.hover, .m-menu-mega a.active-trail, .m-menu-mega > a:hover {
+  @include breakpoint(large) {
+    color: $color-purple;
+    &:after { height: 10px; }
+  }
+}
+
+.m-menu-mega > a.active-trail.m-button, .m-menu-mega > a.m-button:hover {
+  @include breakpoint(large) {
+    color: $white;
+    &:after { height: 0px; }
+  }
+}
+
+.m-menu-mega a.hover + .dropdown-pane {
+  opacity: 1;
+  transition: opacity .3s 0s, visibility 0s 0s;
+  visibility: visible;
+}
+
+// Title Sections
+.m-menu-mega-top { margin-bottom: 30px; }
+
+// Columns Sections
+.m-menu-mega-bottom { }
+
+.m-menu-mega-bottom .column {
+  position: relative;
+  &:after {
+    content: ' ';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    right: 0;
+    top: 0;
+  }
+  &:last-child:after { content: none; }
+}
+
+// Navigation
+.m-menu-mega-nav { }
+
+.m-menu-mega-nav a { font-weight: 400; }
+
+.m-menu-mega-nav--description a,
+.m-menu-mega-nav--main a { font-size: 22px; }
+
+// Main
+.m-menu-mega-nav--main { }
+
+
+// VARIANTS
+
+// Description
+.m-menu-mega-nav--description {
+  flex-direction: column;
+  flex-grow: 1;
+  & + .m-menu-mega-nav--featured,
+  & + .m-menu-mega-nav--description { margin-top: 2rem; }
+}
+
+.m-menu-mega-nav--description a {
+  display: inline-block;
+  margin-bottom: .5rem;
+  line-height: 1.4;
+}
+
+.m-menu-mega-nav--description p {
+  font-size: rem-calc(14px);
+  line-height: 22px;
+  margin-bottom: 0;
+}
+
+// Featured
+.m-menu-mega-nav--featured h6 {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: .25rem;
+}
+
+.m-menu-mega-nav--featured ul {
+  margin: 0;
+  list-style: none;
+}
+
+.m-menu-mega-nav--featured li {
+  display: inline-block;
+  float: left;
+  margin-bottom: 0;
+
+  &:after {
+    content: '|';
+    position: relative;
+    padding: 0 .5rem;
+  }
+
+  &:last-child:after { content: none; }
+}

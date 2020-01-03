@@ -1,0 +1,536 @@
+//
+// LAYOUT: Section
+//
+
+$section-inner-padding-for-medium: rem-calc(5px);
+$section-inner-padding-for-large: rem-calc(15px);
+
+// BASE
+
+.l-section {
+  position: relative;
+}
+
+// SECTIONS
+
+//iWay 8 Free Trial
+body.section-iway-8-trial,
+body.section-iway-free-trial {
+  .l-section-header {
+    text-align: left;
+    h2 {
+      margin-bottom: rem-calc(30);
+    }
+  }
+}
+
+.l-section-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  @include breakpoint(large) {
+    margin-bottom: 2rem;
+  }
+}
+
+.l-section-main {
+  .columns:not(.align-middle-important),
+  .column:not(.align-middle-important) {
+    align-self: flex-start !important;
+  }
+
+  .medium-5.column > .m-wysiwyg,
+  .medium-5.column > .m-video,
+  .medium-5.column > .m-image,
+  .medium-5.column > .m-text {
+    margin-bottom: 1.5rem;
+    @include breakpoint(medium) {
+      padding-right: $section-inner-padding-for-medium;
+      margin-bottom: 0;
+    }
+    @include breakpoint(large) {
+      padding-right: $section-inner-padding-for-large;
+    }
+  }
+
+  .medium-6.column > .m-wysiwyg,
+  .medium-6.column > .m-video,
+  .medium-6.column > .m-image,
+  .medium-6.column > .m-text {
+    margin-bottom: 1.5rem;
+    @include breakpoint(medium) {
+      padding-right: $section-inner-padding-for-medium;
+      margin-bottom: 0;
+    }
+    @include breakpoint(large) {
+      padding-right: $section-inner-padding-for-large;
+    }
+  }
+
+  .medium-7.column > .m-wysiwyg,
+  .medium-7.column > .m-video,
+  .medium-7.column > .m-image,
+  .medium-7.column > .m-text {
+    margin-bottom: 1.5rem;
+    @include breakpoint(medium) {
+      padding-right: $section-inner-padding-for-medium;
+      margin-bottom: 0;
+    }
+    @include breakpoint(large) {
+      padding-right: $section-inner-padding-for-large;
+    }
+  }
+
+  .medium-7.column + .medium-5.column > .m-wysiwyg,
+  .medium-7.column + .medium-5.column > .m-video,
+  .medium-7.column + .medium-5.column > .m-image,
+  .medium-7.column + .medium-5.column > .m-text {
+    margin-bottom: 0;
+    @include breakpoint(medium) {
+      padding-left: $section-inner-padding-for-medium;
+      padding-right: 0;
+    }
+    @include breakpoint(large) {
+      padding-left: $section-inner-padding-for-large;
+    }
+  }
+
+  .medium-6.column + .medium-6.column > .m-wysiwyg,
+  .medium-6.column + .medium-6.column > .m-video,
+  .medium-6.column + .medium-6.column > .m-image,
+  .medium-6.column + .medium-6.column > .m-text {
+    margin-bottom: 0;
+    @include breakpoint(medium) {
+      padding-left: $section-inner-padding-for-medium;
+      padding-right: 0;
+    }
+    @include breakpoint(large) {
+      padding-left: $section-inner-padding-for-large;
+    }
+  }
+
+  .medium-5.column + .medium-7.column > .m-wysiwyg,
+  .medium-5.column + .medium-7.column > .m-video,
+  .medium-5.column + .medium-7.column > .m-image,
+  .medium-5.column + .medium-7.column > .m-text {
+    margin-bottom: 0;
+    @include breakpoint(medium) {
+      padding-left: $section-inner-padding-for-medium;
+      padding-right: 0;
+    }
+    @include breakpoint(large) {
+      padding-left: $section-inner-padding-for-large;
+    }
+  }
+
+  // Child Elements with full-width
+  // Used for elements with carousel
+  &.field-paragraph--field-child-elements .field-items .row {
+    // Carousel
+    > .small-12.column .m-testimonial {
+      margin-bottom: 1.5rem;
+      @include breakpoint(medium) {
+        margin-bottom: 2rem;
+      }
+    }
+
+    // Logo Bar
+    > .small-12.column + .small-12.column .m-bar {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+
+      @include breakpoint(medium) {
+        margin-top: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+    }
+  }
+}
+
+.l-section-footer {
+  margin-top: 1.5rem;
+  @include breakpoint(large) {
+    margin-top: 2.5rem;
+  }
+}
+
+// ELEMENTS
+
+.l-section-header h2,
+.l-section-header h3 {
+  margin-bottom: 0;
+}
+
+.m-card--border .l-section-header.row {
+  flex: 1;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  @include breakpoint(large) {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.l-section .l-section-main.small-up-1 .columns {
+  margin-bottom: 3rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  @include breakpoint(medium) {
+    margin-bottom: 0;
+  }
+}
+
+.l-section-footer .m-button {
+  text-align: center;
+}
+
+// VARIANTS
+
+// Padded
+// Used to increase padding between two <columns> layout
+
+.l-section--padded {
+}
+
+.l-section--padded .m-image,
+.l-section--padded .m-video {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) {
+    margin-bottom: 0;
+  }
+}
+
+.l-section--padded .l-section-main > .columns .m-button {
+  margin-top: 0.625rem;
+  @include breakpoint(medium) {
+    margin-top: 2rem;
+  }
+}
+
+.l-section--padded .l-section-main:not(.l-section--reverse) {
+  @include breakpoint(medium) {
+    &.row .columns:first-child {
+      padding-right: 1.5rem;
+    }
+    &.row .columns:last-child {
+      padding-left: 1.5rem;
+    }
+  }
+  @include breakpoint(large) {
+    &.row .columns:first-child {
+      padding-right: 2rem;
+    }
+    &.row .columns:last-child {
+      padding-left: 2rem;
+    }
+  }
+}
+
+.l-section--padded .l-section-main.l-section--reverse {
+  @include breakpoint(medium) {
+    &.row .columns:first-child {
+      padding-left: 1.5rem;
+    }
+    &.row .columns:last-child {
+      padding-right: 1.5rem;
+    }
+  }
+  @include breakpoint(large) {
+    &.row .columns:first-child {
+      padding-left: 2rem;
+    }
+    &.row .columns:last-child {
+      padding-right: 2rem;
+    }
+  }
+}
+
+// Reverse Order
+.l-section--reverse {
+  @include breakpoint(medium) {
+    &.row .columns:first-child {
+      order: 2;
+    }
+    &.row .columns:last-child {
+      order: 1;
+    }
+  }
+}
+
+// Promoted Links
+.l-section--promoted .l-section-main.small-up-1 .columns {
+  margin-bottom: 2rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Industry Large + Small
+.l-section--industry-large .l-section-main .row.small-up-2 .columns,
+.l-section--industry-small .l-section-main.row.small-up-2 .columns {
+  @include breakpoint(small only) {
+    padding-bottom: 2.5rem;
+  }
+}
+
+.l-section--industry-large .l-section-main .row.small-up-2 .columns,
+.l-section--industry-small .l-section-main.row.small-up-2 .columns {
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+// Industry Large
+.l-section--industry-large .l-section-main {
+  @include breakpoint(medium) {
+    justify-content: center;
+  }
+}
+
+.l-section--industry-large .l-section-main > .columns:first-child {
+  order: 1;
+  margin-bottom: 4rem;
+  @include breakpoint(large) {
+    margin-bottom: 0;
+    order: 2;
+    padding-left: 40px;
+    align-self: center;
+  }
+}
+
+.l-section--industry-large .l-section-main > .columns:last-child {
+  order: 2;
+  max-width: 680px;
+  @include breakpoint(large) {
+    padding-right: 40px;
+    order: 1;
+  }
+}
+
+.l-section--industry-large
+  .l-section-main
+  .row.medium-up-3
+  .columns:nth-last-child(-n + 2) {
+  @include breakpoint(small only) {
+    padding-bottom: 0;
+  }
+}
+
+.l-section--industry-large
+  .l-section-main
+  .row.medium-up-3
+  .columns:nth-child(-n + 3) {
+  @include breakpoint(medium) {
+    padding-bottom: 3.5rem;
+  }
+}
+
+.l-section--industry-large .l-section-main > .columns h2 {
+  margin-bottom: 2rem;
+}
+
+// Industry Small
+.l-section--industry-small .l-section-main.row.small-up-2 .columns {
+  @include breakpoint(small only) {
+    padding-bottom: 4.5rem;
+  }
+}
+
+.l-section--industry-small .l-section-main.row.medium-up-3 .columns {
+  @include breakpoint(medium) {
+    padding-bottom: 4rem;
+  }
+}
+
+// Search Results
+.l-section--search-results .l-cards {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+// Text
+.l-section--text .l-section-main .m-text {
+  height: 95%;
+}
+
+.l-section--text .m-text p {
+  @include breakpoint(medium) {
+    flex-grow: 1;
+  }
+}
+
+// Features
+.l-section--features .m-text {
+  display: block;
+}
+.l-section--features .m-text .m-text-title {
+  @include breakpoint(medium) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+// Edge
+.l-section--edge .m-image {
+  width: 100%;
+  @include breakpoint(medium) {
+    position: absolute;
+    min-width: 680px;
+  }
+}
+
+.l-section--edge .m-text {
+  @include breakpoint(medium) {
+    margin-bottom: 6rem;
+  }
+  @include breakpoint(large) {
+    margin-bottom: 8rem;
+  }
+}
+
+.l-section--edge:not(.l-section--reverse) .m-image {
+  right: 0;
+}
+
+.l-section--edge.l-section--reverse .m-image {
+  left: 0;
+}
+
+.l-section--edge .columns:first-child {
+  position: relative;
+}
+
+// Bullets
+.l-section--bullet .l-section-main {
+  max-width: 960px;
+}
+
+// Headline
+.l-section--headline {
+  text-align: center;
+}
+
+.l-section--headline h2 {
+  margin-bottom: 0;
+}
+
+.l-section--headline h2 + p {
+  margin-top: rem-calc(16px);
+  @include breakpoint(medium) {
+    margin-top: rem-calc(22px);
+  }
+}
+
+.l-section--headline p {
+  max-width: 830px;
+  margin-bottom: 0;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: rem-calc(18px);
+  @include breakpoint(large) {
+    font-size: rem-calc(20px);
+  }
+}
+
+.l-section--headline .m-button {
+  margin-top: rem-calc(30px);
+}
+
+// Careers
+.l-section--careers {
+}
+
+// Outcomes Small + Large
+.l-section--outcomes-large .l-section-main .columns,
+.l-section--outcomes-small .l-section-main .columns {
+  align-self: center;
+}
+
+.l-section--outcomes-large .l-section-main > .columns,
+.l-section--outcomes-small .l-section-main > .columns {
+  padding-bottom: 2.5rem;
+}
+
+// Outcomes Large
+.l-section--outcomes-large
+  .l-section-main.row.medium-up-4
+  .columns:nth-last-child(-n + 4) {
+  @include breakpoint(medium) {
+    padding-top: 0.5rem;
+    padding-bottom: 2rem;
+  }
+}
+
+// Outcomes list
+.l-section--outcomes-list {
+}
+
+.l-section--outcomes-list .l-section-main .columns {
+  @include breakpoint(medium) {
+    align-self: center !important;
+  }
+}
+
+.l-section--outcomes-list .m-circle {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) {
+    margin-bottom: 2.5rem;
+  }
+  @include breakpoint(large) {
+    margin-bottom: 3rem;
+  }
+}
+
+.l-section--outcomes-list .m-circle .m-circle-icon svg {
+  width: 90px;
+  height: 90px;
+  @include breakpoint(medium) {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.l-section--outcomes-list .m-list {
+  max-width: 500px;
+  @include breakpoint(small only) {
+    margin-top: 0.5rem;
+  }
+  li {
+    @include breakpoint(medium) {
+      margin-bottom: 2rem;
+    }
+  }
+  li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.l-section--outcomes-list .m-wysiwyg .title,
+.l-section--outcomes-list .m-wysiwyg .description {
+  width: 100%;
+}
+
+//Fix Flex style strangeness on 4 column entity reference cards
+section.paragraph--type--page-section {
+  .field-type-entity-reference-revisions {
+    .small-12.medium-6.column {
+      align-self: unset;
+    }
+  }
+
+  //change source order for mobile
+  .eighty_p {
+    .field-paragraph--field-child-elements {
+      .row {
+        .has-image.column {
+          @include breakpoint(small only) {
+            @include flex-order(0);
+          }
+        }
+        .column {
+          @include breakpoint(small) {
+            @include flex-order(1);
+          }
+        }
+      }
+    }
+  }
+}

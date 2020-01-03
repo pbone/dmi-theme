@@ -1,0 +1,480 @@
+//
+// Section
+//
+
+// Base
+.m-section {
+  position: relative;
+}
+
+// SECTIONS
+
+// Header Text
+.m-section-header {
+  text-align: center;
+  margin-bottom: rem-calc(16px);
+
+  @include breakpoint(large) {
+    margin-bottom: rem-calc(40px);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 0;
+  }
+}
+
+// ELEMENTS
+
+// Icon
+.m-section-icon {
+  margin-bottom: rem-calc(24px);
+
+  @include breakpoint(medium) {
+    margin-bottom: rem-calc(30px);
+  }
+
+  @include breakpoint(large) {
+    margin-bottom: rem-calc(40px);
+  }
+
+  svg {
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .icon-centered {
+    height: 74px;
+    width: 74px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 100%;
+    margin: auto;
+    display: flex;
+    align-items: normal;
+
+    svg {
+      margin: 10px;
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  .icon-full-width {
+    svg {
+      border: none;
+      padding: 0;
+      height: 100%;
+    }
+  }
+}
+
+.m-section-icon svg path {
+  fill: none;
+  stroke: $color-light-purple;
+  stroke-width: 2px;
+  stroke-miterlimit: 10px;
+}
+
+// Show for Small breakpoint only
+.m-section svg.i-mobile {
+  display: block;
+
+  @include breakpoint(medium) {
+    display: none;
+  }
+}
+
+// Show for Medium / Large Breakpoints only
+.m-section svg.i-desktop {
+  display: none;
+
+  @include breakpoint(medium) {
+    display: block;
+  }
+}
+
+// VARIANTS
+
+// Background Colors
+// - White
+// - White with bottom light Blue
+// - Blue
+// - Light Blue
+// - Purple
+// - Dark Purple
+.m-section--bg {
+  &-white {
+    background: $color-white;
+  }
+
+  &-white-blue {
+    background-color: $color-white;
+    background: $gradient-white-light-blue;
+  }
+
+  &-blue {
+    background: $color-dark-blue;
+  }
+
+  &-light-blue {
+    background: $color-light-blue;
+  }
+
+  &-purple {
+    background: $color-purple;
+  }
+
+  &-dark-purple {
+    background: $color-dark-purple;
+  }
+
+  &-light-grey {
+    background: #f7f7f7;
+  }
+
+  &-blue-purple {
+    background-color: $color-light-blue;
+    background: $gradient-light-blue-purple;
+  }
+}
+
+// Seperators
+// - Top
+// - Bottom
+.m-section--sep {
+
+  &-top,
+  &-top {
+    border: 0;
+  }
+
+  &-top {
+    border-left: 0;
+    border-right: 0;
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-image: $gradient-blue-purple;
+  }
+
+  &-btm {
+    border-width: 0 0 2px 0;
+    border-bottom-style: solid;
+    border-image: $gradient-blue-purple;
+  }
+}
+
+// Background
+// - Image
+.m-section--bg {
+  &-custom {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+// Padding
+// - Top
+// - Bottom
+.m-section--padding {
+  &-top {
+    &-small {
+      @include property-creator(padding-top, 40px, 40px, 50px);
+    }
+
+    &-medium {
+      @include property-creator(padding-top, 40px, 60px, 80px);
+    }
+
+    &-large {
+      @include property-creator(padding-top, 40px, 70px, 110px);
+    }
+  }
+
+  &-bottom {
+    &-small {
+      @include property-creator(padding-bottom, 40px, 40px, 50px);
+    }
+
+    &-medium {
+      @include property-creator(padding-bottom, 40px, 60px, 80px);
+    }
+
+    &-large {
+      @include property-creator(padding-bottom, 40px, 70px, 110px);
+    }
+  }
+}
+
+// Dark Purple - White Text
+.m-section--bg-dark-purple h1,
+.m-section--bg-dark-purple h2,
+.m-section--bg-dark-purple h3,
+.m-section--bg-dark-purple h4,
+.m-section--bg-dark-purple h5,
+.m-section--bg-dark-purple h6,
+.m-section--bg-dark-purple .field-paragraph--field-title,
+.m-section--bg-dark-purple p,
+.m-section--bg-dark-purple .m-list li,
+.m-section--bg-dark-purple li,
+.m-section--bg-dark-purple a {
+  color: $color-white;
+}
+
+.m-section--bg-dark-purple .m-list li:before {
+  border-color: $color-white;
+}
+
+.m-section--bg-dark-purple a svg:not(.i-play) path {
+  stroke: $color-white;
+}
+
+.m-section--bg-dark-purple .m-card-title a {
+  color: $color-dark-blue;
+}
+
+.m-section--bg-dark-purple .m-card.m-card--border .m-card-category {
+  color: $color-grey;
+}
+
+.m-section--bg-dark-purple .m-card.m-card--border .m-card-title {
+  color: $color-grey;
+}
+
+.m-section--bg-dark-purple .m-card.m-card--border .m-card-description {
+  color: $color-grey;
+}
+
+.m-section--bg-dark-purple .m-card.m-card--border .m-link a {
+  color: $primary-color;
+}
+
+.m-section--bg-dark-purple .m-card.m-card--border .m-link a svg:not(.i-play) path {
+  stroke: $primary-color;
+}
+
+.m-section--bg-dark-purple .m-card {
+  border: none;
+}
+
+.m-section--bg-dark-purple .m-section-icon svg path {
+  stroke: $secondary-color;
+}
+
+.m-section--bg-dark-purple .m-section-icon svg line {
+  stroke: $secondary-color;
+}
+
+.m-section--bg-dark-purple .m-section-icon svg polyline {
+  stroke: $secondary-color;
+}
+
+.m-section--bg-dark-purple .m-section-icon .icon-centered {
+  border-color: $secondary-color;
+}
+
+.m-section--bg-dark-purple .m-button--white {
+  color: $primary-color;
+}
+
+.m-section--bg-dark-purple .blog-teaser .blog-author--name .blogger-page-title a {
+  color: $color-dark-blue;
+}
+
+// Purple - White Text
+.m-section--bg-purple h1,
+.m-section--bg-purple h2,
+.m-section--bg-purple h3,
+.m-section--bg-purple h4,
+.m-section--bg-purple h5,
+.m-section--bg-purple h6,
+.m-section--bg-purple .field-paragraph--field-title,
+.m-section--bg-purple p,
+.m-section--bg-purple .m-list li,
+.m-section--bg-purple li,
+.m-section--bg-purple a {
+  color: $color-white;
+}
+
+.m-section--bg-purple a svg:not(.i-play) path {
+  stroke: $color-white;
+}
+
+.m-section--bg-purple .m-list li:before {
+  border-color: $color-white;
+}
+
+.m-section--bg-purple a.accordion-item:before {
+  color: $color-white;
+}
+
+.m-section--bg-purple .m-card.m-card--border .m-card-category {
+  color: inherit;
+}
+
+.m-section--bg-purple .m-card.m-card--border .m-card-title {
+  color: inherit;
+}
+
+.m-section--bg-purple .m-card.m-card--border .m-card-description {
+  color: inherit;
+}
+
+.m-section--bg-purple .m-card.m-card--border .m-link a {
+  color: $primary-color;
+}
+
+.m-section--bg-purple .m-card.m-card--border .m-link a svg:not(.i-play) path {
+  stroke: $primary-color;
+}
+
+.m-section--bg-purple .m-card {
+  border: none;
+}
+
+.m-section--bg-purple .m-button--white {
+  color: $primary-color;
+}
+
+// Blue - White Text
+.m-section--bg-blue h1,
+.m-section--bg-blue h2,
+.m-section--bg-blue h3,
+.m-section--bg-blue h4,
+.m-section--bg-blue h5,
+.m-section--bg-blue h6,
+.m-section--bg-blue .field-paragraph--field-title,
+.m-section--bg-blue p,
+.m-section--bg-blue .m-list li,
+.m-section--bg-blue li,
+.m-section--bg-blue a:not(.m-button--white) {
+  color: $color-white;
+}
+
+.m-section--bg-blue a svg:not(.i-play) path {
+  stroke: $color-white;
+}
+
+.m-section--bg-blue .m-list li:before {
+  border-color: $color-white;
+}
+
+.m-section--bg-blue .m-card.m-card--border .m-card-category {
+  color: inherit;
+}
+
+.m-section--bg-blue .m-card.m-card--border .m-card-title {
+  color: inherit;
+}
+
+.m-section--bg-blue .m-card.m-card--border .m-card-description {
+  color: inherit;
+}
+
+.m-section--bg-blue .m-card.m-card--border .m-link a {
+  color: $primary-color;
+}
+
+.m-section--bg-blue .m-card.m-card--border .m-link a svg path {
+  stroke: $primary-color;
+}
+
+.m-section--bg-blue .m-accordion-title:before {
+  color: $color-white;
+}
+
+// Custom BG - Gray Text
+.m-section--bg-custom-dark h1,
+.m-section--bg-custom-dark h2,
+.m-section--bg-custom-dark h3,
+.m-section--bg-custom-dark h4,
+.m-section--bg-custom-dark h5,
+.m-section--bg-custom-dark h6,
+.m-section--bg-custom-dark p,
+.m-section--bg-custom-dark a {
+  color: $color-grey;
+}
+
+.m-section--bg-custom-dark a svg:not(.i-play) path {
+  stroke: $color-grey;
+}
+
+.m-section--bg-custom-dark a.accordion-item:before {
+  color: $color-grey;
+}
+
+.m-section--bg-custom-dark .m-card .m-card-category {
+  color: inherit;
+}
+
+.m-section--bg-custom-dark .m-card .m-card-title {
+  color: inherit;
+}
+
+.m-section--bg-custom-dark .m-card .m-card-description {
+  color: inherit;
+}
+
+.m-section--bg-custom-dark .m-card .m-link a {
+  color: $primary-color;
+}
+
+.m-section--bg-custom-dark .m-card .m-link a svg path {
+  stroke: $primary-color;
+}
+
+// Custom BG - White Text
+.m-section--bg-custom-light h1,
+.m-section--bg-custom-light h2,
+.m-section--bg-custom-light h3,
+.m-section--bg-custom-light h4,
+.m-section--bg-custom-light h5,
+.m-section--bg-custom-light h6,
+.m-section--bg-custom-light p,
+.m-section--bg-custom-light a {
+  color: $color-white;
+}
+
+.m-section--bg-custom-light a svg:not(.i-play) path {
+  stroke: $color-white;
+}
+
+.m-section--bg-custom-light a.accordion-item:before {
+  color: $color-white;
+}
+
+.m-section--bg-custom-light .m-card .m-card-category {
+  color: inherit;
+}
+
+.m-section--bg-custom-light .m-card .m-card-title {
+  color: inherit;
+}
+
+.m-section--bg-custom-light .m-card .m-card-description {
+  color: inherit;
+}
+
+.m-section--bg-custom-light .m-card .m-link a {
+  color: $primary-color;
+}
+
+.m-section--bg-custom-light .m-card .m-link a svg path {
+  stroke: $primary-color;
+}
+
+//Section width
+.paragraph--type--page-section {
+  .eighty_p {
+    @include breakpoint(large) {
+      max-width: 64em !important;
+    }
+
+    .small-12.medium-6.column {
+      align-self: center !important;
+    }
+  }
+}

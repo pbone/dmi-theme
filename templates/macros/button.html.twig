@@ -1,0 +1,37 @@
+{#
+File to manage the various button styles
+Variables:
+  - buttonStyle
+    - Style selected from Layout Settings
+      - theme_1 = Purple
+      - theme_2 = Blue
+      - theme_3 = White
+      - theme_4 = Text link
+  - url
+    - url to current node
+#}
+{% set buttonClasses = [
+
+] %}
+
+  {% if buttonStyle == 'theme_2' %}
+    {% set buttonClasses = buttonClasses|merge(['m-button']) %}
+
+  {% elseif buttonStyle == 'theme_1' %}
+    {% set buttonClasses = buttonClasses|merge(['m-button', 'm-button--secondary']) %}
+
+  {% elseif buttonStyle == 'theme_3' %}
+    {% set buttonClasses = buttonClasses|merge(['m-button', 'm-button--primary', 'm-button--hollow']) %}
+  {% endif %}
+
+  {% if buttonStyle != 'theme_4' and buttonStyle is not empty %}
+    <a href="{{ url }}" class="{{ buttonClasses|join(' ') }}" {% if isExternal %}target="_blank"{% endif %}>{% if linkText %}{{ linkText|trans }}{% else %}{{ 'Learn more'|trans }}{% endif %}</a>
+  {% else %}
+    <div class="m-link">
+      <a href="{{ url }}" class="m-link-text" {% if isExternal %}target="_blank"{% endif %}>{% if linkText %}{{ linkText|trans }}{% else %}{{ 'Learn more'|trans }}{% endif %}
+        <span>
+          {{ get_svg('i-arrow-right') }}
+          </span>
+      </a>
+    </div>
+  {% endif %}

@@ -1,0 +1,193 @@
+
+// Button
+//
+
+/// Padding inside buttons.
+/// @type List
+$button-padding: 0.85em 1em !default;
+
+/// Sizes for buttons.
+/// @type Map
+$button-sizes: (
+  tiny: 0.6rem,
+  small: 0.75rem,
+  default: 0.9rem,
+  large: 1.25rem,
+) !default;
+
+/// Coloring classes. A map of classes to output in your CSS, like `.--primary`, `.--secondary`, and so on.
+/// @type Map
+$button-palette: $foundation-palette !default;
+
+/// transitions for buttons.
+/// @type List
+$button-transition: background-color 0.25s ease-out, color 0.25s ease-out !default;
+
+// Base
+.m-button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include disable-mouse-outline;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: $button-padding;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transition: $button-transition;
+  font-size: map-get($button-sizes, default);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+
+  // Sizes
+  @each $size, $value in map-remove($button-sizes, default) {
+    &--#{$size} {
+      font-size: $value;
+    }
+  }
+
+  // Colors
+  background-color: $primary-color;
+  color: $white;
+  &:hover, &:focus {
+    background-color: $primary-color;
+    color: $white;
+    box-shadow: 0 1px 5px 0 $primary-color;
+  }
+  @each $name, $color in $button-palette {
+    &--#{$name} {
+      background-color: $color;
+      color: $white;
+      &:hover, &:focus {
+        background-color: $color;
+        color: $white;
+        box-shadow: 0 1px 5px 0 $color;
+      }
+    }
+  }
+
+}
+
+// White
+.m-button--white {
+  background-color: $white;
+  color: $color-dark-blue;
+  &:hover, &:focus {
+    background-color: $white;
+    color: $color-dark-blue;
+    box-shadow: 0 1px 5px 0 $white;
+  }
+}
+
+// White with Purple Text
+.m-button--white-purple-text {
+  background-color: $white;
+  color: $color-purple !important;
+  &:hover, &:focus {
+    background-color: $white;
+    color: $color-dark-blue;
+    box-shadow: 0 1px 5px 0 $white;
+  }
+}
+
+// Arrow
+.m-button--arrow {
+  .i-arrow-right {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    float: none;
+    margin-#{$global-left}: 0;
+    top: -0.1em;
+    left: 10px;
+    fill: none;
+    stroke: $white;
+    width: 6px;
+    height: 14px;
+    transition: left 0.25s ease-out;
+  }
+
+  &:hover, &:focus {
+    .i-arrow-right { left: 13px; }
+  }
+}
+
+// Hollow
+.m-button--hollow {
+  background: transparent;
+  border: 1px solid $primary-color;
+  color: $primary-color;
+  &:hover, &:focus {
+    background: transparent;
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+
+  @each $name, $color in $button-palette {
+    &.m-button--#{$name} {
+      background: transparent;
+      border: 1px solid $color;
+      color: $color;
+      &:hover, &:focus {
+        color: $color;
+        background: transparent;
+        border-color: $color;
+      }
+    }
+  }
+}
+
+// Filter
+.m-button--filter {
+  background: transparent;
+  border: 1px solid $primary-color;
+  font-weight: 700;
+  color: $primary-color;
+  text-align: center;
+  &:hover, &:focus, &.is-active {
+    background: $primary-color;
+    border-color: $primary-color;
+    color: $white;
+    box-shadow: none;
+  }
+
+  &.is-active { background: $primary-color; color: $color-white; }
+  &.bef-link-active { background: $primary-color; color: $color-white; }
+}
+
+// Search
+// Used on menu navigation for mobile and tablet breakpoints
+input.m-button--search {
+  padding: 0;
+  font-size: 0;
+  width: 42px !important;
+  z-index: 9;
+  opacity: 0;
+  &:hover, &:focus {
+    background: $white;
+    box-shadow: none;
+  }
+}
+
+.m-button-wrapper {
+  display: flex;
+}
+
+.content-position-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.content-position-left {
+  justify-content: flex-start;
+  align-items: left;
+}
+
+.content-position-right {
+  justify-content: flex-end;
+  align-items: right;
+}

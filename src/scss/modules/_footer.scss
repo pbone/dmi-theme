@@ -1,0 +1,88 @@
+//
+// MODULE: Footer
+//
+
+// base
+.m-footer {
+  border: 0;
+  border-top-width: 3px;
+  border-top-style: solid;
+  border-image: $gradient-purple-blue;
+  padding: 40px 0 30px;
+  @include breakpoint(medium) { padding: 40px 0 40px; }
+  @include breakpoint(large) { padding: 50px 0 50px; }
+}
+
+
+// SECTIONS
+
+.m-footer-links-text,
+.m-footer-links-social {
+  list-style: none;
+  margin: 0;
+  li {
+    font-size: 0;
+    display: inline-block;
+  }
+}
+
+.m-footer-links-text { @include breakpoint(small only) { margin-bottom: 2rem; } }
+
+.m-footer-links-social { @include breakpoint(medium) { float: right; } }
+
+.m-footer .row .columns:first-child { @include breakpoint(large) { align-self: center; } }
+
+
+// ELEMENTS
+
+// Text Links
+.m-footer-links-text li {
+  font-size: 1rem;
+  display: block;
+  text-align: center;
+  margin-bottom: .5rem;
+  &:first-child {
+    &:after {
+      content: '';
+      position: relative;
+      padding: 0;
+    }
+  }
+  &:last-child { margin-bottom: 0; }
+  @include breakpoint(medium) { text-align: left; }
+  @include breakpoint(large) {
+    display: inline-block;
+    margin-bottom: 0;
+    &:after {
+      content: '|';
+      position: relative;
+      padding: 0 .5rem;
+    }
+    &:last-child:after {
+      content: none;
+    }
+  }
+}
+
+// Social Links
+.m-footer-links-social li {
+  width: 25%;
+  float: left;
+  text-align: center;
+  padding-bottom: 1rem;
+  @include breakpoint(medium) {
+    width: auto;
+    padding-right: rem-calc(10px);
+    &:last-child { padding-right: 0; }
+  }
+  @include breakpoint(large) { padding-bottom: 0; }
+}
+
+.m-footer-links-social li svg {
+  width: 42px;
+  height: 42px;
+  @include breakpoint(medium only) {
+    width: 38px;
+    height: 38px;
+  }
+}

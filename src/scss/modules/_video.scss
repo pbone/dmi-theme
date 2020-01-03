@@ -1,0 +1,69 @@
+//
+// MODULE: Video
+//
+
+
+// BASE
+
+.m-video { position: relative; }
+
+
+// ELEMENT
+
+.m-video .m-video-responsive {
+  position: relative;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    &:after {
+      content: '';
+      display: block;
+      padding-bottom: 56.25%;
+    }
+  }
+}
+
+.m-video .img-responsive { width: 100%; }
+
+.m-video .i-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-50%,0);
+  width: rem-calc(40px);
+  height: rem-calc(40px);
+  z-index: 1;
+  @include breakpoint(medium) {
+    width: rem-calc(50px);
+    height: rem-calc(50px);
+  }
+}
+
+
+// IE 11 couldn't figure out this width for the spotlight video
+.field-type-viewsreference {
+  .spotlight {
+    width: 100%;
+  }
+}
+// Wrap embedded youtube vids in div with this class
+.video-responsive{
+  overflow:hidden;
+  padding-bottom:56.25%;
+  position:relative;
+  height:0;
+}
+.video-responsive iframe{
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  position:absolute;
+}

@@ -1,0 +1,11 @@
+.row > .columns {
+
+  &.align-top {
+    align-self: start !important;
+  }
+
+}
+
+.align-middle-important {
+  align-self: center !important;
+}

@@ -1,0 +1,17 @@
+
+//
+// MODULE: Text
+//
+
+// Base
+.m-text {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  flex: 1;
+// IE 11 is too stupid to know how wide his parent is
+  .field-wrapper {
+    width: 100%;
+  }
+
+}

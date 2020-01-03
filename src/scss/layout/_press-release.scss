@@ -1,0 +1,73 @@
+//
+// LAYOUT: Press Release
+//
+
+// BASE
+
+.l-press-release {
+  position: relative;
+}
+
+
+// SECTIONS
+
+.l-press-release header {
+
+  .m-feature-content {
+    @include breakpoint(medium) {
+      margin-left: 0;
+      padding-left: 0 !important;
+    }
+  }
+
+}
+
+.l-press-release section {
+
+  .field-name-body { margin-bottom: 2rem; }
+
+  .field-name-field-city, .field-name-field-date-only {
+    position: relative;
+    display: inline-block;
+    font-size: rem-calc(14px);
+  }
+
+  .field-name-field-city + .field-name-field-date-only {
+    padding-left: 15px;
+
+    &:before {
+      content: '•';
+      display: inline-block;
+      position: absolute;
+      left: 4px;
+    }
+  }
+
+
+  .row:first-child {
+    margin-bottom: 1.5rem;
+  }
+
+  .row + .row .column {
+
+    &:first-child {
+      @include breakpoint(medium) {
+        padding-right: 1.5rem;
+      }
+      @include breakpoint(large) {
+        padding-right: 2rem;
+      }
+    }
+
+    &:last-child {
+      @include breakpoint(medium) {
+        padding-left: 1.5rem;
+      }
+      @include breakpoint(large) {
+        padding-right: 2rem;
+      }
+    }
+
+  }
+
+}

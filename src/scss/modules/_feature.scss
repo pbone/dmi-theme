@@ -1,0 +1,875 @@
+//
+// Feature
+//
+
+// Base
+.m-feature {
+  position: relative;
+  overflow: hidden;
+}
+// Theme color overrides
+.m-feature-theme {
+  &--light,
+  &--dark {
+    color: $color-grey;
+  }
+
+  &--light .m-feature-title,
+  &--light .m-feature-subtitle,
+  &--light .m-feature-category,
+  &--light .m-feature-subtitle p {
+    @include breakpoint(medium) {
+      color: $color-white;
+      *:not(.m-button) {
+        color: $color-white;
+      }
+    }
+  }
+  &--dark .m-feature-title,
+  &--dark .m-feature-subtitle,
+  &--dark .m-feature-category,
+  &--dark .m-feature-subtitle p {
+    @include breakpoint(medium) {
+      color: $color-grey;
+      *:not(.m-button) {
+        color: $color-grey;
+      }
+    }
+  }
+
+  &--light.m-feature--h1,
+  &--light.m-feature--h2,
+  &--light.m-feature--h3 {
+    *:not(.m-button) {
+      color: $color-white;
+    }
+  }
+  &--dark.m-feature--h1,
+  &--dark.m-feature--h2,
+  &--dark.m-feature--h3 {
+    *:not(.m-button) {
+      color: $color-grey;
+    }
+  }
+}
+
+// SECTIONS
+
+.m-feature .row .columns {
+  @include breakpoint(small only) {
+    padding: 0;
+  }
+  .m-feature-content {
+    @include columnGutter;
+  }
+}
+
+.m-feature-bg {
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  width: 100%;
+  svg {
+    display: none;
+    path {
+      stroke: rgb(0, 160, 223);
+    }
+  }
+}
+// PARAGRAPH PAGE SECTION WITH BACKGROUND IMAGE
+section.m-section-w-bg {
+  .m-feature-bg {
+    background-position: 50% 50%;
+  }
+  .m-feature-content {
+    @include breakpoint(medium) {
+      margin-left: auto;
+      max-width: inherit !important;
+    }
+  }
+}
+
+.m-feature-content {
+  position: relative;
+  @include breakpoint(medium) {
+    margin-left: 30px;
+    max-width: 500px;
+  }
+
+  &--expanded {
+    @include breakpoint(medium) {
+      max-width: 650px;
+    }
+  }
+}
+.m-feature-bottom {
+  background-color: $color-white;
+  padding: 2.5rem 0;
+  @extend .m-section--sep-btm;
+  @include breakpoint(medium) {
+    padding: 4rem 0;
+    // text-align: center;
+  }
+}
+
+// ELEMENTS
+
+// Category
+.m-feature-category {
+  font-size: rem-calc(14px);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  @include breakpoint(medium) {
+    font-size: rem-calc(16px);
+  }
+}
+
+// Title
+.m-feature-title {
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  @include breakpoint(small only) {
+    font-size: rem-calc(32px);
+  }
+  @include breakpoint(medium) {
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  @include breakpoint(medium only) {
+    font-size: rem-calc(38px);
+  }
+}
+.m-feature-title + .m-button {
+  margin-top: 0.5rem;
+}
+
+// Subtitle
+.m-feature-subtitle {
+  margin-bottom: 0;
+}
+.m-feature-subtitle p:last-child,
+.m-feature-subtitle .field-item p:last-child {
+  margin-bottom: 0;
+}
+.m-feature-subtitle + .m-button-group {
+  margin-top: 2rem;
+  //@include breakpoint(medium) { margin-top: 2.5rem; }
+}
+.m-feature-subtitle + .m-button {
+  margin-top: 2rem;
+  @include breakpoint(medium) {
+    margin-bottom: 2rem;
+  }
+}
+.m-feature--h3 .m-feature-subtitle a {
+  color: $color-white;
+}
+
+// Subtitle (Drupal Fields)
+.m-feature .field-name-field-subtitle h5 {
+}
+.m-feature .field-name-field-subtitle p {
+}
+.m-feature .field-name-field-customer-description,
+.m-feature .field-name-field-location {
+  font-size: rem-calc(16px);
+  @include breakpoint(medium) {
+    font-size: rem-calc(20px);
+  }
+}
+.m-feature .field-name-field-location {
+  font-size: 1.25rem;
+}
+.m-feature .field-name-field-location + .field-name-field-customer-description {
+  margin-top: 0.5rem;
+  font-size: rem-calc(16px);
+}
+
+// Press-Release Date
+.m-feature-press-date {
+  margin-bottom: 1.25rem;
+  @include breakpoint(medium) {
+    margin-bottom: 1.5rem;
+  }
+
+  & > div {
+    display: inline-block;
+    font-size: rem-calc(14px) !important;
+    @include breakpoint(medium) {
+      font-size: 1rem !important;
+    }
+  }
+}
+.m-feature-press-date .field-name-field-city .field-item:after,
+.m-feature-press-date .field-name-field-location .field-item:after {
+  content: ", ";
+}
+.m-feature-press-date + .m-feature-subtitle {
+  font-size: rem-calc(16px);
+  @include breakpoint(medium) {
+    font-size: rem-calc(20px);
+  }
+}
+
+// Button
+.m-feature-content .m-button {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.m-feature-lead {
+  max-width: 935px;
+  margin: 0 auto;
+  @include breakpoint(medium) {
+    font-size: rem-calc(20px);
+  }
+  @include breakpoint(large) {
+    font-size: rem-calc(25px);
+  }
+  p {
+    line-height: 1.5;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+.m-feature-lead + .m-button {
+  margin-top: 1.5rem;
+  @include breakpoint(medium) {
+    margin-top: 2rem;
+  }
+  @include breakpoint(large) {
+    margin-top: 2.5rem;
+  }
+}
+// Variants
+
+// H1
+// Used with background-images
+.m-feature--h1 {
+  background-color: $color-white !important;
+  @include breakpoint(medium) {
+    min-height: 550px;
+  }
+  @include breakpoint(large) {
+    min-height: 650px;
+  }
+}
+
+.m-feature--h1 .m-feature-bg/*, .m-feature--h5 .m-feature-bg*/ {
+  min-height: 230px;
+  background-position: bottom center;
+
+  @include breakpoint(small only) {
+    position: relative;
+    display: block;
+    max-height: 380px;
+    height: 60vw;
+  }
+
+  @include breakpoint(medium) {
+    background-size: cover;
+    background-position: bottom left;
+  }
+
+  // Prevents image from moving
+  @include breakpoint(large) {
+    margin: 0 auto;
+    max-width: 3000px;
+    background-position: bottom center;
+    background-size: 3000px auto;
+  }
+
+  @include breakpoint(xlarge) {
+    margin: 0 auto;
+  }
+
+  // Creates fade
+  //@include breakpoint(xxlarge) {
+  //  &:before,
+  //  &:after {
+  //    content: '';
+  //    position: absolute;
+  //    width: 1px;
+  //    top: 0;
+  //    bottom: 0;
+  //    z-index: 3;
+  //  }
+  //
+  //  &:before {
+  //    left: -10px;
+  //    box-shadow: 4px 0 20px 40px $color-light-grey;
+  //  }
+  //
+  //  &:after {
+  //    right: -10px;
+  //    box-shadow: -4px 0 20px 40px $color-light-grey;
+  //  }
+  //}
+}
+
+.m-feature--h1 .m-feature-content/*, .m-feature--h5 .m-feature-content*/ {
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+  @include breakpoint(small only) {
+    text-align: center;
+    background-color: $color-white;
+    border-left: 0;
+    border-right: 0;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-image: $gradient-blue-purple;
+  }
+  @include breakpoint(medium only) {
+    padding-bottom: rem-calc(200px);
+  }
+  @include breakpoint(medium) {
+    padding-top: rem-calc(30px);
+  }
+}
+
+.m-feature--h1 .m-feature-title,
+.m-feature--h1 .m-feature-category,
+.m-feature--h1 .m-feature-subtitle,
+.m-feature--h1 p {
+  @include breakpoint(small only) {
+    color: $color-grey !important;
+  }
+}
+.m-feature--h1 .m-feature-category {
+  margin-bottom: 0;
+}
+.m-feature--h1 .m-feature-title {
+  @include breakpoint(medium) {
+    margin-top: rem-calc(40px);
+  }
+}
+.m-feature--h1 .m-feature-category + .m-feature-title {
+  margin-top: rem-calc(10px);
+}
+
+// H1 SHORT
+// Used with background-images
+.m-feature--h1short {
+  background-color: $color-white !important;
+  @include breakpoint(medium) {
+    min-height: 360px;
+  }
+  // @include breakpoint(large) { min-height: 650px; }
+}
+
+.m-feature--h1short .m-feature-bg/*, .m-feature--h5 .m-feature-bg*/ {
+  // min-height: 230px;
+  // background-position: bottom right;
+
+  @include breakpoint(small only) {
+    position: relative;
+    display: block;
+    max-height: 380px;
+    height: 60vw;
+  }
+
+  @include breakpoint(medium) {
+    background-size: cover;
+    background-position: center right;
+  }
+
+  // Prevents image from moving
+  @include breakpoint(large) {
+    margin: 0 auto;
+    // max-width: 3000px;
+    // background-position: center left;
+    // background-size: 3000px auto;
+  }
+
+  @include breakpoint(xlarge) {
+    margin: 0 auto;
+    // max-width: 3000px;
+    // background-position: center left;
+    // background-size: 3000px auto;
+  }
+
+  // Creates fade
+  //@include breakpoint(xxlarge) {
+  //  &:before,
+  //  &:after {
+  //    content: '';
+  //    position: absolute;
+  //    width: 1px;
+  //    top: 0;
+  //    bottom: 0;
+  //    z-index: 3;
+  //  }
+  //
+  //  &:before {
+  //    left: -10px;
+  //    box-shadow: 4px 0 20px 40px $color-light-grey;
+  //  }
+  //
+  //  &:after {
+  //    right: -10px;
+  //    box-shadow: -4px 0 20px 40px $color-light-grey;
+  //  }
+  //}
+}
+
+.m-feature--h1short .m-feature-content/*, .m-feature--h5 .m-feature-content*/ {
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+  @include breakpoint(small only) {
+    text-align: center;
+    background-color: $color-white;
+    border-left: 0;
+    border-right: 0;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-image: $gradient-blue-purple;
+  }
+  @include breakpoint(medium only) {
+    padding-bottom: rem-calc(200px);
+  }
+  @include breakpoint(medium) {
+    padding-top: rem-calc(30px);
+  }
+  .m-feature-subtitle {
+    @include breakpoint(medium down) {
+      width: rem-calc(400);
+    }
+    @include breakpoint(small only) {
+      width: 100%;
+    }
+  }
+}
+
+.m-feature--h1short .m-feature-title,
+.m-feature--h1short .m-feature-category,
+.m-feature--h1short .m-feature-subtitle,
+.m-feature--h1short p {
+  @include breakpoint(small only) {
+    color: $color-grey !important;
+  }
+}
+.m-feature--h1short .m-feature-category {
+  margin-bottom: 0;
+}
+.m-feature--h1short .m-feature-title {
+  @include breakpoint(medium) {
+    margin-top: rem-calc(40px);
+  }
+}
+.m-feature--h1short .m-feature-category + .m-feature-title {
+  margin-top: rem-calc(10px);
+}
+
+// H2 & H3
+// Used with blue background and Icons
+.m-feature--h2 .m-feature-bg,
+.m-feature--h3 .m-feature-bg,
+.m-feature--h5 .m-feature-bg {
+  background-color: $color-dark-blue;
+}
+
+//if there's a bg image, background defaults to darkblue (for some DMI reason?),
+// this is a fix for when dark-purple is selected.
+
+header.m-section--bg-dark-purple {
+  .m-feature-bg {
+    background-color: $color-dark-purple;
+  }
+}
+
+.m-feature--h2 .m-feature-bg span,
+.m-feature--h3 .m-feature-bg span {
+  max-width: 73.75rem;
+  margin-right: auto;
+  display: block;
+  margin-left: auto;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.m-feature--h2 .m-feature-bg span svg,
+.m-feature--h3 .m-feature-bg span svg {
+  position: absolute;
+  right: -80px;
+  float: right;
+  display: inline-block;
+  top: 50%;
+  opacity: 0.5;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 200px;
+  @include breakpoint(medium) {
+    height: 402px;
+    width: 420px;
+    opacity: 1;
+  }
+  @include breakpoint(large) {
+    right: 0;
+  }
+}
+body.node--type-resource {
+  .m-feature--h2 .m-feature-bg span svg,
+  .m-feature--h3 .m-feature-bg span svg {
+    @include breakpoint(medium) {
+      height: 250px;
+    }
+  }
+}
+.m-feature--h2 .m-feature-content,
+.m-feature--h3 .m-feature-content,
+.m-feature--h5 .m-feature-content {
+  color: $color-white;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  @include breakpoint(medium) {
+    padding-top: rem-calc(50px);
+    padding-bottom: rem-calc(120px);
+  }
+}
+// H3
+// Lower bottom padding and expanded content section
+.m-feature--h3 .m-feature-content {
+  @include breakpoint(medium) {
+    max-width: 650px;
+    padding-bottom: rem-calc(60px);
+  }
+}
+// H4
+.m-feature--h4 .m-feature-bg {
+  position: relative;
+  display: block;
+  min-height: 200px;
+  @include breakpoint(medium) {
+    max-height: 320px;
+    min-height: 320px;
+  }
+  @include breakpoint(large) {
+    max-height: 470px;
+    min-height: 470px;
+  }
+}
+.m-feature--h4 .m-feature-content {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 950px;
+  padding-top: 40px;
+  padding-bottom: 70px;
+  @include breakpoint(medium) {
+    padding-top: 60px;
+    padding-bottom: 90px;
+  }
+}
+.m-feature--h4 .row {
+  max-width: 100%;
+}
+.m-feature--h4 .columns {
+  padding-right: 0;
+  padding-left: 0;
+}
+.m-feature--h4 .m-feature-title,
+.m-feature--h4 .m-feature-subtitle {
+  color: $color-grey;
+}
+.m-feature--h4 .m-feature-title {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) {
+    margin-bottom: 2rem;
+  }
+}
+
+// CUSTOM VIDEO FOR HOMEPAGE
+
+.m-feature--video {
+  .m-feature-bg {
+    @include breakpoint(medium) {
+      background-position: bottom right;
+    }
+    // Prevents image from moving
+    @include breakpoint(large) {
+      max-width: 3000px;
+      background-size: 3000px auto;
+    }
+    @include breakpoint(xlarge) {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  #feature-video {
+    display: none;
+    @include breakpoint(large) {
+      display: block;
+    }
+    @include breakpoint(large only) {
+      position: absolute;
+      right: -780px;
+    }
+    @media screen and (max-width: 1460px) and (min-width: 1180px) {
+      position: absolute;
+      right: -780px;
+    }
+    @media screen and (min-width: 1461px) {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .m-feature-content {
+    @include breakpoint(medium) {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: auto;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 1440px;
+    }
+  }
+
+  .m-feature-video-text {
+    @include breakpoint(medium) {
+      float: right;
+      padding-top: 4rem;
+      padding-left: 40px;
+      max-width: 500px;
+    }
+    @include breakpoint(large) {
+      padding-top: 5rem;
+      padding-left: 100px;
+      max-width: 640px;
+    }
+  }
+
+  .m-feature-title,
+  .m-feature-title span,
+  .m-feature-subtitle,
+  .m-button-group {
+    @include breakpoint(large) {
+      opacity: 0;
+    }
+  }
+
+  // Fade in Dynamic Text
+  .m-feature-content.fade-in {
+    .m-feature-title,
+    .m-feature-title .headline-0 {
+      @include breakpoint(large) {
+        transition-delay: 3.25s;
+      }
+    }
+
+    .m-feature-title .headline-1 {
+      @include breakpoint(large) {
+        transition-delay: 8.75s;
+      }
+    }
+
+    .m-feature-subtitle {
+      @include breakpoint(large) {
+        transition-delay: 14.25s;
+      }
+    }
+
+    .m-button-group {
+      @include breakpoint(large) {
+        transition-delay: 15s;
+      }
+    }
+
+    .m-feature-title,
+    .m-feature-title .headline-0,
+    .m-feature-title .headline-1,
+    .m-feature-subtitle,
+    .m-button-group {
+      @include breakpoint(large) {
+        opacity: 1;
+        transition-property: opacity;
+        transition-duration: 0.4s;
+        transition-timing-function: ease-in-out;
+      }
+    }
+  }
+}
+
+// Feature: Event
+
+header.no-overlay {
+  .m-feature-content {
+    &:before {
+      content: none !important;
+      background: transparent !important;
+    }
+  }
+}
+
+.m-feature--event {
+  background-color: $color-white;
+
+  .columns:first-of-type {
+    padding-right: 0;
+  }
+
+  .columns:last-of-type {
+    align-self: stretch !important;
+    padding-left: 0;
+  }
+
+  .m-feature-content {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    margin-left: 0;
+    max-width: 100%;
+    padding-left: 1.25rem !important;
+    padding-top: rem-calc(30px);
+    padding-bottom: rem-calc(20px);
+    display: flex;
+    flex-direction: column;
+    @include breakpoint(medium) {
+      padding-left: rem-calc(40px);
+      padding-top: rem-calc(50px);
+      padding-bottom: rem-calc(60px);
+    }
+
+    &:before {
+      content: "";
+      background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.5) 51%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 0;
+    }
+  }
+
+  .m-feature-category,
+  .m-feature-title,
+  .m-feature-subtitle,
+  .m-feature-series {
+    color: $color-white;
+    z-index: 1;
+  }
+
+  .m-feature-location {
+    align-items: center;
+    background-color: $color-dark-blue;
+    color: $white;
+    display: flex;
+    height: 100%;
+    padding: rem-calc(20px) 1.25rem;
+    @include breakpoint(medium) {
+      padding: rem-calc(40px) rem-calc(35px);
+    }
+    @include breakpoint(large) {
+      padding: rem-calc(40px) rem-calc(50px);
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      width: 100%;
+
+      li {
+        display: flex;
+        flex-flow: row;
+        margin-bottom: 1rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    span {
+      font-size: rem-calc(14px);
+      @include breakpoint(medium) {
+        font-size: rem-calc(16px);
+      }
+    }
+
+    span:not(.m-feature-location-label) {
+      margin-left: 0;
+      @include breakpoint(medium) {
+        margin-left: rem-calc(30px);
+      }
+      @include breakpoint(large) {
+        margin-left: rem-calc(20px);
+      }
+    }
+
+    p.address span {
+      margin-left: 0 !important;
+
+      @include breakpoint(medium) {
+        margin-left: 0 !important;
+      }
+    }
+
+    .m-feature-location-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      flex: 0 0 40%;
+      max-width: 100px;
+      min-width: 80px;
+      @include breakpoint(medium) {
+        flex: 0 0 40%;
+        max-width: 100px;
+      }
+    }
+
+    a {
+      color: $white;
+    }
+  }
+}
+
+// Feature: General (no background)
+.m-feature--general {
+  .row-header {
+  }
+
+  .m-feature-title {
+    margin-bottom: 1rem;
+    @include breakpoint(medium) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .row-content {
+    @include breakpoint(small only) {
+      flex-flow: wrap-reverse;
+    }
+
+    & > .column:last-child {
+      align-self: flex-start !important;
+    }
+
+    .field-taxonomy-term--field-image {
+      @include breakpoint(small only) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+// Make all subtitles h2
+.m-feature-subtitle {
+  h2 {
+    font-size: rem-calc(16);
+    line-height: 1.6;
+  }
+}

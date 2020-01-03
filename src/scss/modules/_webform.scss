@@ -1,0 +1,199 @@
+//
+// Webform
+//
+
+
+// BASE
+.webform-submission-form {
+  text-align: center;
+}
+
+
+// SECTIONS
+
+// Input Group
+.webform-submission-form .m-input-group-field {
+  text-align: left;
+}
+
+// Radio fieldset
+.webform-submission-form .js-webform-radios-fieldset {
+  text-align: left;
+  margin: 1.5rem 0;
+
+  legend {
+    float: left;
+    display: inline-block;
+    margin-right: 1rem;
+    font-size: rem-calc(14px);
+    margin: 0 1rem 0 0;
+    line-height: 25px;
+  }
+
+  .fieldset-wrapper {
+    display: inline-block;
+  }
+}
+
+
+// ELEMENTS
+
+// Text
+#edit-request-type--description { display: none; }
+.webform-submission-form .form-no-label { text-align: center; }
+
+// Google Captcha
+.webform-submission-form .g-recaptcha {
+  margin-bottom: 1.5rem;
+}
+
+// Label
+.webform-submission-form .m-input-group-field label {
+  position: relative;
+  font-size: rem-calc(14px);
+  color: $color-medium-grey;
+  top: 30px;
+  transition: top .3s ease, color .3s ease, font-size .3s ease;
+  padding-left: .5rem;
+  line-height: 25px;
+  z-index: 1;
+}
+
+// Select
+.webform-submission-form select {
+  position: relative;
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid $color-grey;
+  background-color: transparent;
+  background-image: url(data:image/svg+xml,%3Csvg%20class%3D%22i-arrow-down%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2015%207%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23007ac9%22%20d%3D%22M5.5%200.5L0.5%200.5%207.5%206.5%2014.5%200.5%209.5%200.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E%0A);
+  background-size: 14px 12px;
+  z-index: 2;
+
+  &:hover, &:focus {
+    background-color: transparent;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    box-shadow: none;
+  }
+}
+
+// Inputs (ALL)
+.webform-submission-form [type='text'],
+.webform-submission-form [type='password'],
+.webform-submission-form [type='date'],
+.webform-submission-form [type='datetime'],
+.webform-submission-form [type='datetime-local'],
+.webform-submission-form [type='month'],
+.webform-submission-form [type='week'],
+.webform-submission-form [type='email'],
+.webform-submission-form [type='number'],
+.webform-submission-form [type='search'],
+.webform-submission-form [type='tel'],
+.webform-submission-form [type='time'],
+.webform-submission-form [type='url'],
+.webform-submission-form [type='color'],
+.webform-submission-form textarea {
+  background-color: transparent;
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid $color-grey;
+  box-shadow: none;
+
+  &:hover, &:focus {
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    box-shadow: none;
+  }
+}
+
+// Text Area
+.webform-submission-form textarea {
+  resize: vertical;
+}
+
+// Button
+.webform-submission-form .button {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 1.5rem;
+}
+
+// Radio
+.webform-submission-form [type="radio"]:checked,
+.webform-submission-form [type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+
+.webform-submission-form [type="radio"]:checked + label,
+.webform-submission-form [type="radio"]:not(:checked) + label {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+  color: #666;
+  top: 0 !important;
+}
+
+.webform-submission-form [type="radio"]:checked + label:before,
+.webform-submission-form [type="radio"]:not(:checked) + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid $color-dark-blue;
+  border-radius: 100%;
+  background: transparent;
+}
+
+.webform-submission-form [type="radio"]:checked + label:after,
+.webform-submission-form [type="radio"]:not(:checked) + label:after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: $color-dark-blue;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border-radius: 100%;
+  transition: all 0.2s ease;
+}
+
+.webform-submission-form [type="radio"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.webform-submission-form [type="radio"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+// STATES
+
+// When active / Filled
+.webform-submission-form .m-input-group-field.is-active,
+.webform-submission-form .m-input-group-field.is-filled {
+  label {
+    font-size: rem-calc(10px);
+    color: $color-grey;
+    top: 10px;
+  }
+}
+
+// When text is Active
+.webform-submission-form .m-input-group-field.is-active {
+  input, select, textarea { border-color: $color-purple; }
+}

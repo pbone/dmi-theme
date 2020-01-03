@@ -1,0 +1,95 @@
+//
+// MODULE: Box
+//
+
+// Base
+.m-box {
+  position: relative;
+  @include breakpoint(small only) { margin-top: 3rem; }
+}
+
+
+// SECTIONS
+
+.m-box-inner {
+  border: 2px solid $color-blue;
+  color: $color-grey;
+  padding: 50px 30px;
+  @include breakpoint(large) { padding: 75px 40px; }
+}
+
+.m-box-icon {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+
+// ELEMENTS
+
+.m-box-inner .m-speaker-header {
+  margin-top: 3.5rem;
+  @include breakpoint(medium) { margin-top: 4rem; }
+}
+
+.m-box-icon svg {
+  position: absolute;
+  top: 11px;
+  width: 40px;
+  height: 76px;
+  z-index: 2;
+  @include breakpoint(medium) { top: -38px; }
+  @include breakpoint(large) { top: -48px; width: 50px; height: 95px; }
+}
+
+.m-box-title {
+  margin-bottom: .75rem;
+  @include breakpoint(medium) { margin-bottom: 1rem; }
+  @include breakpoint(large) { margin-bottom: 1.5rem; }
+}
+
+
+// VARIANTS
+
+.m-box--event .m-box-title {
+  font-size: rem-calc(26px);
+  margin-bottom: 1rem;
+  @include breakpoint(medium) {
+    font-size: rem-calc(32px);
+  }
+}
+
+.m-box--cta .m-box-title,
+.m-box--cta p {
+  margin-bottom: 2rem;
+  &:last-child { margin-bottom: 0; }
+}
+
+// Sidebar
+// Used when placed inside sidebar column
+.m-box--sidebar {
+
+  .m-box-inner {
+    background-color: $color-light-blue;
+    padding: rem-calc(30px) rem-calc(30px);
+    @include breakpoint(medium) {
+      padding: rem-calc(30px) rem-calc(30px);
+    }
+  }
+
+  h5 { margin-bottom: .5rem; font-weight: 600; }
+
+}
+
+//Walk me page overrides
+
+body.page-sub-type-walk-me-1 {
+  @include breakpoint(medium) {
+    h1.m-box-title {
+      font-size: rem-calc(25);
+      font-weight: 600;
+      margin-bottom: 0!important;
+    }
+  }
+}

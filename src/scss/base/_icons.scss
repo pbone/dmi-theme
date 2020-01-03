@@ -1,0 +1,8 @@
+//
+// BASE: Icons
+//
+
+.i-stroke {
+  &--white svg path { stroke: $color-white; }
+  &--blue svg path { stroke: $color-blue; }
+}

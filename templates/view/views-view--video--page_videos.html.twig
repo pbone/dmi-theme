@@ -1,0 +1,131 @@
+{#
+/**
+ * @file
+ * Default theme implementation for main view template.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ * - css_name: A css-safe version of the view name.
+ * - css_class: The user-specified classes names, if any.
+ * - header: The optional header.
+ * - footer: The optional footer.
+ * - rows: The results of the view query, if any.
+ * - empty: The content to display if there are no rows.
+ * - pager: The optional pager next/prev links to display.
+ * - exposed: Exposed widget form/info to display.
+ * - feed_icons: Optional feed icons to display.
+ * - more: An optional link to the next page of results.
+ * - title: Title of the view, only used when displaying in the admin preview.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the view title.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the view title.
+ * - attachment_before: An optional attachment view to be displayed before the
+ *   view content.
+ * - attachment_after: An optional attachment view to be displayed after the
+ *   view content.
+ * - dom_id: Unique id for every view being printed to give unique class for
+ *   Javascript.
+ *
+ * @see template_preprocess_views_view()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+set classes = [
+dom_id ? 'js-view-dom-id-' ~ dom_id,
+]
+%}
+{%
+set classes = [
+dom_id ? 'js-view-dom-id-' ~ dom_id,
+]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  <header class="m-feature m-feature--h3">
+    <div class="row">
+      <div class="columns">
+
+        <div class="m-feature-bg">
+          <span>{{ get_svg('i-header-television') }}</span>
+        </div>
+
+        <div class="m-feature-content">
+          <p class="m-feature-category">{{ 'Learn'|trans }}</p>
+          {{ title_prefix }}
+          <h1 class="m-feature-title">{{ 'Information Builders Television'|trans }}</h1>
+          {{ title_suffix }}
+          <div class="m-feature-subtitle">{{ 'Stay up to date on the inductry leading topics we tackle at Information Builders.'|trans }}</div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+
+  {% if header %}
+    <section class="m-section m-section--bg-white-blue m-section--padding-top-medium m-section--padding-bottom-medium l-section m-section--sep-btm">
+
+      <div class="l-section-header row">
+        <div class="column small-12">
+        </div>
+      </div>
+
+      <div class="l-section-main row">
+        <div class="column small-12">
+          {{ header.view }}
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="m-section m-section--bg-light-blue m-section--padding-top-medium m-section--padding-bottom-medium l-section m-section--sep-btm">
+      {{ header.area }}
+      <div class="row">
+        <div class="column small-12">
+          <div class="l-cards l-cards--three m-card--border m-card--border-theme-1 m-card--bg-white m-card--text-style-small">
+            {% for row in header.view_1['#rows'][0]['#rows'] %}
+              {{ row }}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+
+  <section class="m-section m-section--bg-white m-section--padding-top-medium m-section--padding-bottom-small l-section">
+
+    <div class="l-section-header row">
+      <div class="column small-12">
+        <h3>{{ 'More videos from Information builders'|trans }}</h3>
+      </div>
+    </div>
+
+    {{ exposed }}
+    {{ attachment_before }}
+
+    <div class="l-section-main row">
+      <div class="columns small-12">
+        <div class="l-cards l-cards--three m-card--border m-card--border-theme-1 m-card--bg-white m-card--image-style-small m-card--text-style-small">
+          {{ rows[0]['#rows'] }}
+          <div class="gap"></div>
+          {{ empty }}
+          {{ attachment_after }}
+        </div>
+      </div>
+    </div>
+
+    <div class="l-section-footer row">
+      <div class="columns small-12">
+        {{ pager }}
+        {{ more }}
+      </div>
+    </div>
+  </section>
+
+</div>

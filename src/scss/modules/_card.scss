@@ -1,0 +1,1252 @@
+//
+// Module: Content Cards
+//
+
+// Background
+// - White
+// - Blue
+// - Light-Blue
+// - Purple
+// - Specific Overrides
+.m-card--bg {
+
+  &-white .m-card,
+  &-white.m-card {
+    background: $color-white;
+  }
+
+  &-grey .m-card,
+  &-grey.m-card {
+    background: #63777f;
+  }
+
+  &-blue .m-card,
+  &-blue.m-card {
+    background: $color-dark-blue;
+    border-color: $color-dark-blue;
+  }
+
+  &-blue .m-card a,
+  &-blue.m-card a {
+    color: $color-white;
+
+    &:hover {
+      color: rgba($color-white, .8);
+    }
+  }
+
+  &-light-blue .m-card,
+  &-light-blue.m-card {
+    background: $color-light-blue;
+    border-color: $color-light-blue;
+  }
+
+  &-purple .m-card,
+  &-purple.m-card {
+    background: $color-dark-purple;
+    border-color: $color-dark-purple;
+  }
+
+  &-purple .m-card a,
+  &-purple.m-card a {
+    color: $color-white;
+
+    &:hover {
+      color: rgba($color-white, .8);
+    }
+  }
+
+  &-purple .m-card,
+  &-purple.m-card,
+  &-blue .m-card,
+  &-blue.m-card {
+    &>* {
+      color: $color-white;
+    }
+
+    .m-link-text {
+      color: $color-white;
+    }
+
+    .m-link-text svg path,
+    .m-card-image svg path {
+      stroke: $color-white;
+    }
+  }
+
+  &-white .m-card,
+  &-white.m-card {
+    .m-card-section *:not(a) {
+      color: $color-grey;
+    }
+
+    .m-card-section a * {
+      color: $primary-color;
+    }
+
+    .m-card-section a {
+      text-decoration-color: $primary-color;
+    }
+
+    .m-link-text {
+      color: $primary-color;
+    }
+
+    .m-link-text svg path,
+    .m-card-image svg path {
+      stroke: $primary-color;
+    }
+  }
+
+  &-light-blue .m-card,
+  &-light-blue.m-card {
+    .m-card-section:last-child {
+      flex: 1 0 auto;
+    }
+  }
+
+}
+
+// Icon
+// - Center Align
+// - Analytics Report
+.m-card--icon {
+
+  // Image
+  .m-card-image {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 205px;
+    height: 50vw;
+
+    @include breakpoint(medium) {
+      height: 17vw;
+    }
+  }
+
+  .i-resource-analytics-report {
+    width: 150px;
+    height: 60px;
+
+    @include breakpoint(medium only) {
+      width: 120px;
+      height: 50px;
+    }
+  }
+
+  .i-fact-sheet,
+  .i-resource-white-paper,
+  .i-resource-ebook,
+  .i-resource-solutions-brief {
+    width: 60px;
+    height: 75px;
+
+    @include breakpoint(medium only) {
+      width: 50px;
+      height: 65px;
+    }
+  }
+
+}
+
+//Make Customers look like resources in node reference cards
+
+.field-paragraph--field-resources {
+  article.no-icon {
+    .m-card-image {
+      margin: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 205px;
+      height: 50vw;
+
+      @include breakpoint(medium) {
+        height: 17vw;
+      }
+
+      img {
+        max-width: none !important;
+      }
+    }
+  }
+
+}
+
+// Image Background
+// - Purple
+// - Light Purple
+// - Blue
+// - Light Blue
+// - Grey
+// - Light Grey
+.m-card--image-bg {
+
+  // Default
+  &-purple .m-card>.m-card-section:first-child,
+  &-purple .m-card>.m-card-image:first-child,
+  &-purple>.m-card-section:first-child,
+  &-purple>.m-card-image:first-child {
+    background-color: $color-dark-purple;
+
+    svg path {
+      stroke: $color-white;
+    }
+  }
+
+  // E-book
+  &-light-purple .m-card>.m-card-section:first-child,
+  &-light-purple .m-card>.m-card-image:first-child,
+  &-light-purple>.m-card-section:first-child,
+  &-light-purple>.m-card-image:first-child {
+    background-color: $color-purple;
+
+    svg path {
+      stroke: $color-white;
+    }
+  }
+
+  // Analytics Report
+  &-blue .m-card>.m-card-section:first-child,
+  &-blue .m-card>.m-card-image:first-child,
+  &-blue>.m-card-section:first-child,
+  &-blue>.m-card-image:first-child {
+    background-color: $color-dark-blue;
+
+    svg path {
+      stroke: $color-white;
+    }
+  }
+
+  // Solutions Brief
+  &-light-blue .m-card>.m-card-section:first-child,
+  &-light-blue .m-card>.m-card-image:first-child,
+  &-light-blue>.m-card-section:first-child,
+  &-light-blue>.m-card-image:first-child {
+    background-color: $color-blue;
+
+    svg path {
+      stroke: $color-white;
+    }
+  }
+
+  // Webcast
+  &-grey .m-card>.m-card-section:first-child,
+  &-grey .m-card>.m-card-image:first-child,
+  &-grey>.m-card-section:first-child,
+  &-grey>.m-card-image:first-child {
+    background-color: $color-grey;
+
+    svg path {
+      stroke: $color-white;
+    }
+  }
+
+  // White paper
+  &-light-grey .m-card>.m-card-section:first-child,
+  &-light-grey .m-card>.m-card-image:first-child,
+  &-light-grey>.m-card-section:first-child,
+  &-light-grey>.m-card-image:first-child {
+    background-color: $color-light-grey;
+
+    svg path {
+      stroke: $color-dark-purple;
+    }
+  }
+
+}
+
+// Border
+// - Base
+// - Theme-1 (Purple)
+// - Theme-2 (Blue)
+// - Theme-3 (Double)
+// - Image
+.m-card--border {
+
+  .m-card {
+    border-radius: 0;
+    border-top: 1px solid $color-light-grey;
+    border-right: 1px solid $color-light-grey;
+    border-bottom: 1px solid $color-light-grey;
+    border-left: 1px solid $color-light-grey;
+  }
+
+  &-theme-1 .m-card-section {
+    border-top: 3px solid $color-purple;
+  }
+
+  &-theme-2 .m-card-section {
+    border-top: 3px solid $color-dark-blue;
+  }
+
+  &-theme-3 .m-card {
+    border-top: 3px solid $color-dark-blue;
+  }
+
+  &-theme-3 .m-card-section {
+    border-top: 3px solid $color-purple;
+  }
+
+  &-theme-4 .m-card {
+    border-left: 3px solid $color-dark-blue;
+  }
+
+  &.m-card--layout-1 {
+    .m-card-image>img {
+      height: 100%;
+    }
+
+    .m-card-image .m-video {
+      height: 100%;
+    }
+
+    //.m-card-image svg path { stroke: none; }
+
+    .m-card-image img {
+      position: absolute;
+      z-index: 0;
+      transform: translate3d(-50%, -50%, 0);
+      left: 50%;
+      top: 50%;
+      width: 120%;
+      max-width: 120%;
+    }
+  }
+
+  .m-card-section {
+    flex: 1 0 auto;
+  }
+
+  // Image
+  .m-card-image {
+    margin: 0;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    //max-height: 215px;
+    //height: 50vw;
+    //@include breakpoint(medium) { height: 19vw; }
+    //&--small {  max-height: 140px; }
+  }
+
+  .m-card-image>img {
+    height: 100%;
+  }
+
+  .m-card-image .m-video {
+    height: 100%;
+  }
+
+  .m-card-image svg path {
+    stroke: none;
+  }
+
+  .m-card-image img {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    //transform: translate3d(-50%, -50%, 0);
+    //left: 50%;
+    //top: 50%;
+    //width: 120%;
+    //max-width: 120%;
+  }
+
+}
+
+// Success Styling
+.m-card--success {
+  margin-top: 2rem;
+
+  .m-card {
+    @include breakpoint(medium) {
+      margin-bottom: 0;
+    }
+  }
+
+  .m-card-section {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .m-card p {
+    margin-bottom: 0;
+  }
+}
+
+// Image Size
+.m-card--image-style {
+
+
+  // Smaller
+  &-larger-spot.m-card--border .m-card .m-card-image {
+    max-height: 485px;
+  }
+
+
+  // Smaller
+  &-small.m-card--border .m-card .m-card-image {
+    max-height: 140px;
+
+    // Increase play icon size
+    .i-play {
+      width: 50px;
+      height: 50px;
+    }
+
+    .i-resource-analytics-report {
+      width: 120px;
+      height: 50px;
+    }
+
+    .i-fact-sheet,
+    .i-resource-white-paper,
+    .i-resource-ebook,
+    .i-resource-solutions-brief {
+      width: 40px;
+      height: 55px;
+    }
+
+  }
+}
+
+// Text Size
+.m-card--text-style {
+
+  // Smaller
+  &-small .m-card .m-card-title {
+    font-size: rem-calc(20px);
+  }
+
+  // Larger
+  &-large .m-card .m-card-title {
+    font-size: rem-calc(20px);
+
+    @include breakpoint(medium) {
+      font-size: rem-calc(26px);
+    }
+
+    @include breakpoint(large) {
+      font-size: rem-calc(31px);
+    }
+  }
+
+}
+
+// Layout-1
+.m-card--layout-1 {
+
+  .m-card-flex+.m-button {
+    margin-top: 1.5rem;
+
+    @include breakpoint(medium) {
+      margin-top: 2rem;
+    }
+  }
+
+}
+
+// Layout-2
+.m-card--layout-2 {
+
+  &.m-card--border .m-card-section {
+    flex: 0 1 auto;
+  }
+
+  &.m-card--border .m-card-image {
+    height: auto;
+  }
+
+  .m-card {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .m-card-section {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    flex: 0 1 auto;
+
+    @include breakpoint(medium) {
+      align-self: center;
+    }
+
+    &:first-child {
+      padding-right: rem-calc(20px);
+
+      @include breakpoint(medium only) {
+        padding-right: 1rem;
+      }
+    }
+
+    &:last-child {
+      text-align: left;
+      min-width: 0;
+      width: 100%;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Image container
+  .m-card-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    img {
+      max-width: none;
+      position: relative;
+      transform: none;
+      left: auto;
+      right: auto;
+      top: auto;
+    }
+
+    >&:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Image element
+  .m-card-image img {
+    width: 100px;
+    height: 100px;
+
+    @include breakpoint(medium) {
+      width: 85px;
+      height: 85px;
+    }
+
+    @include breakpoint(large) {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
+  .m-card-flex {
+    flex: inherit;
+    hyphens: auto;
+    word-break: break-word;
+  }
+
+  // Title
+  .m-card-title {
+    font-size: rem-calc(20);
+    margin-bottom: 0;
+
+    @include breakpoint(medium) {
+      font-size: rem-calc(18);
+    }
+
+    @include breakpoint(large) {
+      font-size: rem-calc(22);
+    }
+  }
+
+  // Button
+  .m-card-section .m-link {
+    margin-top: .875rem;
+  }
+
+}
+
+// Drupal Fixes
+
+.m-card--layout-1 .m-card>.paragraph,
+.m-card--layout-1 .m-card>article {
+  display: inherit;
+  flex-grow: 1;
+  flex-direction: column;
+
+  .m-card-section {
+    flex-grow: 1;
+  }
+}
+
+.m-card--layout-2 .m-card>.paragraph,
+.m-card--layout-2 .m-card>article {
+  display: inherit;
+  flex-grow: 1;
+  flex-direction: row;
+}
+
+.m-card--layout-1 .m-card .contextual-region {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+
+  .m-card-section {
+    flex-grow: 1;
+  }
+}
+
+.m-card--layout-2 .m-card .contextual-region {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+}
+
+
+// BASE
+
+.m-card {
+  margin-bottom: 1.5rem;
+  background: transparent;
+  overflow: hidden;
+  color: $color-grey;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(large) {
+    margin-bottom: 2rem;
+  }
+}
+
+
+// SECTIONS
+
+.m-card-section {
+  display: flex;
+  flex-direction: column;
+  padding: rem-calc(24px);
+}
+
+.m-card-section:first-child+.m-card-section {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.m-card-section:nth-child(2)+.m-card-section {
+  padding-bottom: 0;
+}
+
+.m-card-image+.m-card-section,
+.m-card-section+.m-card-section {
+  flex: 1 auto;
+}
+
+.m-card-flex {
+  flex: 1 0 auto;
+}
+
+
+// ELEMENT
+
+.m-card-image {
+  position: relative;
+  overflow: hidden;
+  font-size: 0;
+}
+
+.m-card .m-card--image-style--bordered .m-card-image {
+  display: inline-block;
+
+  img {
+    padding: rem-calc(30px);
+    background: $color-dark-purple;
+
+    @include breakpoint(medium only) {
+      padding: rem-calc(25px);
+    }
+  }
+}
+
+// Icon
+.m-card-image span {
+  display: inline-block;
+  z-index: 1;
+
+  svg {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.m-card-image--small span svg {
+  width: 50px;
+  height: 50px;
+}
+
+// Video Icon
+.m-card-image {
+  span .i-play {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: rem-calc(60px);
+    height: rem-calc(60px);
+    z-index: 1;
+
+    @include breakpoint(medium) {
+      width: rem-calc(56px);
+      height: rem-calc(56px);
+    }
+
+    path {
+      stroke: none !important;
+    }
+
+    .i-play-fill {
+      transition: all .2s;
+      opacity: .95;
+    }
+  }
+
+  &:hover .i-play {
+    .i-play-fill {
+      fill: #fc0e1c;
+      opacity: 1;
+    }
+  }
+}
+
+
+// Text
+.m-card-description,
+.m-card-details {
+  font-size: 1rem;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.m-card-details {
+  margin: 0;
+  list-style: none;
+}
+
+// Category
+.m-card-category {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: rem-calc(14px);
+  margin-bottom: .25rem;
+}
+
+// Title
+.m-card-title {
+  display: inline-block;
+  line-height: 1.4;
+  font-size: rem-calc(24px);
+  margin-bottom: rem-calc(16px);
+
+  &--small {
+    font-size: rem-calc(20px);
+  }
+
+  a {
+    //color: inherit;
+
+    &:hover {
+      //color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Link
+.m-card-section .m-link {
+  @include breakpoint(small only) {
+    margin-top: 2rem;
+  }
+
+  float: none;
+  margin-top: 2.5rem;
+}
+
+// Button
+.m-card-section .m-button {
+  justify-items: center;
+  align-self: center;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 220px;
+}
+
+// Breadcrumb
+.m-card-breadcrumb {
+  display: inline-block;
+}
+
+
+// VARIANTS
+
+// Career Card
+.m-card--career {
+  height: 100%;
+  padding: 25px 20px 45px;
+
+  @include breakpoint(medium only) {
+    padding: 10px 0 30px;
+  }
+
+  // Image
+  .m-card-image {
+    width: 90px;
+    height: 90px;
+  }
+
+  // Text
+  .m-card-title {
+    font-size: rem-calc(48px);
+    margin-bottom: 0;
+
+    @include breakpoint(medium only) {
+      font-size: rem-calc(35px);
+    }
+  }
+
+  .m-card-subtitle {
+    font-size: rem-calc(20px);
+    margin-bottom: 0;
+
+    @include breakpoint(medium only) {
+      font-size: rem-calc(18px);
+    }
+  }
+
+  .m-card-description {
+    margin: 0 auto;
+  }
+}
+
+// Accelerator Card
+.m-card--accelerator {
+  text-align: center;
+
+  // Image
+  .m-card-image {
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    top: 0;
+    right: 0;
+    width: 100%;
+    display: block;
+    margin: 0;
+  }
+
+  // Button
+  .m-button {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Text
+  .m-card-description {
+    margin-bottom: rem-calc(40px);
+
+    @include breakpoint(medium) {
+      margin-bottom: rem-calc(60px);
+    }
+  }
+
+}
+
+// Search Card
+.m-card--search {
+  border-radius: 0;
+  text-align: left;
+  border-top: 1px solid $color-light-grey;
+  border-right: 1px solid $color-light-grey;
+  border-bottom: 1px solid $color-light-grey;
+  border-left: 1px solid $color-light-grey;
+
+  // Add blue border
+  @extend .m-card--border-theme-2;
+
+  .views-field-type {
+    @extend .m-card-category;
+    margin-bottom: 1rem;
+  }
+
+  .views-field-title {
+    @extend .m-card-title;
+  }
+
+  .views-field-field-teaser-copy {
+    @extend .m-card-description;
+  }
+
+}
+
+
+
+//Hide some location info on event teaser cards
+.m-card--event {
+  .view-mode-teaser_card {
+    .m-card-description {
+      p.address br {
+        display: none;
+      }
+
+      .address-line1,
+      .address-line2,
+      .postal-code {
+        display: none;
+      }
+
+      .country {
+        display: block
+      }
+    }
+  }
+}
+
+.view-mode-featured {
+  .m-card-flex {
+    .field-name-field-venue-name {
+      margin-bottom: 0;
+    }
+
+    .field-node--field-address {
+      p.address br {
+        display: none;
+      }
+
+      .address-line1,
+      .address-line2,
+      .postal-code {
+        display: none;
+      }
+
+      .country {
+        display: block
+      }
+
+    }
+  }
+}
+
+
+
+
+
+// Featured Customer
+.m-card--featured-customer {
+  .m-card-section {
+    flex: 1;
+  }
+
+  .m-link {
+    margin-top: 1.5rem;
+  }
+}
+
+// Event Card
+.m-card--event {
+
+  .m-card-image {
+    &:before {
+      content: '';
+      background: linear-gradient(0deg, rgba(0, 0, 0, .40) 0%, rgba(0, 0, 0, 0.40) 40%, rgba(255, 255, 255, 0) 100%);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+  }
+
+  .m-card-image img {
+    width: 100%;
+
+    @include breakpoint(medium only) {
+      min-height: 140px;
+      object-fit: cover;
+    }
+  }
+
+  .m-event-title {
+    bottom: rem-calc(10px);
+    left: 1.5rem;
+    position: absolute;
+    z-index: 3;
+
+    @include breakpoint(medium) {
+      bottom: rem-calc(20px);
+    }
+  }
+
+  .field-node--field-tax-event-type {
+    font-size: rem-calc(14px);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: .325rem;
+  }
+
+  .paragraph--type--session {
+    font-size: rem-calc(14px);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: .325rem;
+  }
+
+  .m-card-title {
+    font-size: rem-calc(20px);
+    margin-bottom: 0;
+  }
+
+  // - Featured Variant
+  &-featured {
+    border-top: 1px solid $color-light-grey;
+    border-right: 1px solid $color-light-grey;
+    border-bottom: 1px solid $color-light-grey;
+    border-left: 1px solid $color-light-grey;
+
+    .m-card-image:before {
+      content: none;
+    }
+
+    .m-event-title {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      margin-bottom: 1rem;
+    }
+
+    .m-card-title {
+      margin-bottom: 1.25rem;
+    }
+
+    .field-node--field-venue-name {
+      margin-bottom: 1.5rem;
+    }
+
+    .field-node--field-event-description {
+      margin-bottom: 1.5rem;
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .m-link {
+      margin-top: 1.5rem;
+    }
+  }
+
+  // - Listing Variant
+  &-listing {}
+
+  //- Event status
+  .m-card-status {
+    width: 190px;
+    position: absolute;
+    top: 25px;
+    left: auto;
+    right: -60px;
+    text-align: center;
+    font-size: .8rem;
+    line-height: 30px;
+    letter-spacing: 1px;
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    text-transform: uppercase;
+
+    @include breakpoint(medium only) {
+      top: 15px;
+      right: -70px;
+      line-height: 25px;
+    }
+
+    @include breakpoint(large) {
+      top: 20px;
+      right: -65px;
+    }
+
+    &.full {
+      background: #FE6858;
+    }
+
+    &.waitlist {
+      background: #07C6E2;
+    }
+
+    & * {
+      color: #f0f0f0 !important;
+    }
+  }
+
+  .field-name-field-start-date-and-time,
+  .field-name-field-start-date-and-time div {
+    display: inline;
+  }
+}
+
+// Listing Card (used with event cards)
+.m-card--event-listing {
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  text-align: left;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-card-section {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    @include breakpoint(medium) {
+      padding-right: 2.325rem;
+      padding-left: 2.325rem;
+    }
+
+    &>div {
+      align-content: space-evenly;
+      align-items: center;
+    }
+  }
+
+  .m-card-section .column-title {
+    font-size: rem-calc(18px);
+    font-weight: 600;
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    @include breakpoint(small only) {
+      margin-bottom: 1rem;
+    }
+
+    @include breakpoint(medium) {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+  }
+
+  .m-card-section .column-date {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    @include breakpoint(small only) {
+      margin-bottom: 1rem;
+    }
+
+    @include breakpoint(medium) {
+      margin-bottom: 0;
+      flex: 1 1 0;
+      min-width: initial;
+      max-width: initial;
+    }
+  }
+
+  .m-card-section .column-contact,
+  .m-card-section .column-venue {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    @include breakpoint(small only) {
+      margin-bottom: 1rem;
+    }
+
+    @include breakpoint(medium) {
+      margin-bottom: 0;
+      flex: 1 1 0;
+      min-width: initial;
+      max-width: initial;
+    }
+  }
+
+  .m-card-section .column-button {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    @include breakpoint(small only) {
+      margin-top: .5rem;
+    }
+
+    @include breakpoint(medium) {
+      flex: 0 0 27%;
+      max-width: 27%;
+    }
+
+    .m-button {
+      @include breakpoint(small only) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  // if title and button are only available
+  .m-card-section .column-title+.column-empty+.column-empty+.column-button {
+    @include breakpoint(medium) {
+      text-align: right;
+    }
+  }
+
+  .m-card-section .column-empty {}
+
+  // Date/Time (places timezone on a new line-break after date)
+  .paragraph--type--session span {
+    display: block;
+  }
+}
+
+// Listing Card Headers (used with event cards)
+.event-headers {
+  display: none;
+  border-bottom: 1px solid $color-light-grey;
+  font-size: .8rem;
+  margin-bottom: 2rem;
+  text-align: left;
+
+  @include breakpoint(medium) {
+    display: block;
+  }
+
+  .m-card-section {
+    @include breakpoint(medium) {
+      padding-right: 2.325rem;
+      padding-left: 2.325rem;
+    }
+
+    &>div {
+      align-content: space-evenly;
+    }
+  }
+
+  .column:nth-child(1) {
+    @include breakpoint(medium) {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+  }
+
+  .column:nth-child(2),
+  .column:nth-child(3) {
+    @include breakpoint(medium) {
+      flex: 1 1 0;
+      min-width: initial;
+      max-width: initial;
+    }
+  }
+
+  .column:last-child {
+    @include breakpoint(medium) {
+      flex: 0 0 27%;
+      max-width: 27%;
+    }
+  }
+}

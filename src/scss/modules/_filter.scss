@@ -1,0 +1,169 @@
+//
+// Filter
+//
+
+// Base
+.m-filter {
+  margin-bottom: 1em;
+  position: relative;
+  @include breakpoint(medium) { margin-bottom: 0; }
+  label { display: none; }
+}
+
+.m-filter-button {
+  display: block;
+  position: relative;
+  background: transparent;
+  border: 1px solid $primary-color;
+  border-radius: 5px;
+  font-size: 1rem;
+  line-height: 1;
+  color: $primary-color;
+  padding: 1rem 1.5rem 1rem 1rem;
+  @include breakpoint(medium only) { padding-left: .75rem; padding-right: .75rem; }
+
+  span { float: right; }
+
+  .i-close,
+  .i-arrow-down {
+    display: inline-block;
+    float: none;
+    line-height: 1;
+    margin-left: 0;
+    position: relative;
+    top: -.1em;
+    vertical-align: middle;
+  }
+
+  .i-close {
+    height: 14px;
+    width: 14px;
+    left: 0;
+    path { fill: $color-dark-blue; }
+  }
+
+  .i-arrow-down {
+    height: 8px;
+    width: 16px;
+  }
+
+  &.is-open .i-arrow-down { margin-top: 0; }
+}
+
+// Filter List
+.m-filter-list,
+.m-filter .m-filter-select-list {
+  background: $color-light-blue;
+  margin: 0;
+  position: absolute;
+  margin-top: 0;
+  max-height: 400px;
+  overflow-y: inherit;
+  right: 1.125em;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.13), 0 0 25px 0 rgba(0,0,0,0.03);
+
+  &.is-scrollable {
+    overflow-y: scroll;
+  }
+}
+
+.m-filter-list.is-collapsed {
+  display: none;
+}
+
+.m-filter-list li {
+  list-style: none;
+  border: none;
+}
+
+// Invisible Checkbox
+.m-filter-list .m-filter-checkbox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  z-index: 2;
+}
+
+.m-filter-list .m-filter-label,
+.m-filter--sort .m-filter-list li,
+.m-filter .m-filter-select-list li {
+  position: relative;
+  display: block;
+  margin: 0;
+  text-align: left;
+  font-size: rem-calc(16px);
+  padding: 1rem 1.5rem 1rem 1rem;
+  line-height: 1.25;
+  font-weight: 500;
+  cursor: pointer;
+  color: $color-dark-blue;
+
+  &:hover { background-color: #e1f3fc; }
+}
+
+.m-filter-list .m-filter-label {
+
+  &:after {
+    content: '';
+    position: absolute;
+    //background: $checkBlack no-repeat;
+    right: 18px;
+    top: 40%;
+    width: 12px;
+    height: 12px;
+    transform-origin: 4px 50%;
+    opacity: 0;
+  }
+}
+
+.m-filter-list .m-filter-checkbox:checked + .m-filter-label {
+  background-color: #e1f3fc;
+  &:after { opacity: 1; }
+}
+
+.m-filter-list li:first-child .m-filter-label,
+.m-filter--sort .m-filter-list li:first-child,
+.m-filter .m-filter-select-list li:first-child {
+  padding-top: 1.25rem;
+}
+.m-filter-list li:last-child .m-filter-label,
+.m-filter--sort .m-filter-list li:last-child,
+.m-filter .m-filter-select-list li:last-child {
+  padding-bottom: 1.25rem;
+}
+
+
+// Custom Select
+.m-filter select { display: none; }
+
+.m-filter select {
+  border-color: $color-dark-blue;
+  color: $color-dark-blue;
+  height: 2.5rem;
+  margin: 0;
+  appearance: none;
+  border: 1px solid $color-grey;
+  background: $color-white;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.m-filter .m-filter-select { position: relative; }
+
+.m-filter .m-filter-select.is-active .m-filter-select-list {
+  visibility: visible;
+  opacity: 1;
+}
+
+.m-filter .m-filter-select-list {
+  opacity: 0;
+  visibility: hidden;
+  min-height: 10px;
+  min-width: 100%;
+}

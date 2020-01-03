@@ -1,0 +1,2187 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\Core\Render\Markup;
+use \Drupal\block\Entity\Block;
+use \Drupal\taxonomy\Entity\Term;
+use Drupal\node\Entity\Node;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Link;
+use Drupal\views\Views;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Component\Utility;
+
+/**
+ * Implements hook_theme_suggestions_alter
+ *
+ * @param array $suggestions
+ * @param array $variables
+ *
+ * @return array
+ */
+function infobuilders_theme_suggestions_alter(
+  array &$suggestions,
+  array $variables
+) {
+
+  if (isset($variables['element']) && isset($variables['element']['#type']) && $variables['element']['#type'] == 'form') {
+    $original_theme_hook = $variables['theme_hook_original'];
+
+    $suggestions[] = $original_theme_hook . '__' . str_replace('-', '_', $variables['element']['#id']);
+  }
+
+  if (isset($variables['elements']) && isset($variables['elements']['#entity_type']) && $variables['elements']['#entity_type'] == 'taxonomy_term') {
+    $original_theme_hook = $variables['theme_hook_original'];
+
+    $suggestions[] = $original_theme_hook . '__'. $variables['elements']['name']['#bundle'] . '__' . $variables['elements']['#view_mode'];
+  }
+
+
+  return $suggestions;
+
+}
+
+/**
+ * Implements hook_preprocess_block()
+ */
+function infobuilders_preprocess_block(&$variables) {
+  $variables['language_id'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  if (!empty($variables['elements']) && $variables['elements']['#id'] == 'instagram_block_block') {
+    $children = array();
+    foreach ($variables['content']['children'] as $item) {
+      $children[] = $item;
+    }
+    $variables['content']['children'] = $children;
+  }
+  elseif (!empty($variables['elements']) && $variables['elements']['#id'] == 'languageswitchercontent'){
+    $variables['attributes']['class'][] = 'm-header-right';
+  }
+
+}
+
+/**
+ * Implements theme_suggestions_HOOK_alter().
+ * Give me template suggestions based on paragraph type and id and/or language
+ */
+function infobuilders_theme_suggestions_paragraph_alter(array &$suggestions, array $variables) {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $paragraph = $variables['elements']['#paragraph'];
+    array_push($suggestions, 'paragraph__' . $paragraph->getType().'__'.$paragraph->id());
+  }
+}
+/** Make Language variable available to paragraph header  */
+function infobuilders_preprocess_paragraph(&$variables) {
+  $paragraph = $variables['paragraph'];
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $variables['paralang'] = $language;
+
+}
+
+
+/** Get tpl name suggestions for links tpl */
+function infobuilders_theme_suggestions_links_alter(&$suggestions, $vars, $hook) {
+
+  // Get the node type.
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof \Drupal\node\NodeInterface) {
+    $type = $node->getType();
+
+    // Create the theme hook suggestion.
+    $suggestions[] = 'links__' . 'type_' . $type;
+
+  }
+
+
+}
+
+
+/**
+ *
+ * Implements template_preprocess_field().
+ *
+ * @param $variables
+ * @param $hook
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ */
+function infobuilders_preprocess_field(&$variables, $hook) {
+  $fieldName = $variables['element']['#field_name'];
+  $element   = $variables['element'];
+  $paragraph = $element['#object'];
+  //$language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+
+  //VIDEO PARAGRAPH/FIELD
+  if ('field_video_link' == $fieldName || 'field_video' == $fieldName) {
+    $provider_manager        = \Drupal::service('video_embed_field.provider_manager');
+    $videoValue              = $element['#object']->get($fieldName)->value;
+    $provider      = $provider_manager->loadProviderFromInput($videoValue);
+
+    if ($provider) {
+      $provider->downloadThumbnail();
+      $videoThumbnailUri       = $provider->getLocalThumbnailUri();
+      $variables['videoUri'] = $videoValue;
+      $variables['videoId']    = $element['#object']->id();
+      $variables['videoThumb'] = [
+        '#theme' => 'image_style',
+        '#style_name' => 'featured_video',
+        '#uri' => $videoThumbnailUri,
+        '#attributes' => [
+          'class' => [
+            'img-responsive'
+          ]
+        ]
+      ];
+
+      $width = 854;
+      $height = 480;
+      $autoplay = FALSE;
+      $variables['videoIframe'] = $provider->renderEmbedCode($width, $height, $autoplay);
+
+      $variables['videoIframe']['#attributes']['id'] = 'frame-' . $element['#object']->id();
+    }
+
+    $variables['videoLink'] = $element['#object']->url();
+  }
+
+  if (in_array($fieldName, array('field_resources', 'field_page', 'field_card_item'))) {
+
+    //- Get layout settings
+    if (isset($paragraph->field_layout_settings) && !$paragraph->field_layout_settings->isEmpty()) {
+      $layoutSettingsObject  = $paragraph->field_layout_settings->first()->getValue()['target_id'];
+      $layoutSettings = Paragraph::load($layoutSettingsObject);
+
+      if (isset($layoutSettings->field_background_color) && !$layoutSettings->field_background_color->isEmpty()) {
+        $backgroundColor = $layoutSettings->field_background_color->first()->getValue();
+        $variables['backgroundColor'] = isset($backgroundColor['value']) ? $backgroundColor['value'] : NULL;
+      }
+
+      if (isset($layoutSettings->field_border_style) && !$layoutSettings->field_border_style->isEmpty()) {
+        $borderStyle = $layoutSettings->field_border_style->first()->getValue();
+        $variables['borderStyle'] = isset($borderStyle['value']) ? $borderStyle['value'] : NULL;
+      }
+
+      if (isset($layoutSettings->field_border_wrap) && !$layoutSettings->field_border_wrap->isEmpty()) {
+        $borderWrap = $layoutSettings->field_border_wrap->first()->getValue();
+        $variables['borderWrap'] = isset($borderWrap['value']) ? $borderWrap['value'] : NULL;
+      }
+
+      if (isset($layoutSettings->field_button_style) && !$layoutSettings->field_button_style->isEmpty()) {
+        $buttonStyle = $layoutSettings->field_button_style->first()->getValue();
+        $variables['buttonStyle'] = isset($buttonStyle['value']) ? $buttonStyle['value'] : NULL;
+      }
+
+      if (isset($layoutSettings->field_columns) && !$layoutSettings->field_columns->isEmpty()) {
+        $subColumns = $layoutSettings->field_columns->first()->getValue();
+        $variables['subColumns'] = isset($subColumns['value']) ? $subColumns['value'] : NULL;
+      }
+
+      if (isset($layoutSettings->field_layout_mode) && !$layoutSettings->field_layout_mode->isEmpty()) {
+        $layoutMode = $layoutSettings->field_layout_mode->first()->getValue();
+        $variables['layoutStyle'] = isset($layoutMode['value']) ? $layoutMode['value'] : NULL;
+      }
+
+      if (isset($layoutSettings->field_text_alignment) && !$layoutSettings->field_text_alignment->isEmpty()) {
+        $textAlignment = $layoutSettings->field_text_alignment->first()->getValue();
+
+        $variables['textAlignment'] = isset($textAlignment['value']) ? $textAlignment['value'] : NULL;
+      }
+
+
+      if (isset($layoutSettings->field_image_display_size) && !$layoutSettings->field_image_display_size->isEmpty()) {
+        /*
+         * small => rectangle_small
+         * medium => rectangle_medium
+         * large => rectangle_large
+         * bordered => square_98
+         * square => square_98
+         */
+
+        $imageDisplay = $layoutSettings->field_image_display_size->first()->getValue();
+        switch ($imageDisplay['value']) {
+          case 'small':
+            $imageStyle = 'rectangle_small';
+            break;
+          case 'medium':
+            $imageStyle = 'rectangle_medium';
+            break;
+          case 'large':
+            $imageStyle = 'rectangle_large';
+            break;
+          case 'bordered':
+          case 'square':
+            $imageStyle = 'square_98';
+            break;
+          case 'square_160':
+            $imageStyle = 'square_160';
+            break;
+
+          default:
+            $imageStyle = 'rectangle_large';
+            break;
+        }
+        if (isset($imageStyle)) {
+          $style = \Drupal::entityTypeManager()->getStorage('image_style')->load($imageStyle);
+          if (isset($paragraph->field_teaser_image) && !$paragraph->field_teaser_image->isEmpty()) {
+            $imageUri = $paragraph->field_teaser_image->entity->getFileUri();
+          } else if (isset($paragraph->field_card_image) && !$paragraph->field_card_image->isEmpty()) {
+            $imageUri = $paragraph->field_card_image->entity->getFileUri();
+          }
+
+          if (isset($imageUri)) {
+            $imageStyleUri = $style->buildUrl($imageUri);
+            $variables['imageUri'] = $imageStyleUri;
+          }
+          $variables['imageStyle'] = isset($imageDisplay['value']) ? 'm-card--image-style--' . $imageDisplay['value'] : NULL;
+        }
+      }
+    }
+
+  }
+
+  if ('field_child_elements' == $fieldName) {
+    if (isset($paragraph->field_columns) && !$paragraph->field_columns->isEmpty()) {
+      $colNum                            = $paragraph->field_columns->value;
+      $variables['sectionColumns'] = $colNum;
+    }
+  }
+
+  if ('field_customer' == $fieldName) {
+    if (isset($paragraph->field_display_mode) && !$paragraph->field_display_mode->isEmpty()) {
+      $displayMode = $paragraph->field_display_mode->first()->getValue();
+      if ($displayMode['value'] == 'customer_carousel_') {
+        $variables['content_attributes']['class'][] = 'm-testimonial';
+      }
+      if ($displayMode['value'] == 'carousel_no_line') {
+        $variables['content_attributes']['class'][] = 'm-testimonialz';
+      }
+
+
+      if ($displayMode['value'] == 'logo') {
+        $variables['content_attributes']['class'][] = 'm-bar l-bar l-bar--4';
+        foreach ($variables['items'] as $key => $item) {
+          $variables['items'][$key]['attributes']->addClass('m-bar-item');
+        }
+      }
+      if ($displayMode['value'] == 'company_provided_logo') {
+        $variables['content_attributes']['class'][] = 'm-bar l-bar l-bar--6';
+        foreach ($variables['items'] as $key => $item) {
+          $variables['items'][$key]['attributes']->addClass('m-bar-item');
+        }
+      }
+      if ($displayMode['value'] == 'logo_black_and_white') {
+        $variables['content_attributes']['class'][] = 'm-bar l-bar l-bar--6 logo-bw';
+        foreach ($variables['items'] as $key => $item) {
+          $variables['items'][$key]['attributes']->addClass('m-bar-item');
+        }
+      }
+    }
+  }
+
+  if ('field_outcomes' == $fieldName) {
+    if (isset($paragraph->field_display_mode) && !$paragraph->field_display_mode->isEmpty()) {
+      $displayMode = $paragraph->field_display_mode->first()->getValue();
+      if ($displayMode['value'] == 'bubbles_alternating') {
+        $variables['attributes']['class'][] = 'l-circle l-circle--alternate row small-up-2 medium-up-4';
+      } else {
+        $variables['attributes']['class'][] = 'l-circle l-circle--inline row small-up-1 medium-up-4';
+      }
+    }
+  }
+
+}
+
+function infobuilders_preprocess_menu(array &$variables) {
+  // add language to menu twigs
+  $variables['language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
+}
+
+
+
+/**
+ * Implements template_preprocess_html().
+ *
+ * Adds additional classes
+ */
+
+use Drupal\Component\Utility\Html;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+function infobuilders_preprocess_html(&$variables) {
+
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    //var_dump($node instanceof \Drupal\node\NodeInterface); die;
+    if ($node instanceof \Drupal\node\NodeInterface){
+        /**
+         * Get the term id from the 'field_page_sub_type' taxonomy field.
+         * If greater than zero, load the term and acquire the name value
+         * as a css safe value. Add to body class
+         */
+        if($node->hasField('field_page_sub_type')) {
+          $tid = $node->get('field_page_sub_type')->target_id;
+          if($tid > 0) {
+            $term_object = Term::load($tid);
+            $variables['attributes']['class'][] = 'page-sub-type-' . Html::getClass($term_object->get('name')->value);
+          }
+        }
+        /**
+         * Get the term id from the 'field_blog_topic' taxonomy field.
+         * If greater than zero, load the term and acquire the name value
+         * as a css safe value. Add to body class
+         */
+        if($node->hasField('field_blog_topic')) {
+          $tid = $node->get('field_blog_topic')->target_id;
+          if($tid > 0) {
+            $term_object = Term::load($tid);
+            $variables['attributes']['class'][] = 'blog-topic-' . Html::getClass($term_object->get('name')->value);
+          }
+        }
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_node
+ *
+ * Add template suggestions and classes
+ */
+function infobuilders_preprocess_node(&$variables) {
+
+  $node = $variables['elements']['#node'];
+  $nid = $node->id();
+  $nodeType = $node->getType();
+  $viewMode = $variables['elements']['#view_mode'];
+
+  //OUTCOME BLOCK : bubbles alternating display mode
+  //note: this fails if we have reuse the same node multiple times in the entity reference field
+  //however this use case currently not anticipated
+
+  if ($viewMode === 'bubbles_alternating') {
+    // Get the node ID.
+    $variables['nid'] = $nid;
+    $parent           = $node->_referringItem->getEntity();//$variables['elements']['#node']->_referringItem->getEntity();
+    $outcomes         = $parent->get('field_outcomes')->getValue();
+
+    foreach ($outcomes as $key => $outcome) {
+      if ($outcome['target_id'] == $nid) {
+        $variables['tree_position'] = $key;
+      }
+    }
+  }
+
+  if ($nodeType == 'resource') {
+    $linkTitle = '';
+    if (!$node->get('field_resource_type')->isEmpty()) {
+      $resourceEntity = $node->get('field_resource_type')->entity;
+      $linkTitle = $resourceEntity->get('field_link_title')->value;
+	  $unGated = $node->get('field_not_gated')->value;
+
+      if ($viewMode == 'teaser_card' || $viewMode == 'teaser' || $viewMode == 'featured') {
+        //- Taxonomy term IDs for "Solutions Brief" and "Fact Sheet", 11 ebooks only if ungated
+        if ((in_array($resourceEntity->id(), array(21, 16))) || (($resourceEntity->id() == 11) && ($unGated))) {
+
+          if (!$node->field_resource_file->isEmpty()) {
+            $resourceFileUri = file_create_url($node->field_resource_file->entity->getFileUri());
+          }
+
+          if (isset($resourceFileUri)) {
+            $variables['url'] = $resourceFileUri;
+            $variables['isExternal'] = TRUE;
+          }
+        }
+      } elseif ($viewMode == "full"){
+        // send anon factsheet requests directly to the PDF
+        if($resourceEntity->id() == 16){
+          if (!$node->field_resource_file->isEmpty() && (\Drupal::currentUser()->isAnonymous())) {
+            $route_name = file_create_url($node->field_resource_file->entity->getFileUri());
+            $status_code = "302";
+            $redirect = new RedirectResponse($route_name, $status_code);
+            $redirect->send();
+          }
+        }
+      }
+
+    }
+    if (!empty($linkTitle)) {
+      $variables['linkTitle'] = $linkTitle;
+    }
+
+  }
+
+  if ($nodeType == 'page' || $nodeType == 'resource') {
+
+    if (in_array($viewMode, array('teaser_card', 'teaser'))) {
+
+      //- Content being loaded from entity reference field
+      if (isset($node->_referringItem)) {
+        $parent           = $node->_referringItem->getEntity();
+
+        if (!$parent->get('field_layout_settings')->isEmpty()) {
+
+          //$layoutSettings = Paragraph::load($parent->get('field_layout_settings')->first()->getValue()['target_id']);
+          $layoutSettings = $parent->field_layout_settings->entity;
+
+          if (isset($layoutSettings)) {
+            if (isset($layoutSettings->field_button_style) && !$layoutSettings->field_button_style->isEmpty()) {
+              $buttonValue = $layoutSettings->field_button_style->first()->getValue();
+              if (isset($buttonValue['value'])) {
+                $variables['buttonStyle'] = $buttonValue['value'];
+              }
+            }
+
+            if (isset($layoutSettings->field_layout_mode) && !$layoutSettings->field_layout_mode->isEmpty()) {
+              $layoutMode = $layoutSettings->field_layout_mode->first()->getValue();
+              $variables['layoutStyle'] = isset($layoutMode['value']) ? $layoutMode['value'] : NULL;
+            }
+
+            if (isset($layoutSettings->field_image_display_size) && !$layoutSettings->field_image_display_size->isEmpty()) {
+              /*
+               * small => rectangle_small
+               * medium => rectangle_medium
+               * large => rectangle_large
+               * bordered => square_98
+               * square => square_98
+               */
+
+              $imageDisplay = $layoutSettings->field_image_display_size->first()->getValue();
+              switch ($imageDisplay['value']) {
+                case 'small':
+                  $imageStyle = 'rectangle_small';
+                  break;
+                case 'medium':
+                  $imageStyle = 'rectangle_medium';
+                  break;
+                case 'large':
+                  $imageStyle = 'rectangle_large';
+                  break;
+                case 'bordered':
+                case 'square':
+                  $imageStyle = 'square_98';
+                  break;
+                case 'square_160':
+                  $imageStyle = 'square_160';
+                  break;
+
+                default:
+                  $imageStyle = 'rectangle_large';
+                  break;
+              }
+              if (isset($imageStyle)) {
+                $style = \Drupal::entityTypeManager()->getStorage('image_style')->load($imageStyle);
+                if (isset($node->field_teaser_image) && !$node->field_teaser_image->isEmpty()) {
+                  $imageUri = $node->field_teaser_image->entity->getFileUri();
+                } else if (isset($node->field_teaser_thumbnail) && !$node->field_teaser_thumbnail->isEmpty()) {
+                  $imageUri = $node->field_teaser_thumbnail->entity->getFileUri();
+                }
+                if (isset($imageUri)) {
+                  $imageStyleUri = $style->buildUrl($imageUri);
+                  $variables['imageUri'] = $imageStyleUri;
+                }
+                $variables['imageStyle'] = isset($imageDisplay['value']) ? 'm-card--image-style--' . $imageDisplay['value'] : NULL;
+              }
+            }
+          }
+        }
+      }
+
+      if ($nodeType == 'resource') {
+        if (isset($node->field_resource_type) && !$node->field_resource_type->isEmpty()) {
+          $resourceTermTid = $node->field_resource_type->target_id;
+
+          //- 1246 is the tid for "Customer Story"
+          //- Load up the customer node that this is tagged with to fetch the image from there
+          if ($resourceTermTid == 1246) {
+            if (isset($node->field_customer) && !$node->field_customer->isEmpty()) {
+
+              $taxRef = $node->field_customer->target_id;
+              $storage = \Drupal::entityTypeManager()->getStorage('node');
+              $query = $storage->getQuery();
+              $query->condition('type', array('customer'))
+                    ->condition('status', 1)
+                    ->condition('field_customer', $taxRef);
+              $result = $query->execute();
+              if (!empty($result)){
+                if (sizeof($result) > 1) {
+                  $result = array_shift($result);
+                }
+                else {
+                  $result = reset($result);
+                }
+                $customerNode = $storage->loadMultiple(array($result));
+                $customerNode = reset($customerNode);
+
+                if (isset($node->field_teaser_image) && !$node->field_teaser_image->isEmpty()) {
+                  $imageUri = $node->field_teaser_image->entity->getFileUri();
+                } else if (isset($node->field_teaser_thumbnail) && !$node->field_teaser_thumbnail->isEmpty()) {
+                  $imageUri = $node->field_teaser_thumbnail->entity->getFileUri();
+                } else {
+                  //- Load image from customer node
+                  $fid = $customerNode->field_image->target_id;
+                  if ( ! empty( $fid )) {
+                    $file                  = File::load($fid);
+                    $variables['imageUri'] = file_create_url($file->getFileUri());
+                  }
+                }
+
+                if ($variables['view_mode'] == 'teaser') {
+                  if (!$node->field_resource_file->isEmpty()) {
+                    $variables['url'] = file_create_url($node->field_resource_file->entity->getFileUri());
+                    $variables['isExternal'] = TRUE;
+                  } elseif (!$node->field_resource_link->isEmpty()) {
+                    $url = $node->field_resource_link->getValue();
+                    $url = reset($url);
+                    $variables['url'] = $url['uri'];
+                    $variables['isExternal'] = TRUE;
+                  }
+                } else {
+                  //- Change url value to the customer node and not directly to the customer story
+                  $variables['url'] = $customerNode->url();
+                }
+
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+  if ($nodeType == 'customer' && $variables['view_mode'] == 'full') {
+    $taxRef = $node->field_customer->target_id;
+    $storage = \Drupal::entityTypeManager()->getStorage('node');
+    $query = $storage->getQuery();
+    $query->condition('type', array('resource'))
+          ->condition('status', 1)
+      //added to only show customer story pdfs, and no other resource type
+          ->condition('field_resource_type', 1246)
+          ->condition('field_customer', $taxRef)
+          ->sort('created', 'DESC');
+    $result = $query->execute();
+
+    if (!empty($result)){
+      if (sizeof($result) > 1) {
+        $result = array_shift($result);
+      }
+      else {
+        $result = reset($result);
+      }
+      $resourceNode = $storage->loadMultiple(array($result));
+      $resourceNode = reset($resourceNode);
+      $fid = $resourceNode->field_resource_file->target_id;
+      if (!empty($fid)) {
+        $file = File::load($fid);
+        $variables['content']['resource_file'] = [
+          '#theme' => 'ib_link',
+          '#file' => $file,
+          '#description' => t('Read the Case Study'),
+          '#cache' => [
+            'tags' => $file->getCacheTags(),
+          ],
+          '#attributes' => [
+            'target' => '_blank',
+
+          ]
+        ];
+      }
+    }
+    $block_content = null;
+
+    $customerResults = null;
+    $args = [];
+    $terms = infobuilders_getcustomerterm($node);
+
+    if (!empty($terms)) {
+      $args = array_merge($args, $terms);
+      $args = implode('+', $args);
+    }
+    $view = \Drupal\views\Views::getView('related_resources');
+    if (is_object($view)) {
+      $view->setArguments(array($args));
+      $view->setDisplay('block_related_resources');
+      $view->preExecute();
+      $view->execute('block_related_resources');
+      $content = $view->buildRenderable('block_related_resources', array($args));
+
+      if (!($node->field_customer->isEmpty())) {
+        //- Remove customer stories that are on the same customer
+        $taxRef = $node->field_customer->target_id;
+        $storage = \Drupal::entityTypeManager()->getStorage('node');
+        $query = $storage->getQuery();
+        $query->condition('type', array('resource'))
+              ->condition('status', 1)
+              ->condition('field_customer', $taxRef)
+              ->sort('created', 'DESC');
+        $result = $query->execute();
+
+        if (!empty($result)) {
+          if (sizeof($result) > 1) {
+            $result = array_shift($result);
+          }
+          else {
+            $result = reset($result);
+          }
+          if (!empty($content['#view']->result)) {
+            foreach ($content['#view']->result as $k => $row) {
+              if ($row->nid == $result) unset($content['#view']->result[$k]);
+            }
+          }
+        }
+
+        //- Remove videos already on customer
+        $storage = \Drupal::entityTypeManager()->getStorage('node');
+        $query = $storage->getQuery();
+        $query->condition('type', array('video'))
+              ->condition('status', 1)
+              ->condition('field_customer', $taxRef)
+              ->sort('created', 'DESC');
+        $result = $query->execute();
+        if (!empty($result)) {
+          if (sizeof($result) > 1) {
+            $result = array_shift($result);
+          }
+          else {
+            $result = reset($result);
+          }
+          if (!empty($content['#view']->result)) {
+            foreach ($content['#view']->result as $k => $row) {
+              if ($row->nid == $result) unset($content['#view']->result[$k]);
+            }
+          }
+        }
+
+
+      }
+    }
+
+    if (isset($content['#view']) && !empty($content['#view']->result)) {
+      $block_content = \Drupal::service('renderer')->render($content);
+      $variables['content']['customer_related_resources'] = $block_content;
+    }
+  }
+
+  if ($nodeType == 'news' && $variables['view_mode'] == 'teaser') {
+    if (!empty($node->field_news_type)) {
+      $variables['content']['tt_date'] = strtotime($node->field_date_only->value);
+    }
+  }
+  if ($nodeType == 'event' && $node->field_image->isEmpty()) {
+    $event_type = $node->get('field_tax_event_type')->getValue();
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($event_type[0]['target_id']);
+    $term_images = $term->get('field_image')->getValue();
+
+    if (empty($term_images)) {
+      $nid = $node->id();
+      $node_image = \Drupal::config('system.site')->get('infobuilders_event_node_image');
+      if (!empty($node_image) && isset($node_image[$nid])) {
+        $node->field_image->setValue($node_image[$nid]);
+        $variables['content']['field_image'] = $node->field_image->view($variables['view_mode']);
+      }
+    }
+    else {
+      shuffle($term_images);
+      $rand_image = $term_images[array_rand($term_images)];
+      $node->field_image->setValue($rand_image);
+      $variables['content']['field_image'] = $node->field_image->view($variables['view_mode']);
+      $config = \Drupal::service('config.factory')->getEditable('system.site');
+      $node_image[$nid] = $rand_image;
+      $config->set('infobuilders_event_node_image', $node_image)
+             ->save();
+    }
+  }
+
+  if ($nodeType == 'event' && ($variables['view_mode'] == 'full')) {
+
+    $eventType = $node->get('field_tax_event_type')->getValue();
+    $termName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventType[0]['target_id'])->getName();
+    $variables['eventType'] = $termName;
+
+
+
+    if (!$node->field_workshop_theme->isEmpty()) {
+      $eventSeriesTheme = $node->get('field_workshop_theme')->getValue();
+      $eventTermName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventSeriesTheme[0]['target_id'])->getName();
+      $variables['eventSeriesTheme'] = $eventTermName;
+    }
+
+    if (!$node->field_tax_seminar_theme->isEmpty()){
+      $eventSeriesTheme = $node->get('field_tax_seminar_theme')->getValue();
+      $eventTermName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventSeriesTheme[0]['target_id'])->getName();
+      $variables['eventSeriesTheme'] = $eventTermName;
+    }
+    if (!$node->field_tax_webinar_series->isEmpty() && $node->field_tax_webinar_series != '') {
+        $eventSeriesTheme = $node->get('field_tax_webinar_series')->getValue();
+        if (\Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventSeriesTheme[0]['target_id'])){
+            $eventTermName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventSeriesTheme[0]['target_id'])->getName();
+        }
+        else{
+            $eventTermName = "";
+        }
+        $variables['eventSeriesTheme'] = $eventTermName;
+    }
+    if (!$node->field_tax_user_group_cat->isEmpty()) {
+      $eventSeriesTheme = $node->get('field_tax_user_group_cat')->getValue();
+      $eventTermName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventSeriesTheme[0]['target_id'])->getName();
+      $variables['eventSeriesTheme'] = $eventTermName;
+    }
+
+    if ($node->field_event_description->isEmpty()) {
+      $associated_term = NULL;
+      if (!$node->field_tax_seminar_theme->isEmpty()){
+        $associated_term = $node->get('field_tax_seminar_theme')->getValue();
+
+      }
+      if (!$node->field_tax_webinar_series->isEmpty()) {
+        $associated_term = $node->get('field_tax_webinar_series')->getValue();
+      }
+      if (!$node->field_workshop_theme->isEmpty()) {
+        $associated_term = $node->get('field_workshop_theme')->getValue();
+
+      }
+      if (!empty($associated_term)) {
+        $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($associated_term[0]['target_id']);
+        $term_description = $term->getDescription();
+        $node->field_event_description->setValue($term_description);
+        $variables['content']['field_event_description'] = $node->field_event_description->view($variables['view_mode']);
+        $variables['content']['field_event_description'][0]['#format'] = 'full_html';
+      }
+
+    }
+
+    $eventStatus = $node->get('field_status')->value;
+    switch($eventStatus) {
+      case 'full':
+        $message = t('Thanks for your interest in this event, but we\'re sorry to say it\'s full. If you sign up here, we\'ll be sure to keep you up to speed with our latest news and events info.');
+        $variables['content']['field_status'][0]['#markup'] = Markup::create($message);
+        $variables['isClosed'] = true;
+        $variables['isFull'] = true;
+        break;
+      case 'waitlist':
+        $message = t('Thanks for your interest in this event, but we\'re sorry to say it\'s full. If you sign up here, we can add you to our wait list, and notify you about future events.');
+        $variables['content']['field_status'][0]['#markup'] = Markup::create($message);
+        $variables['isClosed'] = true;
+        break;
+    }
+
+    $sessions = $node->field_sessions;
+
+    $eventIsPast = false;
+
+    foreach ($sessions as $k => $session) {
+
+      $parentParagraph = $session->entity->getParentEntity();
+      $parentTerm = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($parentParagraph->field_tax_event_type->first()->getValue()['target_id']);
+      $parentName = $parentTerm->getName();
+
+      $session  = $session->entity;
+      $timezone = $session->get('field_timezone')->value;
+
+      if ($k == 0) {
+        $start     = $session->get('field_start_date_and_time')->value;
+        $startDate = new DateTime($start, new DateTimeZone('UTC'));
+
+
+        $variables['customDate'] = \Drupal::service('date.formatter')
+                                          ->format($startDate->getTimestamp(), 'month_day_year');
+
+        $timezoneValue = $startDate;
+        if ($timezone != NULL) {
+          $timezoneValue = $timezoneValue->setTimezone(new DateTimeZone($timezone));
+        }
+
+        $variables['timezone'] = $timezoneValue->format('T');
+
+        $startFormatted = \Drupal::service('date.formatter')->format(
+          $startDate->getTimestamp(), 'custom', 'g:i A');
+
+        $variables['customTime'] = $startFormatted;
+
+        //- Check for webinar or conference event type and change date format
+        if ( ! $parentParagraph->field_tax_event_type->isEmpty()) {
+          if (in_array($parentName, array( 'Webinar', 'Conference' ))) {
+            if ($parentParagraph->field_sessions->count() > 1) {
+
+              $eventDateField = $session->get('field_start_date_and_time')->date->render();
+              $eventDateValue = strtotime($eventDateField);
+
+              $eventDate = \Drupal::service('date.formatter')
+                                  ->format($eventDateValue, 'month_day_year');
+
+              $variables['customDate'] = $eventDate;
+            }
+          }
+        }
+      }
+
+      //- Event is past
+      $startDate2 = $startDate;
+      //$startDate2 = $startDate2->add(new DateInterval('PT12H'));
+      if (new DateTime() > $startDate2) {
+        $eventIsPast = true;
+      } else {
+        $eventIsPast = false;
+      }
+      $variables['eventIsPast'] = $eventIsPast;
+
+
+      if (!in_array($parentName, array('Virtual User Group Meeting'))) {
+        //- Duration calculations
+        if (!$session->field_duration->isEmpty()) {
+
+          $eventDate = \Drupal::service('date.formatter')
+                              ->format($startDate->getTimeStamp(), 'month_day_year');
+          $variables['customDate'] = $eventDate;
+
+          $duration = $session->get('field_duration')->value;
+          $duration = preg_replace("'/.([0-9]{5,6})/'", "", $duration);
+          $interval = new DateInterval($duration);
+          if  ($parentName == 'Seminar'){
+              $start2 = $session->get('field_start_date_and_time')->value;
+              $startDate      = new DateTime($start2, new DateTimeZone('UTC'));
+              $startDate->setTimezone(new DateTimeZone($timezone));
+
+          }
+
+          $end = $session->get('field_start_date_and_time')->value;
+          $endDate      = new DateTime($end, new DateTimeZone('UTC'));
+          $endDate->setTimezone(new DateTimeZone($timezone));
+          $endDate      = $endDate->add($interval);
+
+          if ($interval->h >= 1 ) {
+            $eventDate = \Drupal::service('date.formatter')->format(
+              $startDate->getTimestamp(), 'custom', 'g:i');
+
+            $endFormatted = \Drupal::service('date.formatter')->format(
+              $endDate->getTimestamp(), 'custom', 'g:i A');
+
+            $formattedDate =  $eventDate . ' - ' . $endFormatted;
+
+            if ((count($sessions) > 1 && $parentName == 'Webinar') || (count($sessions) > 1 && $parentName == 'Seminar')) {
+              $variables['sessionTimes'][$k] = Markup::create($formattedDate);
+            } else {
+              $variables['customTime'] = Markup::create($formattedDate);
+            }
+          }
+          if ($interval->d > 0) {
+            if (\Drupal::service('date.formatter')->format($startDate->getTimestamp(), 'custom', 'F') == \Drupal::service('date.formatter')->format($endDate->getTimestamp(), 'custom', 'F')){
+                $eventDate = \Drupal::service('date.formatter')->format($startDate->getTimestamp(), 'custom', 'F j');
+                                $endFormatted = \Drupal::service('date.formatter')->format($endDate->getTimestamp(), 'custom', ' j, Y ');
+            }
+            else{
+                $eventDate = \Drupal::service('date.formatter')->format($startDate->getTimestamp(), 'custom', 'F j, Y');
+                $endFormatted = \Drupal::service('date.formatter')->format($endDate->getTimestamp(), 'custom', 'F j, Y');
+            }
+            $formattedDate =  $eventDate . ' - ' . $endFormatted;
+            $variables['customDate'] = Markup::create($formattedDate);
+          } else {
+            #$variables['customDate'] .= ' - ' . $endDate->format('F j, Y');
+          }
+        }
+      }
+
+
+    }
+
+    if ($eventIsPast) {
+      $message = t('We\'re really sorry you\'ve missed this event. To make sure you stay in the know about all our upcoming events, sign up here.');
+      $variables['content']['field_status'][0]['#markup'] = Markup::create($message);
+      $variables['isClosed'] = true;
+    }
+
+
+
+    //- Contact
+    _infobuilders_get_contact_email($node, $variables);
+
+    //- Misc tabs
+    if (!$node->field_misc->isEmpty()) {
+      $tabs = [];
+      foreach($node->field_misc as $i => $miscTab) {
+        if (!$miscTab->isEmpty()) {
+          $miscValue = $miscTab->getValue();
+          $miscParagraph = Paragraph::load($miscValue['target_id']);
+          if (!$miscParagraph->get('field_title')->isEmpty()) {
+            $tabs[$i] = [
+              'target_id' => $miscValue['target_id'],
+              'title' => $miscParagraph->get('field_title')->first()->getValue()['value']
+            ];
+          }
+        }
+      }
+
+      if (!empty($tabs)) {
+        $variables['miscTabs'] = $tabs;
+      }
+    }
+
+    //- Presenters
+    if (!$node->field_presentations->isEmpty()) {
+      $tabs = [];
+
+      //- File information
+      if (!$node->field_presentation_file->isEmpty()) {
+        $file = $node->get('field_presentation_file');
+        $fileSize = format_size($file->entity->getSize());
+        $fileMimeType = $file->entity->getMimeType();
+
+        if (strpos($fileMimeType, 'application') !== -1) {
+          $fileMimeType = str_replace('application/', '', $fileMimeType);
+        }
+
+        $variables['fileInfo'] = $fileMimeType . ', ' . $fileSize;
+      }
+
+
+      foreach($node->field_presentations as $i => $presentation) {
+        if (!$presentation->isEmpty()) {
+          $presValue = $presentation->getValue();
+          $presParagraph = Paragraph::load($presValue['target_id']);
+          if (!$presParagraph->get('field_title')->isEmpty()) {
+            $tabs[$i] = [
+              'target_id' => $presValue['target_id'],
+              'title' => $presParagraph->get('field_title')->first()->getValue()['value']
+            ];
+          }
+        }
+      }
+
+      if (!empty($tabs)) {
+        $variables['presentationTabs'] = $tabs;
+      }
+    }
+
+    $eventType = $node->get('field_tax_event_type')->getValue();
+    $termName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventType[0]['target_id'])->getName();
+    $variables['eventType'] = $termName;
+
+
+  }
+
+
+  if ($nodeType == 'event' && $variables['view_mode'] == 'teaser_card') {
+    $layout = null;
+    $eventType = null;
+
+    if (isset($node->view) && $node->view->current_display != 'upcoming_events_block') {
+      if (!$node->field_tax_event_type->isEmpty()) {
+        $eventType = $node->get('field_tax_event_type')->getValue();
+
+        if (!$node->get('field_address')->isEmpty()) {
+          $address = $node->get('field_address')->first()->getValue();
+          $variables['address'] = $address;
+        }
+
+        if (!empty($eventType)) {
+          $termName = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($eventType[0]['target_id'])->getName();
+          $variables['eventType'] = $termName;
+          switch($termName) {
+            case 'Seminar':
+              $layout = 'brickmortar';
+              break;
+            case 'Workshop':
+              $layout = 'brickmortar';
+              break;
+          }
+        }
+      }
+    }
+
+    if (isset($node->view) && ($node->view->current_display == 'usergroup_meetings_local_block' || $node->view->current_display == 'upcoming_usergroup_meetings_local_block' || $node->view->current_display == 'past_usergroup_meetings_local_block')) {
+      $layout = 'usergroup';
+      _infobuilders_get_contact_email($node, $variables);
+    }
+
+    if (isset($node->view) && ($node->view->current_display == 'past_usergroup_meetings_virtual_block' || $node->view->current_display == 'upcoming_usergroup_meetings_virtual_block')) {
+      $layout = 'usergroupsimple';
+    }
+
+    $variables['layout'] = $layout;
+
+    if (isset($variables['view']) && $variables['view']->current_display == 'past_usergroup_meetings_virtual_block') {
+      $variables['title_nolink'] = TRUE;
+      if (!$node->field_tax_event_type->isEmpty()) {
+        $associated_term       = $node->get('field_tax_event_type')->getValue();
+        $termName              = \Drupal::entityTypeManager()
+                                        ->getStorage('taxonomy_term')
+                                        ->load($associated_term[0]['target_id'])
+                                        ->getName();
+        $variables['termName'] = $termName;
+      }
+    }
+
+    if (isset($node->view) && ($node->view->current_display == 'recorded_webinars_block')) {
+      $variables['isPast'] = TRUE;
+    }
+
+    if (isset($node->view) && ($node->view->current_display == 'events_terms_page')) {
+      if ( ! $node->field_tax_event_type->isEmpty()) {
+        $eventType = $node->get('field_tax_event_type')->getValue();
+        $termName  = \Drupal::entityTypeManager()
+                            ->getStorage('taxonomy_term')
+                            ->load($eventType[0]['target_id'])
+                            ->getName();
+
+        if ($termName == 'Virtual User Group Meeting'||$termName == 'Webinar'|| $termName == 'Seminar') {
+          $sessions = $node->field_sessions;
+
+          $eventIsPast = FALSE;
+
+          foreach ($sessions as $k => $session) {
+
+            $session = $session->entity;
+
+            if ($k == 0) {
+              $start     = $session->get('field_start_date_and_time')->value;
+              $startDate = new DateTime($start, new DateTimeZone('UTC'));
+            }
+
+            //- Event is past
+            if (new DateTime() > $startDate) {
+              $eventIsPast = TRUE;
+            }
+            else {
+              $eventIsPast = FALSE;
+            }
+            $variables['isPast'] = $eventIsPast;
+          }
+        }
+      }
+    }
+
+  }
+
+
+
+  if ($nodeType == 'speaker') {
+    if (isset($node->_referringItem)) {
+      $parent = $node->_referringItem->getEntity();
+      if ($parent->getEntityType()->id() == 'paragraph' && $parent->getType() == 'presentation') {
+        $variables['presentation'] = true;
+      }
+    }
+  }
+
+  //Get ID of infographic page and add library
+  // get a hold of the node object
+  //$node = \Drupal::routeMatch()->getParameter('node');
+  //if ($node instanceof \Drupal\node\NodeInterface) { // check we have a node object.
+  //  if ($node->id() == 17881 || $node->id() == 18141 ) { // look for a specific node id.
+      //attach the library.
+      //$variables['#attached']['library'][] = 'infobuilders/infographic';
+  //  }
+  //}
+}
+
+/**
+ * Implements template_preprocess_page
+ *
+ * Add convenience variables and template suggestions
+ */
+function infobuilders_preprocess_page(&$variables) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    //var_dump($node instanceof \Drupal\node\NodeInterface); die;
+    if ($node instanceof \Drupal\node\NodeInterface){
+        /**
+         * Get the term id from the 'field_page_sub_type' taxonomy field.
+         * If greater than zero, load the term and acquire the name value
+         * as a css safe value. Add to body class
+         */
+        if($node->hasField('field_page_sub_type')) {
+          $tid = $node->get('field_page_sub_type')->target_id;
+          if($tid > 0) {
+            $term_object = Term::load($tid);
+            $variables['page_sub_type'] =  Html::getClass($term_object->get('name')->value);
+          }
+        }
+       
+    }
+  }
+
+ 
+}
+
+/**
+ * Implement template_preprocess_views_view().
+ * @param $variables
+ */
+function infobuilders_preprocess_views_view(&$variables) {
+
+  //SEARCH
+  if (!empty($variables['display_id'])
+      && $variables['display_id'] == 'page_search_result'
+  ) {
+    $variables['exposed']['keys']['#weight'] = 0;
+
+    $variables['exposed']['actions']['#weight'] = 10;
+    if (!empty($variables['header']['result'])) {
+      $variables['exposed']['summary']          = array(
+        '#markup' => $variables['header']['result']['#markup'],
+        '#weight' => 25,
+      );
+      $variables['header']['result']['#access'] = FALSE;
+    };
+  }
+
+  //- Infinite scroll tweaks
+  $view = $variables['view'];
+  if ($view->getDisplay()->isPagerEnabled() && !empty($variables['rows'])) {
+    if (!empty($variables['display_id']) && $variables['display_id'] !== 'recorded_webinars_block' && $variables['display_id'] !== 'upcoming_webinars_block') {
+      $pager = $view->getPager();
+      if ($pager && $pager->getBaseId() == 'infinite_scroll') {
+        $variables['rows']['#attributes']['class'][] = 'm-section m-section--bg-white m-section--padding-top-medium m-section--padding-bottom-medium';
+      }
+    }
+  }
+
+  if (!empty($variables['display_id'])
+      && $variables['display_id'] === 'recorded_webinars_block') {
+    //get list of tids from views result set nodes;
+    $result = _infobuilders_get_result_topics($variables, 'field_topic');
+
+    if (!empty($result)
+        && !empty($variables['exposed'])
+        && !empty($variables['exposed']['field_topic_target_id'])
+        && !empty($variables['exposed']['field_topic_target_id']['#options'])) {
+      // filter exposed form filter options by the nodes present in result set;
+      _infobuilders_filter_options($variables['exposed']['field_topic_target_id']['#options'], $result);
+
+    }
+
+  }
+  if (!empty($variables['display_id'])
+      && $variables['display_id'] === 'upcoming_events_block') {
+
+    // Get all items without pager;
+    $newView = $view->createDuplicate();
+    $newView->setDisplay($view->current_display);
+    $newView->setItemsPerPage(0);
+    $newView->exposed_data = $view->exposed_data;
+    $newView->exposed_raw_input = $view->exposed_raw_input;
+    $newView->pager = new \Drupal\views\Plugin\views\pager\None([], '', []);
+    $newView->pager->init($newView, $newView->display_handler);
+    $newView->build();
+    $newView->preExecute();
+    $newView->execute('upcoming_events_block');
+
+
+    $allowedTypes = _infobuilders_get_allowed_options($newView->result, 'field_tax_city');
+    if (!empty($allowedTypes)) {
+      _infobuilders_filter_options($variables['exposed']['field_tax_city_target_id']['#options'], $allowedTypes);
+    }
+
+    /*
+    // Filter select options by field_tax_event_type
+    $allowedTypes = _infobuilders_get_allowed_options($newView->result, 'field_tax_event_type');
+    if (!empty($allowedTypes)) {
+      _infobuilders_filter_options($variables['exposed']['field_tax_event_type_target_id']['#options'], $allowedTypes);
+    }
+
+    // Filter select options by field_tax_country
+    $allowedCountries = _infobuilders_get_allowed_options($newView->result, 'term_node_tid_depth');
+    if (!empty($allowedCountries)) {
+
+      foreach ($allowedCountries as $termId) {
+        //- Load taxonomy term parent and add to $allowedCountries so we can use hierarchy
+        if ($termId) {
+          $storage   = \Drupal::service('entity_type.manager')
+                              ->getStorage('taxonomy_term');
+          $parent   = $storage->loadParents($termId);
+          $parent = array_keys($parent);
+          $allowedCountries[] = array_pop($parent);
+        }
+      }
+      _infobuilders_filter_options($variables['exposed']['term_node_tid_depth']['#options'], $allowedCountries);
+    }
+    */
+  }
+
+  if (!empty($variables['display_id'])
+      && $variables['display_id'] === 'events_terms_page') {
+    _infobuilders_filter_sessions($variables['rows']);
+  }
+}
+
+/**
+ * Implement templates_preprocess_views_view_field
+ *
+ * @param $variables
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ */
+function infobuilders_preprocess_views_view_field(&$variables) {
+  $id = $variables['view']->storage->id();
+  $display = $variables['view']->current_display;
+  $fieldName = $variables['field']->field;
+  //SEARCH
+  if ($id == 'search_content'
+      && $display == 'page_search_result'
+      && $fieldName == 'field_site_structure'
+  ) {
+    if (isset($variables['field']->original_value)) {
+      $origValue = $variables['field']->original_value->__toString();
+      $term      = \Drupal\taxonomy\Entity\Term::load($origValue);
+      $storage   = \Drupal::service('entity_type.manager')
+                          ->getStorage('taxonomy_term');
+      $parents   = $storage->loadParents($term->id());
+      $parent    = reset($parents);
+      if ( ! empty( $parent )) {
+        $parentName = $parent->label();
+        $parentUrl  = \Drupal\Core\Url::fromRoute('entity.taxonomy_term.canonical',
+          [ 'taxonomy_term' => $parent->tid->value ], [ 'absolute' => TRUE ]);
+        $parentLink = \Drupal::service('link_generator')
+                             ->generate($parentName, $parentUrl);
+      }
+
+      $termName = $term->label();
+      $termUrl  = \Drupal\Core\Url::fromRoute('entity.taxonomy_term.canonical',
+        [ 'taxonomy_term' => $term->tid->value ], [ 'absolute' => TRUE ]);
+      $termLink = \Drupal::service('link_generator')
+                         ->generate($termName, $termUrl);
+      if ( ! empty( $parentLink )) {
+        $output = "<div class='structure-warapper'>" . "<span>" . $parentLink
+                  . "</span>" . ' > ' . "<span>" . $termLink . "</span></div>";
+      }
+      else {
+        $output = "<div class='structure-warapper'>" . "<span>" . $termLink
+                  . "</span></div>";
+      }
+      $variables['output'] = \Drupal\core\Render\Markup::create($output);
+    }
+  }
+
+  elseif ($id == 'video'
+          && $display == 'block_featured_video'
+          && $fieldName == 'field_video') {
+    $provider_manager = \Drupal::service('video_embed_field.provider_manager');
+    $videoValue = $variables['row']->_entity->get('field_video')->value;
+    $provider = $provider_manager->loadProviderFromInput($videoValue);
+
+    if ($provider) {
+      $videoId = $variables['row']->_entity->id();
+      $provider->downloadThumbnail();
+      $videoThumbnailUri = $provider->getLocalThumbnailUri();
+      $variables['videoUri'] = $videoValue;
+      $variables['videoId']    = $videoId;
+      $variables['videoThumb'] = array(
+        '#theme' => 'image_style',
+        '#style_name' => 'featured_video',
+        '#uri' => $videoThumbnailUri,
+        '#attributes' => array(
+          'class' => array(
+            'img-responsive'
+          )
+        )
+      );
+
+      $width = 854;
+      $height = 480;
+      $autoplay = FALSE;
+      $variables['videoIframe'] = $provider->renderEmbedCode($width, $height, $autoplay);
+    }
+  }
+
+  elseif ($id == 'search_content'
+          && $display == 'page_search_result'
+          && $fieldName == 'title') {
+    $entity = $variables['row']->_object->getValue();
+    $entityType = $entity->getType();
+    switch ($entityType) {
+      case 'news':
+      case 'award':
+        if (!empty($entity->field_news_link)) {
+          $uri = $entity->field_news_link->uri;
+        }
+        else if (!empty($entity->field_award_link)) {
+          $uri = $entity->field_award_link->uri;
+        }
+        if (!empty($uri)) {
+          $options = [
+            'absolute'   => TRUE,
+            'attributes' => ['target' => '_blank']
+          ];
+          $link = Link::fromTextAndUrl($entity->getTitle(), Url::fromUri($uri, $options));
+          $renderable = $link->toRenderable();
+          $variables['output'] = \Drupal::service('renderer')->render($renderable);
+        }
+        break;
+      case 'resource':
+        $resourceType = $entity->field_resource_type->target_id;
+
+        $coreHelper = \Drupal::service('infobuilders_core.helper');
+        $isResourceGated = $coreHelper->isResourceGated($entity);
+
+        if ($resourceType == 1246 && !empty($entity->field_customer)) {
+          //- 1246 is the tid for "Customer Story"
+          //- Load up the customer node that this is tagged with to fetch the url from there
+          if (isset( $entity->field_customer ) && ! $entity->field_customer->isEmpty()) {
+
+            $taxRef  = $entity->field_customer->target_id;
+            $storage = \Drupal::entityTypeManager()->getStorage('node');
+            $query   = $storage->getQuery();
+            $query->condition('type', array( 'customer' ))
+                  ->condition('status', 1)
+                  ->condition('field_customer', $taxRef);
+            $result = $query->execute();
+            if ( ! empty( $result )) {
+              if (sizeof($result) > 1) {
+                $result = array_shift($result);
+              }
+              else {
+                $result = reset($result);
+              }
+              $customerNode = $storage->loadMultiple(array( $result ));
+              $customerNode = reset($customerNode);
+
+              //- Change url value to the customer node and not directly to the customer story
+              $link = Link::fromTextAndUrl($entity->getTitle(), Url::fromRoute('entity.node.canonical', ['node' => $customerNode->id()]));
+              $renderable = $link->toRenderable();
+              $variables['output'] = \Drupal::service('renderer')->render($renderable);
+            }
+          }
+        } elseif (($resourceType == 16)||($resourceType == 21)  || (($resourceType == 11) && (!$isResourceGated)) ) {
+          //- direct to PDF for factsheets and solutions_briefs and non gated ebooks
+          if (!$entity->field_resource_link->isEmpty()) {
+            $uri = $entity->field_resource_link->uri;
+          }
+          else if (!$entity->field_resource_file->isEmpty()) {
+            $uri = file_create_url($entity->field_resource_file->entity->getFileUri());
+          }
+          if (!empty($uri)) {
+            $options = [
+              'absolute'   => TRUE,
+              'attributes' => ['target' => '_blank']
+            ];
+            $link = Link::fromTextAndUrl($entity->getTitle(), Url::fromUri($uri, $options));
+            $renderable = $link->toRenderable();
+            $variables['output'] = \Drupal::service('renderer')->render($renderable);
+          }
+        }
+
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+/**
+ * Implement hook_form_alter.
+ * @param                                      $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param                                      $form_id
+ */
+function infobuilders_form_alter(
+  &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state,
+  $form_id
+) {
+
+  //- Search
+  if ($form_id == 'search_block_form') {
+
+    $form['#attributes']['class'][] = 'm-search-form'; //- Add class to form
+    unset($form['description']['#markup']); //- Hide form description
+
+    $form['keys']['#attributes']['class'][]              = 'm-input-group-field'; //- Add class to input
+    $form['actions']['#attributes']['class'][]           = 'm-input-group-button'; //- Add class to actions wrapper
+    $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--secondary'; //- Add class to submit button
+  }
+
+  //- Views filter forms
+  if ($form_id == 'views_exposed_form') {
+
+    $formName = $form_state->getStorage()['view']->current_display;
+    if ($formName == 'upcoming_events_block') {
+      $form['#attributes']['class'][] = 'm-section l-filter l-filter--search-small';
+    }
+
+    if ($formName == 'block_all_customers') {
+      $form['#attributes']['class'][] = 'm-section l-filter l-filter--search-small';
+
+      $form['search_api_fulltext']['#attributes']['placeholder'] = t('Search');
+
+      if (isset($form['field_industry'])) {
+        $form['field_industry']['#title_display']             = 'hidden';
+        $form['field_industry']['#attributes']['placeholder'] = t('All Industries');
+      }
+
+      if (isset($form['field_business'])) {
+        $form['field_business']['#title_display']             = 'hidden';
+        $form['field_business']['#attributes']['placeholder'] = t('All lines of business');
+      }
+
+      if (isset($form['field_tax_function'])) {
+        $form['field_tax_function']['#title_display']             = 'hidden';
+        $form['field_tax_function']['#attributes']['placeholder'] = t('All Functions');
+        $form['field_tax_function']['#options']['All'] = t('All Functions');
+      }
+
+      if (isset($form['field_use_case'])) {
+        $form['field_use_case']['#title_display'] = 'hidden';
+        $form['field_use_case']['#attributes']['placeholder'] = t('All Use Cases');
+      }
+
+      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+    if ($formName == 'block_all_resources') {
+      $form['#attributes']['class'][] = 'm-section l-filter l-filter--search-small l-filter--split';
+
+      $form['search_api_fulltext']['#attributes']['placeholder'] = t('Search');
+
+      $form['field_industry']['#title_display'] = 'hidden';
+      $form['field_industry']['#attributes']['placeholder'] = t('All Industries');
+      $form['field_industry']['#options']['All'] = t('All Industries');
+
+      $form['resource_type']['#title_display'] = 'hidden';
+      $form['resource_type']['#attributes']['placeholder'] = t('All Types');
+      $form['resource_type']['#options']['All'] = t('All Types');
+
+      $form['sort_bef_combine']['#title_display'] = 'hidden';
+      $form['sort_bef_combine']['#attributes']['placeholder'] = t('Newest');
+      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+
+    if ($formName == 'page_topics') {
+      $form['#attributes']['class'][] = 'm-section l-filter l-filter--search';
+
+      $form['search_api_fulltext']['#attributes']['placeholder'] = t('Search');
+      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+      $form['actions']['submit']['#ajax']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+    if ($formName == 'block_accelerators') {
+      $form['field_industry']['#title_display'] = 'hidden';
+      $form['field_industry']['#attributes']['placeholder'] = t('All Industries');
+      $form['field_industry']['#options']['All'] = t('All Industries');
+//      - Ajax rendered
+//      $form['field_industry']['#ajax']['#title_display'] = 'hidden';
+//      $form['field_industry']['#ajax']['#attributes']['placeholder'] = t('All Industries');
+//      $form['#attributes']['class'][] = 'm-section l-filter l-filter--search';
+//      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+//      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+    //- Not sure what block this was...
+    if ($formName == 'block_1') {
+      $form['#attributes']['class'][] = 'l-filter l-filter--search-small l-filter--split';
+
+      $form['search_api_fulltext']['#attributes']['placeholder'] = t('Search');
+      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+      $form['actions']['submit']['#ajax']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+    if ($formName == 'page_all_press_releases') {
+      $form['#attributes']['class'][] = 'm-section m-section--padding-top-small l-filter l-filter--split';
+
+      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+      $form['actions']['submit']['#ajax']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+    if ($formName == 'page_search_result') {
+      $form['type']['#attributes']['class'][] = 'm-filter-group';
+      $form['actions']['#attributes']['class'][] = 'm-input-group-button';
+      $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--search';
+    }
+
+  }
+
+  //- Contact forms
+  if (strpos($form_id, 'contact_message_') !== FALSE) {
+    $form['actions']['submit']['#attributes']['class'][] = 'm-button m-button--secondary'; //- Add class to submit button
+    foreach ($form['actions']['submit']['#attributes']['class'] as $k => $class) {
+      if ($class == 'success') {
+        unset($form['actions']['submit']['#attributes']['class'][$k]); //- Remove success class
+      }
+    }
+  }
+  if ($form_id == 'contact_message_resource_download_form') {
+    Cache::invalidateTags($form['#cache']['tags']);
+    if (!empty($form['field_country'])) {
+      $form['field_country']['widget']['#after_build'][] = 'infobuilders_country_after_build';
+      $form['field_country']['widget'][0]['value']['#validated'] = TRUE;
+    }
+  }
+
+  //-
+
+}
+
+/**
+ * Implement hook_preprocess_form_element.
+ * @param $variables
+ */
+function infobuilders_preprocess_form_element(&$variables) {
+  if ($variables['name'] = 'keys' && in_array($variables['type'], array('textfield', 'search', 'email', 'tel'))) {
+    $variables['attributes']['class'][] = 'm-input-group-field';
+  }
+}
+
+/**
+ * Implement hook_preprocess_links.
+ * @param $variables
+ */
+function infobuilders_preprocess_bef_links(&$variables) {
+  if (isset($variables['links']) && !empty($variables['links'])) {
+    foreach ($variables['links'] as $k => $link) {
+      //- Link classes
+      $link_options = array(
+        'attributes' => array(
+          'class' => array(
+            'm-filter-button',
+            'm-button--filter',
+          ),
+        ),
+      );
+
+      if ($k == $variables['selected'][0]) {
+        $link_options['attributes']['class'][] = 'bef-link-active';
+      }
+      $variables['links'][$k]['#url']->mergeOptions($link_options);
+
+      //- Container class
+      $variables['links'][$k]['#theme_wrappers'] = array(
+        'container' => array(
+          '#attributes' => array('class' => 'm-filter'),
+        )
+      );
+    }
+
+    //- Not entirely sure why BEF does this
+    $variables['element'] = array_replace($variables['element'], $variables['links']);
+  }
+}
+
+/**
+ * Implement hook_preprocess_container
+ * @param $variables
+ */
+function infobuilders_preprocess_container(&$variables) {
+  if (!empty($variables['element']['#type']) && $variables['element']['#type'] == 'more_link') {
+    $variables['attributes']['class'][] = 'm-button-wrapper content-position-center';
+    $variables['element']['#attributes']['class'][] = 'm-button';
+    unset($variables['element']['#markup']);
+    unset($variables['element']['#children']);
+    $output = \Drupal::service('renderer')->render($variables['element']);
+    unset($variables['children']);
+    $variables['children'] = Markup::create($output->__toString());
+  }
+}
+
+/**
+ * Implement hook_preprocess_views_view_unformatted.
+ * @param $variables
+ */
+function infobuilders_preprocess_views_view_unformatted(&$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (is_object($node)) {
+    $nodeType = $node->getType();
+    $nid = $node->id();
+    $id = $variables['view']->storage->id();
+    $display = $variables['view']->current_display;
+    if ($id == 'video' && $display == 'block_related_videos') {
+      $weights = [
+        'topics' => 4,
+        'industry' => 3,
+        'function' => 2,
+        'videotype' => 1,
+        'customer' => 0
+      ];
+      $rows = infobuilders_sort_content($variables['rows'], $weights);
+      $rows = infobuilders_exclude($rows, $nid);
+      if (!empty($rows)) {
+        $variables['rows'] = $rows;
+      }
+      if ($node->getType() == 'video') {
+        $variables['show_title'] = TRUE;
+      }
+    }
+    elseif ($id == 'related_resources' && $display == 'block_related_resources') {
+      if ($nodeType == 'customer') {
+        $weights = [
+          'customer' => 5,
+          'industry' => 4,
+          'function' => 3,
+          'topics' => 1,
+          'videotype' => 0,
+        ];
+
+        $cutomerTermids = infobuilders_gettermids($node, 'field_customer');
+        $rows = infobuiders_exclude_field($variables['rows'], 'field_customer', $cutomerTermids);
+
+        $rows = infobuilders_sort_content($rows, $weights);
+        $rows = infobuilders_sortby_type($rows);
+        $rows = infobuilders_exclude($rows, $nid);
+
+        if (!empty($rows)) {
+          $rows              = array_slice($rows, 0, 3);
+          $variables['rows'] = $rows;
+        } else {
+          $variables['rows'] = [ ];
+        }
+      }
+      elseif ($nodeType == 'topic') {
+        $weights = [
+          'topics' => 5
+        ];
+        $topicTermIds = infobuilders_gettermids($node, 'field_topic');
+        if (!empty($topicTermIds)) {
+          $rows = infobuiders_exclude_field($variables['rows'], 'field_topic', $topicTermIds);
+          $rows = infobuilders_sort_content($rows, $weights);
+          $rows = infobuilders_sortby_type($rows);
+          $rows = infobuilders_exclude($rows, $nid);
+          if ( ! empty( $rows )) {
+            $rows              = array_slice($rows, 0, 3);
+            $variables['rows'] = $rows;
+          }
+          else {
+            $variables['rows'] = [ ];
+          }
+        }
+      }
+      elseif ($nodeType == 'outcome'){
+        $weights = [
+          'outcome' => 5,
+          'industry' => 2,
+          'topics' => 1,
+        ];
+
+        $outcomeTermIds = infobuilders_gettermids($node, 'field_outcome');
+        $rows = infobuiders_exclude_field($variables['rows'], 'field_outcome', $outcomeTermIds);
+        if (!empty($rows)) {
+          $rows = infobuilders_sort_content($rows, $weights);
+          $rows = infobuilders_sortby_type($rows);
+          $rows = infobuilders_exclude($rows, $nid);
+        }
+        if (!empty($rows)) {
+          $rows              = array_slice($rows, 0, 3);
+          $variables['rows'] = $rows;
+        }
+        else {
+          $variables['rows'] = [];
+        }
+      }
+    }
+  }
+}
+
+function infobuilders_page_attachments_alter(array &$attachments) {
+
+  // Trim all meta tags to a max of 150 characters.
+  if (!empty($attachments['#attached']['html_head'])) {
+    // Adjust this as needed.
+    $max_length = 150;
+    foreach ($attachments['#attached']['html_head'] as &$tag) {
+      // Only process meta tags with a 'content' attribute, that way it will
+      // exclude LINK tags or meta tags which do not have a "content" value.
+      if (isset($tag[0]['#tag']) && $tag[0]['#tag'] == 'meta') {
+        if (isset($tag[0]['#attributes']['content'])) {
+          if (!is_string($tag[0]['#attributes']['content'])) {
+            $tag[0]['#attributes']['content'] = (string) $tag[0]['#attributes']['content'];
+          }
+          if (strlen($tag[0]['#attributes']['content']) > $max_length) {
+            $trimmedDescription                = Drupal\Component\Utility\Unicode::truncate($tag[0]['#attributes']['content'], 150, TRUE, TRUE);
+            $tag[0]['#attributes']['content'] = $trimmedDescription;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/**
+ *
+ * Utility function to sort nodes.
+ *
+ * @param $rows
+ *
+ * @return array
+ */
+function infobuilders_sort_content($rows, $weights) {
+
+  foreach ($rows as $key =>$row) {
+    $rows[$key]['#weight'] = 0;
+    $node = $row['content']['#node'];
+    if (isset($weights['topics'])
+        && isset($node->field_topic)
+        && !empty($node->field_topic->target_id)) {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + $weights['topics'];
+    }
+    if (isset($weights['industry'])
+        && isset($node->field_industry)
+        && !empty($node->field_industry->target_id)) {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + $weights['industry'];
+    }
+    if (isset($weights['function'])
+        && isset($node->field_tax_function)
+        && !empty($node->field_tax_function->target_id)) {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + $weights['function'];
+    }
+    if (isset($weights['videotype'])
+        && isset($node->field_video)
+        && !empty($node->field_video->target_id)) {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + $weights['videotype'];
+    }
+    if (isset($weights['customer'])
+        && isset($node->field_customer)
+        && !empty($node->field_customer->target_id)) {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + $weights['customer'];
+    }
+    if (isset($weights['outcome'])
+        && isset($node->field_outcome)
+        && !empty($node->field_outcome->target_id)) {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + $weights['customer'];
+    }
+  }
+
+  usort($rows, function($a, $b){
+    return $b['#weight'] - $a['#weight'];
+  });
+  return $rows;
+}
+
+/**
+ *
+ * Utility function to sort nodes.
+ *
+ * @param $rows
+ *
+ * @return array
+ */
+function infobuilders_sortby_type($rows) {
+  $weights = [
+    'White Paper' => 7,
+    'Analyst Report' => 6,
+    'Ebook' => 5,
+    'Video' => 4,
+    'Solutions Brief' => 3,
+    'Fact Sheet' => 2,
+    'Customer Story' => 8,
+    'Event' => 8,
+  ];
+  foreach ($rows as $key =>$row) {
+    $rows[$key]['#weight'] = 0;
+    $node = $row['content']['#node'];
+    $nodeType = $node->getType();
+    if (isset($node->field_resource_type)) {
+      if (!empty($node->field_resource_type->target_id)) {
+        $tid = $node->field_resource_type->target_id;
+      }
+      $term = \Drupal\taxonomy\Entity\Term::load($tid);
+      $termName = $term->getName();
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + !empty($weights[$termName])? $weights[$termName] : 0;
+    }
+    elseif($nodeType == 'video' || $nodeType == 'event') {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + 4;
+    }
+    elseif ($nodeType == 'news' || $nodeType == 'press_release') {
+      $rows[$key]['#weight'] = $rows[$key]['#weight'] + 1;
+    }
+
+  }
+
+  usort($rows, function($a, $b){
+    return $b['#weight'] - $a['#weight'];
+  });
+  return $rows;
+}
+
+/**
+ * Remove same video from rows;
+ * @param $rows
+ * @param $nid
+ *
+ * @return array
+ */
+function infobuilders_exclude($rows, $nid) {
+  $updatedRow = [];
+  //exclude row with same video as current node;
+  foreach ($rows as $key =>$row) {
+    $node = $row['content']['#node'];
+    if ($nid !== $node->id()) {
+      $updatedRow[] = $row;
+    }
+  }
+
+  if (sizeof($updatedRow) > 3) {
+    //use only first 3 rows if more
+    $updatedRow = array_slice($updatedRow, 0, 3);
+  }
+  return $updatedRow;
+}
+
+/**
+ * @param $node
+ *
+ * @return array
+ */
+function infobuilders_getrelatedterms($node) {
+  $terms = [];
+  if (!empty($node->field_customer)) {
+    $values = $node->get('field_customer')->getValue();
+    foreach ($values as $val) {
+      if (!empty($val['target_id'])){
+        $terms[] = $val['target_id'];
+      }
+    }
+  }
+  if (!empty($node->field_industry)) {
+    $values = $node->get('field_industry')->getValue();
+    foreach ($values as $val) {
+      if (!empty($val['target_id'])){
+        $terms[] = $val['target_id'];
+      }
+    }
+  }
+
+  if (!empty($node->field_tax_function)) {
+    $values = $node->get('field_tax_function')->getValue();
+    foreach ($values as $val) {
+      if (!empty($val['target_id'])){
+        $terms[] = $val['target_id'];
+      }
+    }
+  }
+  return $terms;
+}
+
+/**
+ * @param $node
+ *
+ * @return array
+ */
+function infobuilders_getcustomerterm($node) {
+  $terms = [];
+  if (!empty($node->field_customer)) {
+    $values = $node->get('field_customer')->getValue();
+    foreach ($values as $val) {
+      if (!empty($val['target_id'])){
+        $terms[] = $val['target_id'];
+      }
+    }
+  }
+  return $terms;
+}
+
+/**
+ * @param       $rows
+ * @param       $field
+ * @param array $tids
+ *
+ * @return array
+ */
+function infobuiders_exclude_field($rows, $field, $tids = []){
+  foreach ($rows as $key =>$row) {
+    $node = $row['content']['#node'];
+    if (!isset($node->$field)){
+      unset($rows[$key]);
+      continue;
+    }
+    if (isset($node->$field) && empty($node->$field->target_id)) {
+      unset($rows[$key]);
+      continue;
+    }
+    if (!empty($node->$field)){
+      $curTids = [];
+      foreach ($node->$field as $item) {
+        $curTids[] = $item->target_id;
+      }
+      $inter = array_intersect($curTids, $tids);
+      if (!count($inter)) {
+        unset($rows[$key]);
+      }
+    }
+  }
+  $result = array_values($rows);
+  return $result;
+}
+
+/**
+ * @param $rows
+ *
+ * @return array
+ */
+function infobuiders_exclude_topic($rows){
+  foreach ($rows as $key =>$row) {
+    $node = $row['content']['#node'];
+    if (isset($node->field_topic) && empty($node->field_topic->target_id)) {
+      unset($rows[$key]);
+    }
+  }
+  $result = array_values($rows);
+  return $result;
+}
+
+/**
+ * Process Country select options to have US & CA be the first and second option in select
+ * @param $element
+ * @param $formState
+ *
+ * @return mixed
+ */
+function infobuilders_country_after_build($element, $formState) {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  if ($language == 'en'){
+    $element[0]['value']['country_code']['#needs_validation'] = FALSE;
+    $element[0]['value']['#needs_validation'] = FALSE;
+    $options = $element[0]['value']['country_code']['#options'];
+    $element[0]['value']['country_code']['#limit_validation_errors'] =
+    $countries = ['Highlighted Countries' => [
+      'US' => 'United States',
+      'GB' => 'United Kingdom',
+      'CA' => 'Canada',
+      'AU' => 'Australia']
+    ];
+
+    unset($options['US'], $options['GB'], $options['CA'], $options['AU']);
+
+    $options = ['More Countries' => $options];
+    $opt = array_merge($countries, $options);
+    $element[0]['value']['country_code']['#options'] = $opt;
+    $userInput = $formState->getUserInput();
+    if (empty($userInput)) {
+      $element[0]['value']['#default_value'] = 'US';
+      $element[0]['value']['country_code']['#default_value']= 'US';
+      $element[0]['value']['country_code']['#value'] = 'US';
+    }
+  }
+  else if($language == 'fr'){
+    $element[0]['value']['country_code']['#needs_validation'] = FALSE;
+    $element[0]['value']['#needs_validation'] = FALSE;
+    $options = $element[0]['value']['country_code']['#options'];
+    $element[0]['value']['country_code']['#limit_validation_errors'] =
+    $countries = ['Highlighted Countries' => [
+      'FR' => 'France',
+      'BE' => 'Belgique',
+      'CA' => 'Canada',
+      'LU' => 'Luxembourg',
+      'CH' => 'Suisse']
+    ];
+
+    unset($options['FR'], $options['BE'], $options['CA'], $options['LU'], $options['CH']);
+    $options = ['More Countries' => $options];
+    $opt = array_merge($countries, $options);
+    $element[0]['value']['country_code']['#options'] = $opt;
+    $userInput = $formState->getUserInput();
+    if (empty($userInput)) {
+      $element[0]['value']['#default_value'] = 'FR';
+      $element[0]['value']['country_code']['#default_value']= 'FR';
+      $element[0]['value']['country_code']['#value'] = 'FR';
+    }
+  }
+  else if($language == 'de'){
+    $element[0]['value']['country_code']['#needs_validation'] = FALSE;
+    $element[0]['value']['#needs_validation'] = FALSE;
+    $options = $element[0]['value']['country_code']['#options'];
+    $element[0]['value']['country_code']['#limit_validation_errors'] =
+    $countries = ['Highlighted Countries' => [
+      'DE' => 'Deutschland',
+      'BE' => 'Belgien',
+      'LI' => 'Liechtenstein',
+      'LU' => 'Luxemburg',
+      'AT' => 'Österreich',
+      'CH' => 'Schweiz']
+    ];
+
+    unset($options['DE'], $options['BE'], $options['LI'], $options['LU'], $options['AT'], $options['CH']);
+    $options = ['More Countries' => $options];
+    $opt = array_merge($countries, $options);
+    $element[0]['value']['country_code']['#options'] = $opt;
+    $userInput = $formState->getUserInput();
+    if (empty($userInput)) {
+      $element[0]['value']['#default_value'] = 'DE';
+      $element[0]['value']['country_code']['#default_value']= 'DE';
+      $element[0]['value']['country_code']['#value'] = 'DE';
+    }
+  }
+  else if($language == 'es'){
+    $element[0]['value']['country_code']['#needs_validation'] = FALSE;
+    $element[0]['value']['#needs_validation'] = FALSE;
+    $userInput = $formState->getUserInput();
+    if (empty($userInput)) {
+      $element[0]['value']['#default_value'] = 'ES';
+      $element[0]['value']['country_code']['#default_value']= 'ES';
+      $element[0]['value']['country_code']['#value'] = 'ES';
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * @param $node
+ * @param $field
+ *
+ * @return array
+ */
+function infobuilders_gettermids($node, $field){
+  $termIds = [];
+  if (!empty($node->$field)){
+    foreach($node->$field as $item) {
+      $termIds[] = $item->target_id;
+    }
+  }
+  return $termIds;
+}
+function infobuilders_preprocess_region__meta_header(&$variables) {
+
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    /**
+     * Get the term id from the 'field_top_nav_cta' taxonomy field.
+     * If greater than zero, load the term and acquire the name value
+     * as a css safe value.
+     */
+    if ($node instanceof \Drupal\node\NodeInterface){
+        if ($node->hasField('field_top_nav_cta')) {
+          $tid = $node->get('field_top_nav_cta')->target_id;
+          if ($tid > 0) {
+            $term_object = Term::load($tid);
+            $variables['attributes']['class'][] = 'cta-' . $term_object->get('name')->value;
+          }
+        }
+        /**
+         * Get the node id from the node object.
+         * If greater than zero, add the node id to body classes
+         */
+        $nid = $node->get('nid')->value;
+        if ($nid > 0) {
+          // $variables['attributes']['class'][] = 'page--node-' . $nid;
+        }
+    }
+  }
+}
+
+/**
+ * Get array of options.
+ *
+ * @param $variables
+ * @param $field_name
+ *
+ * @return array
+ */
+function _infobuilders_get_result_topics($variables, $field_name) {
+  $result = [];
+  if (!empty($variables['rows'])
+      && !empty($variables['rows'][0])
+      && !empty($variables['rows'][0]['#rows'])) {
+    foreach ($variables['rows'][0]['#rows'] as $row) {
+      if (!empty($row['#node'])) {
+        $values = $row['#node']->get($field_name)->getValue();
+        if (is_array($values)) {
+          foreach($values as $value) {
+            $result[] = $value['target_id'];
+          }
+        }
+        else {
+          $result = $values['target_id'];
+        }
+      }
+    }
+  }
+  return $result;
+}
+
+/**
+ * Filter options
+ *
+ * @param      $options
+ * @param      $result
+ * @param null $exclude
+ */
+function _infobuilders_filter_options(&$options, $result, $exclude = []) {
+  foreach($options as $key => $value) {
+    if ($key === "All") {
+//      $options['All'] = t('Topics');
+      continue;
+    }
+    // if no exclude skip everything
+    if(!empty($exclude)) {
+      if (is_object($value)) {
+        $tids = array_keys($value->option);
+        $tid = $tids[0];
+        if (!is_null($tid)) {
+          if (in_array($tid, $exclude)) {
+            continue;
+          }
+          if (!in_array($tid, $result)) {
+            unset($options[$key]);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Filter duplicate nodes
+ *
+ * @param $rows
+ */
+function _infobuilders_filter_sessions(&$rows){
+  $nids = [];
+  if (!empty($rows[0])
+      && !empty($rows[0]['#rows'])) {
+    foreach ($rows[0]['#rows'] as $key => $value) {
+      if (!empty($value['#node'])) {
+        $nid = $value['#node']->id();
+        if(!in_array($nid, $nids)) {
+          $nids[] = $nid;
+        }
+        else {
+          unset($rows[0]['#rows'][$key]);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Get event contact email addresses
+ */
+function _infobuilders_get_contact_email($node, &$variables) {
+  //- Contact
+  if (!$node->field_tax_contact->isEmpty()) {
+    $contactId = $node->field_tax_contact->first()->getValue();
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($contactId['target_id']);
+    $contact = '<a href="mailto:' . $term->get('field_email')->value . '">' . $term->getName() . '</a>';
+    $variables['contact'] = Markup::create($contact);
+  }
+}
+
+/**
+ * Get allowed options to filter select.
+ *
+ * @param $items
+ * @param $field_name
+ *
+ * @return array
+ */
+function _infobuilders_get_allowed_options($items, $field_name) {
+  $topics = [];
+
+  foreach ($items as $key => $item) {
+    $entity = $item->_entity;
+
+    if ($field_name == 'term_node_tid_depth') {
+      $field_name = 'field_tax_country';
+    }
+
+    if (!$entity->$field_name->isEmpty()) {
+      $topics[] = $entity->$field_name->target_id;
+    }
+  }
+  $topics = array_unique($topics);
+  return $topics;
+}

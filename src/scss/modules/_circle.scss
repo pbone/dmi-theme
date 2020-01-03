@@ -1,0 +1,284 @@
+//
+// MODULE: Circle
+//
+
+// Base
+.m-circle {
+  position: relative;
+  display: inline-block;
+  flex-direction: column;
+  background-color: transparent;
+  color: $color-grey;
+  width: 100%;
+  text-align: center;
+  max-width: 175px;
+  z-index: 1;
+  @include breakpoint(medium) {
+    max-width: 220px;
+  }
+
+  // Creates our circle effect
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    width: 100%;
+    height: 0;
+    border-radius: 50%;
+    border: 2px solid $color-purple;
+    background-color: transparent;
+    transition: box-shadow .3s ease;
+    z-index: 1;
+  }
+
+  // Hide circle if --alt
+  &--alt:after { visibility: hidden; }
+
+  // svg container
+  &--alt .m-circle-shape {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    svg { transition: filter .4s ease; }
+  }
+
+  // Circle with notch
+  .i-circle-left path,
+  .i-circle-right path {
+    fill: none;
+    stroke: $color-purple;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+  }
+
+  // Filled circle
+  &--alt .i-circle-fill-left path,
+  &--alt .i-circle-fill-right path {
+    fill: $color-dark-purple;
+    stroke: none;
+  }
+
+
+  // Hover effect on CSS circle
+  &:hover:after,
+  &:focus:after {
+    box-shadow: 0 1px 5px 0 $color-purple;
+  }
+
+  // Hover effect on SVG circle
+  &--alt:hover .i-circle-left,
+  &--alt:hover .i-circle-right {
+    filter: drop-shadow(0 1px 5px $color-purple);
+  }
+
+  // Controls sizing of circle
+  &--size-small { @include breakpoint(medium) {max-width: 165px;} }
+  &--size-large { @include breakpoint(medium) {max-width: 250px;} }
+}
+
+
+// SECTION
+
+.m-circle-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.m-circle a {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+.m-circle-section {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  & + & { height: auto; margin-top: 1rem; padding: 0; }
+  & + & .m-circle-link { color: $color-white; }
+}
+
+.m-section--bg-light-blue .m-circle-section {
+  & + & .m-circle-link { color: $color-blue; }
+}
+.m-section--bg-light-blue .m-circle-section, .m-section--bg-white-blue .m-circle-section, .m-section--bg-white .m-circle-section {
+  .m-circle-link { color: $color-blue; }
+}
+
+
+
+
+
+
+
+// ELEMENTS
+
+// Background Image
+.m-circle-bg {
+  background-size: cover;
+  position: absolute;
+  border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+// Circle Link
+.m-circle-link {
+  text-align: center;
+  color: $color-dark-blue;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-size: rem-calc(14px);
+  line-height: 1.3;
+  margin-bottom: 0;
+  width: 100%;
+  @include breakpoint(medium) {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: rem-calc(16px);
+  }
+}
+
+// Text
+.m-circle-text {
+  width: 100%;
+}
+
+.m-circle-text,
+.m-circle-text p {
+  color: $color-grey;
+  font-size: rem-calc(15px);
+  line-height: 1.3;
+  margin-bottom: 0;
+  z-index: 2;
+  position: relative;
+  @include breakpoint(medium) {
+    font-size: rem-calc(20px);
+  }
+
+  p:last-child { margin-bottom: 0; }
+}
+
+// Circle Icon
+.m-circle-icon {
+  position: relative;
+  font-size: 0;
+  z-index: 2;
+
+  & + .m-circle-text,
+  & + .m-circle-link {
+    margin-top: .675rem;
+    @include breakpoint(medium) { margin-bottom: 1rem; }
+  }
+}
+
+.m-circle-icon svg {
+  width: 55px;
+  height: 55px;
+  @include breakpoint(medium) {
+    width: 60px;
+    height: 55px;
+  }
+  path { stroke: $color-dark-blue; }
+}
+
+.m-circle-icon .i-stroke--white svg path { stroke: $color-white; }
+
+.m-circle-icon + .m-circle-text {
+  font-size: .875rem;
+  @include breakpoint(medium) {
+    font-size: 1rem;
+  }
+}
+
+// Circle Arrow
+.m-circle-arrow {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: $color-purple;
+  text-align: center;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  @include breakpoint(medium) {
+    width: 28px;
+    height: 28px;
+  }
+
+  // Right
+  &--right {
+    bottom: auto;
+    left: auto;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.m-circle-arrow svg {
+  vertical-align: -4px;
+  font-size: 0;
+  margin: 0 auto;
+  padding-left: 2px;
+  width: 8px;
+  height: 18px;
+  @include breakpoint(medium) { vertical-align: -5px; }
+
+  path  { stroke: $color-white; }
+}
+
+
+// VARIANTS
+
+// Purple BG - White Text and Icon fill
+.m-circle--fill .m-circle-text { color: $color-white; }
+
+.m-circle--fill .m-circle-icon svg path { fill: $color-white; }
+
+// White BG
+.m-circle--fill-white .m-circle-shape path { fill: $color-white; }
+
+.m-circle
+
+  // Size - Small
+.m-circle--size-small .m-circle-text,
+.m-circle--size-small .m-circle-text p {
+  @include breakpoint(medium) { font-size: rem-calc(14px); }
+  @include breakpoint(large) { font-size: rem-calc(15px); }
+}
+
+// Size - large
+.m-circle--size-large .m-circle-text,
+.m-circle--size-large .m-circle-text p {
+  @include breakpoint(medium) { font-size: rem-calc(16px); }
+  @include breakpoint(large) { font-size: rem-calc(22px); }
+}
+
+.m-circle--size-large .m-circle-icon svg {
+  @include breakpoint(medium) {
+    width: 100px;
+    height: 100px;
+  }
+}

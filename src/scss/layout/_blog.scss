@@ -1,0 +1,1797 @@
+body.node--type-blog,
+body.page-sub-type-blog-listing,
+body.section-blogger,
+body.section-blog {
+  .blog-author--image {
+    img[src*="information_builders_icon"] {
+      border-radius: 0 !important;
+    }
+  }
+
+  .field-paragraph--field-wysiwyg {
+    @include breakpoint(medium) {
+      max-width: 100%;
+    }
+
+    @include breakpoint(large) {
+      max-width: 75%;
+    }
+  }
+
+  .m-header {
+    border-bottom-width: 1px !important;
+    border-bottom-color: #eeeeee;
+    border-image: none;
+  }
+
+  .m-menu--secondary {
+    // visibility: hidden;
+    //  display: none;
+  }
+
+  .sticky.is-anchored {
+    @include breakpoint(medium) {
+      // padding-top: rem-calc(30);
+      //padding-bottom: rem-calc(30);
+    }
+  }
+
+  .paragraph--type--image {
+    display: flex;
+    align-content: center;
+
+    .field-paragraph--field-single-image {
+      @include breakpoint(medium) {
+        flex: 0 0 75%;
+        max-width: 75%;
+        align-self: center;
+        margin: auto;
+      }
+    }
+  }
+}
+
+#block-blogmenu {
+  li.m-menu-link-blog {
+    @include breakpoint(large) {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 5px;
+      background-color: #8d9ea6;
+      display: block;
+      height: rem-calc(80);
+      width: rem-calc(80);
+      margin-right: rem-calc(45);
+
+      a {
+        color: #fff;
+        font-size: rem-calc(17);
+      }
+
+      a.m-button--secondary {
+        //  color: #912BA7 !important;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  #site-search-link {
+    span.search-text {
+      padding-right: rem-calc(10);
+    }
+
+    @include breakpoint(small) {
+      svg {
+        // display: none;
+      }
+    }
+  }
+
+  @include breakpoint(medium) {
+    li.industry-focus:hover,
+    li.industry-focus.is-active {
+      background-color: #5bb6f8;
+    }
+
+    li.news-events:hover,
+    li.news-events.is-active {
+      background-color: #653e97;
+    }
+
+    li.use-cases:hover,
+    li.use-cases.is-active {
+      background-color: #ff5855;
+    }
+
+    li.analytics:hover,
+    li.analytics.is-active {
+      background-color: #59c5c7;
+    }
+
+    li.data:hover,
+    li.data.is-active {
+      background-color: #f86d2a;
+    }
+  }
+
+  li.hide-me {
+    // visibility: hidden;
+    //  display: none!important;
+  }
+
+  li#subscribe {
+    position: relative;
+
+    @include breakpoint(medium) {
+      background-color: transparent;
+      margin-right: 0;
+      width: rem-calc(140);
+    }
+
+    @include breakpoint(small) {
+      text-align: center;
+
+      a.m-button--secondary {
+        border-radius: 5px;
+      }
+    }
+
+    a.vidLink {
+      position: absolute;
+      top: 0;
+      font-size: rem-calc(14);
+      color: #ffffff;
+    }
+
+    a.view-all {
+      position: absolute;
+      top: rem-calc(47);
+      font-size: rem-calc(14);
+      color: #912ba7 !important;
+
+      @media screen and (min-width: 800px) {
+        // visibility: visible;
+      }
+
+      @media screen and (max-width: 800px) {
+        // visibility: hidden;
+      }
+    }
+  }
+}
+
+header.blog {
+  @include breakpoint(medium) {
+    margin-top: rem-calc(20);
+    margin-bottom: rem-calc(50);
+  }
+
+  @include breakpoint(small) {
+    margin-bottom: rem-calc(20);
+  }
+}
+
+.blog-feature-bg {
+  position: relative;
+  overflow: hidden;
+
+  @include breakpoint(medium) {
+    padding-right: 0 !important;
+    // padding-left: 0 !important;
+  }
+
+  .blog-image--page {
+    z-index: 0;
+    position: relative;
+  }
+
+  .blog-image--mask {
+    @include breakpoint(large) {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: rem-calc(370);
+      display: block;
+      background-color: #fff;
+      height: rem-calc(330);
+      width: rem-calc(600);
+      transform: rotate(-62.6deg);
+    }
+  }
+}
+
+.blog-feature-content {
+  @include breakpoint(large) {
+    align-self: center !important;
+    padding-left: 0 !important;
+  }
+
+  h1.blog-feature-title {
+    @include breakpoint(medium) {
+      font-size: rem-calc(37);
+      margin-bottom: rem-calc(20);
+    }
+  }
+}
+
+.blog-author--page {
+  @include breakpoint(small down) {
+    margin-top: rem-calc(13);
+  }
+
+  .blog-author--image {
+    @include breakpoint(small only) {
+      float: left;
+      padding-right: rem-calc(10);
+    }
+
+    @include breakpoint(medium) {
+      float: left;
+      padding-right: rem-calc(10);
+    }
+
+    img {
+      border-radius: 50%;
+      width: rem-calc(50);
+      height: auto;
+    }
+  }
+
+  .blog-author--name {
+    @include breakpoint(medium) {
+      float: left;
+      margin-top: rem-calc(12);
+    }
+  }
+
+  .blog-author--date::before {
+    @include breakpoint(medium) {
+      content: "|";
+      padding: 0 0.5em;
+    }
+  }
+
+  .blog-author--date {
+    @include breakpoint(medium) {
+      float: left;
+      margin-top: rem-calc(12);
+    }
+  }
+}
+
+.blog-feature--vflex {
+  @include flex-align-self(middle);
+
+  @include breakpoint(small only) {
+    padding-left: rem-calc(20);
+    padding-right: rem-calc(20);
+  }
+}
+
+//This pull quote style is here in blog scss, but will be available globally
+
+.pull-quote-right,
+.pull-quote-left {
+  position: relative;
+  color: #415d6b;
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(24);
+    width: rem-calc(290);
+  }
+
+  @include breakpoint(small) {
+    font-size: rem-calc(18);
+  }
+}
+
+.pull-quote-left {
+  float: left;
+}
+
+.pull-quote-right,
+.image-float-right {
+  @include breakpoint(medium) {
+    float: right;
+    margin-left: rem-calc(50);
+    padding-left: rem-calc(25);
+    line-height: 1.4;
+    text-indent: rem-calc(30);
+  }
+
+  @include breakpoint(small) {
+    text-indent: rem-calc(10);
+  }
+}
+
+.pull-quote-right::before {
+  position: absolute;
+  color: #415d6b;
+
+  @include breakpoint(medium) {
+    top: rem-calc(-23);
+    left: rem-calc(-10);
+  }
+
+  @include breakpoint(small) {
+    top: rem-calc(-15);
+    left: rem-calc(-20);
+  }
+
+  content: "\201C  ";
+
+  @include breakpoint(medium) {
+    font: {
+      family: Georgia, serif;
+      size: rem-calc(70);
+      style: italic;
+    }
+  }
+
+  @include breakpoint(small) {
+    font: {
+      family: Georgia, serif;
+      size: rem-calc(40);
+      style: italic;
+    }
+  }
+}
+
+.pull-quote-right::after {
+  position: absolute;
+  color: #415d6b;
+  bottom: 0;
+  line-height: 0;
+  content: "\201D";
+
+  @include breakpoint(medium) {
+    transform: translate(-1.5rem, 100%);
+
+    font: {
+      family: Georgia, serif;
+      size: rem-calc(70);
+      style: italic;
+    }
+  }
+
+  @include breakpoint(small) {
+    font: {
+      family: Georgia, serif;
+      size: rem-calc(40);
+      style: italic;
+    }
+  }
+}
+
+ul.blog {
+  list-style: none;
+  margin-left: 0;
+}
+
+.bbody {
+  .sharethis-wrapper {
+    margin-bottom: rem-calc(10);
+    margin-top: rem-calc(10);
+    display: block;
+    clear: both;
+  }
+}
+
+body.page-sub-type-blog-listing {
+  @include breakpoint(large) {
+    li.industry-focus {
+      background-color: #5bb6f8 !important;
+    }
+
+    li.news-events {
+      background-color: #653e97 !important;
+    }
+
+    li.use-cases {
+      background-color: #ff5855 !important;
+    }
+
+    li.analytics {
+      background-color: #59c5c7 !important;
+    }
+
+    li.data {
+      background-color: #f86d2a !important;
+    }
+  }
+
+  .l-section-header {
+    h2 {
+      color: #912ba7;
+      font-size: rem-calc(29);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h2::after,
+    h2::before {
+      content: " / ";
+    }
+  }
+
+  .pull-quote-right {
+    @include breakpoint(small only) {
+      display: none;
+    }
+  }
+
+  // homepage only mobile styles
+  .blog-feature--vflex {
+    @include flex-align-self(middle);
+
+    @include breakpoint(small only) {
+      width: 80%;
+      margin: auto;
+    }
+  }
+
+  .blog-feature-content {
+    @include breakpoint(medium down) {
+      padding-right: rem-calc(20) !important;
+      padding-left: rem-calc(40) !important;
+      position: absolute;
+      top: 0;
+      z-index: 4;
+      padding-top: rem-calc(10);
+    }
+  }
+
+  h1.blog-feature-title {
+    @include breakpoint(small only) {
+      // font-size: rem-calc(16) !important;
+    }
+
+    @include breakpoint(medium down) {
+      font-size: rem-calc(20);
+
+      a {
+        color: #ffffff;
+      }
+    }
+  }
+
+  .blog-author--name {
+    @include breakpoint(small only) {
+      float: left;
+      color: #fff;
+      margin-top: rem-calc(6);
+    }
+  }
+}
+
+article.blog {
+  @include breakpoint(medium) {
+    width: grid-item-width(3.3, 1.5rem) !important;
+  }
+
+  .m-card-title {
+    a {
+      color: white !important;
+    }
+  }
+
+  .blog-author--page .blog-author--name {
+    color: white !important;
+
+    a {
+      color: white !important;
+    }
+  }
+
+  .blog-author--image img {
+    padding: rem-calc(0.8);
+    background-color: #fff;
+  }
+
+  .blog-image--mask {
+    @include breakpoint(large) {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: rem-calc(311);
+      display: block;
+      background-color: #63777f;
+      height: rem-calc(228);
+      width: rem-calc(170);
+      -ms-transform: rotate(-62.7deg);
+      transform: rotate(-62.7deg);
+    }
+  }
+}
+
+article.blog-spotlight {
+  @include breakpoint(medium) {
+    width: 100%;
+  }
+
+  header.blog {
+    @include breakpoint(medium) {
+      max-height: rem-calc(450);
+    }
+
+    .blog-image--page {
+      img {
+        @include breakpoint(medium) {
+          min-height: rem-calc(480);
+        }
+      }
+    }
+
+    .blog-feature-bg {
+      position: relative;
+    }
+
+    .blog-feature-content {
+      @include breakpoint(640) {
+        width: 50% !important;
+      }
+
+      @include breakpoint(large) {
+        width: 59% !important;
+      }
+
+      @include breakpoint(medium) {
+        position: absolute;
+        top: rem-calc(40);
+        // width: 59%;
+        right: 0;
+
+        .blog-teaser--pull-quote {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          // margin-top: rem-calc(30);
+          height: rem-calc(400);
+        }
+
+        .blog-feature--vflex {
+          width: rem-calc(300);
+          float: left;
+        }
+
+        .blog-feature-title {
+          font-size: rem-calc(30);
+
+          a {
+            color: #ffffff;
+          }
+        }
+
+        .pull-quote-right {
+          width: rem-calc(280);
+          float: right;
+          margin-right: rem-calc(20);
+          color: #ffffff;
+          font-size: rem-calc(20);
+          // margin-top: 16%;
+        }
+
+        .pull-quote-right::before {
+          color: #ffffff;
+        }
+
+        .pull-quote-right::after {
+          color: #ffffff;
+          right: 2%;
+          bottom: 6%;
+          display: none;
+        }
+
+        .pull-quote-right {
+          p::after {
+            position: absolute;
+            color: #ffffff;
+            bottom: rem-calc(70);
+            content: "\201D";
+
+            @include breakpoint(medium) {
+              transform: translate(-1.5rem, 100%);
+
+              font: {
+                family: Georgia, serif;
+                size: rem-calc(70);
+                style: italic;
+              }
+            }
+
+            @include breakpoint(small) {
+              font: {
+                family: Georgia, serif;
+                size: rem-calc(40);
+                style: italic;
+              }
+            }
+          }
+        }
+
+        .blog-author--page .blog-author--name {
+          color: white !important;
+
+          a {
+            color: white !important;
+          }
+        }
+
+        .blog-author--image img {
+          padding: rem-calc(0.9);
+          background-color: #fff;
+        }
+      }
+
+      @include breakpoint(small) {
+        .blog-author--page .blog-author--name {
+          color: white !important;
+
+          a {
+            color: white !important;
+          }
+        }
+      }
+
+      @include breakpoint(large down) {
+        .pull-quote-right {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .blog-image--mask-spot-1 {
+    @include breakpoint(medium) {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: rem-calc(250);
+      display: block;
+      background-color: #638593;
+      height: rem-calc(600);
+      width: rem-calc(1000);
+      transform: rotate(63.2deg);
+      opacity: 0.95;
+    }
+
+    @include breakpoint(small only) {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: rem-calc(-14);
+      display: block;
+      background-color: #638593;
+      height: rem-calc(600);
+      width: rem-calc(1000);
+      transform: rotate(63.2deg);
+      opacity: 0.75;
+    }
+  }
+
+  .blog-image--mask-spot-2 {
+    @include breakpoint(medium) {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: rem-calc(525);
+      display: block;
+      background-color: #912ba7;
+      height: rem-calc(450);
+      width: rem-calc(1000);
+      transform: rotate(117.6deg);
+    }
+
+    @include breakpoint(small only) {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: rem-calc(11);
+      display: block;
+      background-color: #912ba7;
+      height: rem-calc(450);
+      width: rem-calc(1000);
+      transform: rotate(117.6deg);
+    }
+  }
+
+  .blog-feature-content {
+    @include breakpoint(medium) {
+      z-index: 3;
+    }
+  }
+
+  .blog-teaser--pull-quote {
+    @include breakpoint(small) {
+      // display: none;
+    }
+  }
+}
+
+.chevron::before {
+  border-style: solid;
+  border-width: 0.1em 0.1em 0 0;
+  content: "";
+  display: inline-block;
+  height: 0.6em;
+  left: 0.15em;
+  position: relative;
+  top: -1px;
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  /* vertical-align: middle; */
+  width: 0.6em;
+  color: $color-purple;
+}
+
+.chevron.right:before {
+  left: 0;
+  transform: rotate(45deg);
+}
+
+article.blog-spotlight.full {
+  header.blog.angled-full {
+    .blog-image--mask-spot-2 {
+      background-color: #fff;
+      height: rem-calc(525);
+
+      @include breakpoint(large) {
+        left: rem-calc(-360);
+        display: block;
+      }
+
+      @include breakpoint(medium down) {
+        left: rem-calc(-300);
+        display: block;
+      }
+
+      @include breakpoint(small only) {
+        display: none;
+      }
+    }
+
+    @include breakpoint(medium) {
+      max-height: rem-calc(260);
+      margin-bottom: rem-calc(10);
+    }
+
+    @include breakpoint(large) {
+      max-height: rem-calc(490);
+      margin-bottom: rem-calc(10);
+    }
+
+    .blog-image--page {
+      img {
+        @include breakpoint(medium) {
+          width: rem-calc(830);
+          float: right;
+        }
+
+        @include breakpoint(large) {
+          width: rem-calc(830);
+          float: right;
+        }
+      }
+    }
+  }
+
+  //margin-top: rem-calc(500);
+
+  .blog-feature-content {
+    left: 0;
+    top: 0 !important;
+    height: 90%;
+    display: flex;
+
+    @include breakpoint(small only) {
+      top: unset;
+      position: inherit;
+    }
+
+    @include breakpoint(small) {
+      height: 41%;
+    }
+
+    @include breakpoint(medium) {
+    }
+
+    @include breakpoint(large) {
+      height: 90%;
+    }
+
+    .blog-feature--vflex {
+      @include breakpoint(small) {
+        padding: 0;
+        width: inherit;
+      }
+
+      @include breakpoint(large) {
+        padding-left: rem-calc(40);
+        width: rem-calc(350) !important;
+      }
+    }
+
+    p.readmore {
+      clear: both;
+      font-weight: 700;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding-top: rem-calc(20);
+
+      a {
+        color: $color-purple;
+      }
+    }
+
+    .blog-feature-title {
+      @include breakpoint(medium) {
+        margin-bottom: rem-calc(2);
+        font-size: rem-calc(40) !important;
+        line-height: 1.2em;
+      }
+
+      a {
+        color: $color-grey !important;
+      }
+    }
+
+    .blog-author--name.fullspot {
+      @include breakpoint(medium) {
+        margin-top: 0;
+      }
+
+      .blogger-page-title {
+        a {
+          color: $color-purple !important;
+        }
+      }
+    }
+  }
+}
+
+article.blog.most-pop {
+  // border: 0;
+  background: $white;
+
+  @include breakpoint(medium) {
+    padding-left: rem-calc(20);
+
+    .m-card-image.pop {
+      max-height: rem-calc(170);
+    }
+  }
+
+  .blog-image--mask {
+    @include breakpoint(large) {
+      z-index: 1;
+      position: absolute;
+      top: -40px;
+      left: -204px;
+      display: block;
+      background-color: #fefefe;
+      height: 200px;
+      width: 335px;
+      transform: rotate(-62.7deg);
+    }
+  }
+
+  .m-card-flex {
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+  }
+
+  .m-card-title {
+    @include breakpoint(medium) {
+      // align-self: flex-start;
+      min-height: rem-calc(120);
+    }
+
+    a {
+      color: $color-grey !important;
+    }
+  }
+
+  .view-mode-blog_pop_teaser {
+    padding-left: 0;
+  }
+
+  .blog-author--page {
+    @include breakpoint(medium) {
+      //halign-self: flex-end;
+      //  height: 60%;
+      //  display: flex;
+    }
+
+    .blog-author--name {
+      // align-self: flex-end;
+
+      a {
+        color: $color-purple !important;
+      }
+    }
+  }
+}
+
+.blog--industry-focus,
+.blog--news-events,
+.blog--use-cases,
+.blog--analytics,
+.blog--data {
+  text-align: center;
+
+  h2 {
+    //background-color: #5bb6f8 !important;
+    color: white !important;
+    line-height: 0.9;
+    margin: auto;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 5px;
+    display: block;
+    text-align: left;
+
+    @include breakpoint(medium) {
+      font-size: rem-calc(30);
+      height: rem-calc(145);
+      width: rem-calc(145);
+      margin-bottom: rem-calc(45);
+      padding: rem-calc(17);
+    }
+
+    @include breakpoint(small) {
+      font-size: rem-calc(20);
+      height: rem-calc(80);
+      width: rem-calc(80);
+      margin-bottom: rem-calc(10);
+    }
+  }
+}
+
+.blog--industry-focus h2 {
+  background-color: #7cc5f9 !important;
+}
+
+.blog--news-events h2 {
+  background-color: #653e97 !important;
+}
+
+.blog--use-cases h2 {
+  background-color: #ff7977 !important;
+}
+
+.blog--analytics h2 {
+  background-color: #59c5c7 !important;
+}
+
+.blog--data h2 {
+  background-color: #f98a55 !important;
+}
+
+.view-mode-teaser_card_blog_industry_focus {
+  h4.m-card-title {
+    @include breakpoint(medium) {
+      margin-top: rem-calc(15);
+      width: 98%;
+    }
+
+    a {
+      color: #415d6b !important;
+    }
+  }
+}
+
+.blog--card-container--industry-focus {
+  @include breakpoint(medium) {
+    //  padding-left: rem-calc(55);
+    // padding-right: rem-calc(55);
+    margin-top: rem-calc(-45);
+  }
+
+  .m-card-image {
+    @include breakpoint(small only) {
+      height: rem-calc(130);
+    }
+  }
+
+  .card-number-1 {
+    @include breakpoint(medium) {
+      //  align-self: flex-start !important;
+      // flex: 0 0 23%;
+      padding: 0 60px 0 60px;
+
+      .m-card-flex {
+        min-height: rem-calc(100);
+      }
+    }
+  }
+
+  .card-number-2,
+  .card-number-3 {
+    @include breakpoint(medium) {
+      //  padding-left: rem-calc(10);
+      //   align-self: flex-start !important;
+      // flex: 0 0 33%;
+
+      .m-card-flex {
+        //  width: 60%;
+        // float: left;
+      }
+
+      .m-card-image {
+        //  width: 40%;
+        //  float: right;
+        z-index: 2;
+      }
+    }
+  }
+
+  .card-number-2 {
+    @include breakpoint(medium) {
+      // flex: 0 0 43%;
+    }
+  }
+
+  .card-number-3 {
+    @include breakpoint(medium) {
+      //  flex: 0 0 23%;
+      padding: 0 60px 0 60px;
+    }
+  }
+
+  .card-number-1 {
+    position: relative;
+
+    .m-card-section-blog--industry-focus {
+      // width: rem-calc(300);
+      // float: left;
+      .m-card-image {
+        @include breakpoint(medium) {
+          // width: rem-calc(365);
+        }
+      }
+
+      .blog-image--mask {
+        @include breakpoint(large) {
+          z-index: 1;
+          position: absolute;
+          top: rem-calc(60);
+          left: rem-calc(250);
+          display: block;
+          background-color: #5bb6f8;
+          height: rem-calc(415);
+          width: rem-calc(170);
+          transform: rotate(30deg);
+        }
+      }
+    }
+
+    .blog-image--mask2 {
+      @include breakpoint(large) {
+        z-index: 2;
+        position: absolute;
+        top: rem-calc(50);
+        left: rem-calc(274);
+        display: block;
+        background-color: #5bb6f8;
+        height: rem-calc(500);
+        width: rem-calc(85);
+        transform: skew(-30deg);
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .card-number-2 {
+    position: relative;
+
+    .m-card-section-blog--industry-focus {
+    }
+
+    .blog-image--mask2 {
+      @include breakpoint(large) {
+        z-index: 0;
+        position: absolute;
+        top: rem-calc(-8);
+        left: rem-calc(490);
+        display: block;
+        background-color: #5bb6f8;
+        height: rem-calc(290);
+        width: rem-calc(10);
+        transform: skew(-30deg);
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .card-number-3 {
+    // margin-top: rem-calc(80);
+  }
+}
+
+.blog--card-container--use-case {
+  @include breakpoint(medium) {
+    padding-left: rem-calc(90);
+    padding-right: rem-calc(50);
+    margin-top: rem-calc(-45);
+  }
+
+  .m-card-image {
+    @include breakpoint(small only) {
+      height: rem-calc(130);
+    }
+  }
+
+  h4.m-card-title {
+    @include breakpoint(medium) {
+      margin-top: rem-calc(15);
+      width: 76%;
+    }
+
+    a {
+      color: #415d6b !important;
+    }
+  }
+
+  .m-card-flex {
+    @include breakpoint(medium) {
+      // padding-bottom: rem-calc(40);
+      min-height: rem-calc(100);
+
+      h4.card-title {
+        //  width: 60% !important;
+      }
+    }
+  }
+
+  .card-number-1,
+  .card-number-2 {
+    @include breakpoint(medium) {
+      width: 50%;
+      float: left;
+    }
+  }
+
+  .card-number-1 {
+    position: relative;
+
+    .m-card-section-blog--industry-focus {
+      .m-card-image {
+        @include breakpoint(medium) {
+          width: rem-calc(365);
+        }
+      }
+
+      .blog-image--mask {
+        @include breakpoint(large) {
+          z-index: 1;
+          position: absolute;
+          top: rem-calc(60);
+          left: rem-calc(250);
+          display: block;
+          background-color: #ff5855;
+          height: rem-calc(415);
+          width: rem-calc(170);
+          transform: rotate(30deg);
+        }
+      }
+    }
+
+    .blog-image--mask2 {
+      @include breakpoint(large) {
+        z-index: 2;
+        position: absolute;
+        top: rem-calc(30);
+        left: rem-calc(277);
+        display: block;
+        background-color: #ff5855;
+        height: rem-calc(500);
+        width: rem-calc(12);
+        transform: skew(-30deg);
+        //opacity: .8;
+      }
+    }
+  }
+
+  .card-number-2 {
+    position: relative;
+
+    @include breakpoint(medium) {
+      padding-left: rem-calc(80);
+    }
+
+    .m-card-section-blog--industry-focus {
+      // width: rem-calc(300);
+      // float: left;
+      .m-card-image {
+        @include breakpoint(medium) {
+          width: rem-calc(365);
+        }
+      }
+
+      .blog-image--mask {
+        @include breakpoint(large) {
+          z-index: 1;
+          position: absolute;
+          top: rem-calc(-179);
+          left: rem-calc(-60);
+          display: block;
+          background-color: #ff5855;
+          height: rem-calc(415);
+          width: rem-calc(170);
+          transform: rotate(30deg);
+        }
+      }
+    }
+  }
+}
+
+.blog--card-container--news-events,
+.blog--card-container--analytics {
+  @include breakpoint(medium) {
+    min-height: rem-calc(670);
+    padding-top: rem-calc(30);
+  }
+
+  h3 {
+    a {
+      color: #ffffff;
+    }
+  }
+
+  .card-number-1,
+  .card-number-2,
+  .card-number-3 {
+    @include breakpoint(small only) {
+      margin-left: rem-calc(10);
+      margin-bottom: rem-calc(30);
+      padding-top: rem-calc(10);
+    }
+  }
+
+  .card-number-3 {
+    clear: both;
+  }
+
+  .card-number-1,
+  .card-number-3 {
+    position: relative;
+
+    @include breakpoint(large) {
+      margin-left: rem-calc(70);
+      margin-bottom: rem-calc(70);
+    }
+
+    @include breakpoint(medium) {
+      margin-left: rem-calc(30);
+      width: 38%;
+      float: left;
+      padding-top: rem-calc(20);
+    }
+  }
+
+  .card-number-1::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: rem-calc(68);
+    //left: 25%;
+    border-top: 4px solid #653e97;
+  }
+
+  .card-number-2 {
+    position: relative;
+
+    @include breakpoint(medium) {
+      padding-right: rem-calc(50);
+      width: 42%;
+      float: right;
+      padding-top: rem-calc(20);
+    }
+  }
+
+  .card-number-2::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: rem-calc(68);
+    //left: 25%;
+    border-top: 4px solid #653e97;
+  }
+
+  .card-number-3::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: rem-calc(68);
+    //left: 25%;
+    border-top: 4px solid #653e97;
+  }
+
+  .gap {
+    @include breakpoint(small only) {
+      display: block;
+      padding: rem-calc(10);
+    }
+  }
+}
+
+.blog--card-container--analytics {
+  .card-number-1::before,
+  .card-number-2::before,
+  .card-number-3::before {
+    border-top: 4px solid #59c5c7;
+  }
+}
+
+.blog--card-container--data {
+  @include breakpoint(medium) {
+    padding-left: rem-calc(40);
+    padding-right: rem-calc(40);
+  }
+
+  .m-card-image {
+    @include breakpoint(small only) {
+      height: rem-calc(130);
+    }
+  }
+
+  .card-number-1 {
+    @include breakpoint(medium) {
+      .m-card-flex {
+        min-height: rem-calc(100);
+      }
+
+      width: 50%;
+      float: left;
+    }
+  }
+
+  .card-number-2,
+  .card-number-3 {
+    @include breakpoint(medium) {
+      padding-left: rem-calc(10);
+      width: 50%;
+      height: 80%;
+      float: left;
+
+      .m-card-flex {
+        width: 60%;
+        float: left;
+      }
+
+      .m-card-image {
+        width: 40%;
+        float: right;
+        z-index: 2;
+      }
+    }
+  }
+
+  .card-number-1 {
+    position: relative;
+
+    .m-card-section-blog--industry-focus {
+      // width: rem-calc(300);
+      // float: left;
+      .m-card-image {
+        @include breakpoint(medium) {
+          width: rem-calc(365);
+          z-index: 4;
+        }
+      }
+
+      .blog-image--mask {
+        @include breakpoint(large) {
+          z-index: 1;
+          position: absolute;
+          top: rem-calc(60);
+          left: rem-calc(250);
+          display: block;
+          background-color: #f86d2a;
+          height: rem-calc(415);
+          width: rem-calc(170);
+          transform: rotate(30deg);
+        }
+      }
+    }
+
+    .blog-image--mask2 {
+      @include breakpoint(large) {
+        z-index: 1;
+        position: absolute;
+        top: rem-calc(75);
+        left: rem-calc(260);
+        display: block;
+        background-color: #f86d2a;
+        height: rem-calc(500);
+        width: rem-calc(85);
+        transform: skew(-30deg);
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .card-number-2 {
+  }
+
+  .card-number-3 {
+    margin-top: rem-calc(80);
+    position: relative;
+
+    .m-card-image {
+      z-index: 1;
+    }
+
+    .blog-image--mask3 {
+      @include breakpoint(large) {
+        z-index: 0;
+        position: absolute;
+        top: rem-calc(-8);
+        left: rem-calc(490);
+        display: block;
+        background-color: #f86d2a;
+        height: rem-calc(290);
+        width: rem-calc(10);
+        transform: skew(-30deg);
+        opacity: 0.9;
+      }
+    }
+
+    .blog-image--mask2 {
+      @include breakpoint(large) {
+        z-index: 0;
+        position: absolute;
+        top: rem-calc(-8);
+        left: rem-calc(470);
+        display: block;
+        background-color: #f86d2a;
+        height: rem-calc(290);
+        width: rem-calc(21);
+        transform: skew(-30deg);
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
+article.blog-topic-row {
+  @include breakpoint(large) {
+    margin-bottom: rem-calc(20);
+    padding-bottom: rem-calc(20);
+  }
+
+  border-bottom: #ff7931;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+
+  @include breakpoint(small) {
+    margin-bottom: rem-calc(20);
+    padding-bottom: rem-calc(20);
+  }
+}
+
+article.blog-topic-row:first-child {
+  padding-top: rem-calc(20);
+  border-top: #ff7931;
+  border-top-width: 2px;
+  border-top-style: solid;
+}
+
+.industry-list {
+  ul {
+    list-style: none;
+    margin-left: 0;
+    padding-bottom: rem-calc(30);
+    padding-top: rem-calc(10);
+
+    li {
+      float: left;
+      padding-right: rem-calc(30);
+    }
+  }
+}
+
+.blog-topic--wrapper {
+  @include breakpoint(medium) {
+    margin-top: rem-calc(30);
+  }
+
+  a {
+    // @include button()
+    margin-bottom: 0 !important;
+  }
+
+  .l-filter-main {
+    #edit-actions {
+      display: none;
+    }
+  }
+}
+
+#edit-submit-blogs {
+  display: none;
+}
+
+body.section-blog {
+  .no-results {
+    background-color: #ebebeb;
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: 600;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top: 2rem;
+    padding: 1rem;
+
+    @include breakpoint(large) {
+      margin-top: rem-calc(50);
+      margin-bottom: rem-calc(50);
+    }
+  }
+}
+
+#views-exposed-form-blogs-block-8 {
+  .m-filter-select {
+    position: relative;
+
+    .industry-color {
+      position: absolute;
+      height: rem-calc(50);
+      width: rem-calc(60);
+      display: block;
+      border-radius: 5px;
+      right: 0;
+    }
+
+    .industry-focus {
+      background-color: #5bb6f8;
+      border: 1px solid #5bb6f8;
+    }
+
+    .news-and-events {
+      background-color: #653e97;
+      border: 1px solid #653e97;
+    }
+
+    .use-cases {
+      background-color: #ff5855;
+      border: 1px solid #ff5855;
+    }
+
+    .analytics {
+      background-color: #59c5c7;
+      border: 1px solid #59c5c7;
+    }
+
+    .data {
+      background-color: #f86d2a;
+      border: 1px solid #f86d2a;
+    }
+
+    svg.i-arrow-down {
+      path {
+        stroke: white !important;
+      }
+    }
+  }
+
+  // dropdown width override for blog
+  .m-filter-group .m-filter {
+    @include breakpoint(medium) {
+      max-width: 290px !important;
+    }
+  }
+}
+
+.blogger-about-row {
+  margin-bottom: rem-calc(20);
+
+  .blog-author--image {
+    img {
+      border-radius: 50%;
+      width: rem-calc(98);
+      height: auto;
+    }
+  }
+
+  .rule {
+    border-bottom: 2px solid #c6ced2;
+    padding: rem-calc(18);
+  }
+}
+
+.callout.blog {
+  border: none !important;
+
+  ul.blog-tags {
+    margin-left: 0;
+    list-style-type: none;
+    // padding-bottom: rem-calc(20);
+    overflow: overlay;
+
+    li {
+      float: left;
+
+      :after {
+        content: ",  ";
+      }
+
+      margin-right: rem-calc(10);
+    }
+
+    li:last-child {
+      :after {
+        content: none;
+      }
+    }
+  }
+}
+
+.related-blogs {
+  article.blog-topic-row:first-child {
+    border-top: none !important;
+  }
+}
+
+.blog-keyword {
+  @include breakpoint(medium) {
+    margin-top: rem-calc(20);
+    margin-bottom: rem-calc(20);
+  }
+
+  h1.keywords {
+    text-transform: capitalize;
+  }
+}
+
+.paragraph--type--blog-reference {
+  .m-card-section {
+    h3.m-card-title {
+      @include breakpoint(large) {
+        min-height: rem-calc(99);
+      }
+    }
+  }
+
+  .m-card-description {
+    .blog-author--page {
+    }
+  }
+}
+
+#views-exposed-form-blogs-block-all-blogs {
+  margin-bottom: rem-calc(40);
+}
+
+.blog-border {
+  position: relative;
+  @include breakpoint(medium) {
+    border-radius: 0;
+    border: 1px solid #ebebeb;
+  }
+  .line-use-case-1 {
+    position: absolute;
+    top: 490px;
+    left: 306px;
+    z-index: -1;
+    -ms-transform: rotate(-64.7deg);
+    transform: rotate(-64.7deg);
+    
+      @include breakpoint(medium) {
+        border-top: 2px solid #fff2f2;
+        width: 500px;
+      }
+    
+  }
+  .line-use-case-2 {
+    position: absolute;
+    top: 415px;
+    left: 747px;
+    z-index: -1;
+    -ms-transform: rotate(-64.7deg);
+    transform: rotate(-64.7deg);
+    
+      @include breakpoint(medium) {
+        border-top: 2px solid #fff2f2;
+        width: 600px;
+      }
+    
+  }
+  .line-data-1 {
+    position: absolute;
+    top: 490px;
+    left: 306px;
+    z-index: -1;
+    -ms-transform: rotate(-64.7deg);
+    transform: rotate(-64.7deg);
+    
+      @include breakpoint(medium) {
+        border-top: 2px solid #FEF1E9;
+        width: 500px;
+      }
+    
+  }
+  .line-data-2 {
+    position: absolute;
+    top: 415px;
+    left: 747px;
+    z-index: -1;
+    -ms-transform: rotate(-64.7deg);
+    transform: rotate(-64.7deg);
+    
+      @include breakpoint(medium) {
+        border-top: 2px solid #FEF1E9;
+        width: 600px;
+      }
+    
+  }
+}
+
+// Blogtype block redesign
+
+.blog--industry-focus,
+.blog--use-cases,
+.blog--data {
+  position: relative;
+  overflow: hidden;
+
+  @include breakpoint(medium) {
+    // background-color: #5bb6f8;
+    padding-top: rem-calc(39);
+    padding-bottom: rem-calc(39);
+    z-index: 0;
+  }
+
+  .mask {
+    @include breakpoint(medium) {
+      z-index: 1;
+      position: absolute;
+      top: -40px;
+      left: -190px;
+      display: block;
+      background-color: $color-white;
+      height: 288px;
+      width: 400px;
+      -ms-transform: rotate(-64.7deg);
+      transform: rotate(-64.7deg);
+      overflow: hidden;
+    }
+  }
+}
+
+.blog--industry-focus {
+  @include breakpoint(medium) {
+    background-color: #5bb6f8;
+    right: -17px;
+  }
+}
+
+.blog--use-cases {
+  @include breakpoint(medium) {
+    background-color: #ff5855;
+    right: -17px;
+  }
+}
+
+.blog--data {
+  @include breakpoint(medium) {
+    background-color: #f86d2a;
+    right: -17px;
+  }
+}
+
+.industry-focus.m-card {
+  background: transparent !important;
+}
+
+.blogger-page-title {
+  a {
+    color: $color-purple;
+  }
+}

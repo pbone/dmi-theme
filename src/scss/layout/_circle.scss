@@ -1,0 +1,182 @@
+//
+// LAYOUT: Circle
+//
+
+.l-circle { position: relative; }
+
+// In-line
+.l-section-main .l-circle--inline {
+  padding-right: 1rem;
+  @include breakpoint(medium) { padding-right: .75rem; }
+
+  > div {
+    display: flex;
+    align-self: center !important;
+    justify-content: center;
+    @include breakpoint(small only) {
+      margin-bottom: 1rem;
+    }
+
+    &:last-child { margin-bottom: 0; }
+  }
+
+  .m-circle { @include breakpoint(small only) { max-width: 200px; } }
+
+  + .field-paragraph--field-button { margin-top: 2.5rem; }
+
+  + .field-paragraph--field-button .m-link.content-position-right {
+    @include breakpoint(small only) { text-align: center; }
+  }
+}
+
+// Alternate
+.l-section-main .l-circle--alternate {
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+  @include breakpoint(medium) { padding-right: .75rem; }
+
+  > div {
+    display: flex;
+    margin-bottom: 1rem;
+    @include breakpoint(medium) {
+      align-self: center !important;
+      justify-content: center;
+    }
+
+    &:nth-child(even) {
+      @include breakpoint(small only) { padding-left: 10px; }
+    }
+
+    &:nth-child(odd) {
+      @include breakpoint(small only) {
+        justify-content: flex-end;
+        padding-right: 10px;
+      }
+    }
+
+    &:nth-child(-n+4) { @include breakpoint(medium only) { margin-bottom: 1rem; } }
+  }
+}
+
+// Industry Image & Industry Icon
+.l-circle--industry-image .small-up-2 .columns,
+.l-circle--industry-icon .small-up-2 .columns {
+  &:last-child { padding-bottom: 0; }
+}
+
+// Circles
+.l-circle--industry-image > .columns:first-child,
+.l-circle--industry-icon > .columns:first-child  {
+  order: 2;
+  @include breakpoint(large) {
+    margin-bottom: 0;
+    padding-right: 40px;
+    order: 1;
+    align-self: center;
+  }
+}
+
+// Text
+.l-circle--industry-image > .columns:last-child,
+.l-circle--industry-icon > .columns:last-child {
+  order: 1;
+  margin-bottom: 2.5rem;
+  @include breakpoint(medium) {
+    align-self: center !important;
+  }
+  @include breakpoint(large) {
+    padding-left: 40px;
+    order: 2;
+  }
+}
+
+.l-circle--industry-image .m-text,
+.l-circle--industry-icon .m-text {
+  align-self: center;
+  @include breakpoint(medium down) { align-items: center; }
+}
+
+.l-circle--industry-image .medium-up-3 .columns:nth-child(odd),
+.l-circle--industry-icon .medium-up-3 .columns:nth-child(odd) {
+  @include breakpoint(small only) {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+  }
+}
+
+.l-circle--industry-image .medium-up-3 .columns:nth-child(even),
+.l-circle--industry-icon .medium-up-3 .columns:nth-child(even) {
+  @include breakpoint(small only) {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 1rem;
+  }
+}
+
+.l-circle--industry-image > .columns h2,
+.l-circle--industry-icon > .columns h2 {
+  margin-bottom: 0;
+  width: 100%;
+  @include breakpoint(small only) { text-align: center; }
+}
+
+.l-circle--industry-image > .columns h2 + .m-button,
+.l-circle--industry-icon > .columns h2 + .m-button {
+  margin-top: 1.5rem;
+}
+
+// Industry Image
+
+.l-circle--industry-image .small-up-2 .columns {
+  @include breakpoint(small only) {
+    padding-bottom: 5rem;
+  }
+}
+
+.l-circle--industry-image > .columns:first-child {
+  @include breakpoint(small) { padding-bottom: 5rem; }
+  @include breakpoint(large) { padding-bottom: 4rem; }
+}
+
+.l-circle--industry-image .medium-up-3 .columns{
+  @include breakpoint(medium) {
+    padding-bottom: 5rem;
+  }
+}
+
+.l-circle--industry-image .medium-up-3 .columns:nth-last-child(-n+3) {
+  @include breakpoint(medium) {
+    padding-bottom: 0;
+  }
+}
+
+.l-circle--industry-image .m-circle-link { margin-top: .65rem; }
+
+// Industry Icon
+
+.l-circle--industry-icon .small-up-2 .columns {
+  @include breakpoint(small only) {
+    padding-bottom: 2.5rem;
+  }
+}
+
+.l-circle--industry-icon > .columns:first-child {
+  @include breakpoint(medium down) { padding-bottom: 1.5rem; }
+  @include breakpoint(large) {
+    margin-bottom: 0;
+    align-self: center;
+  }
+}
+
+.l-circle--industry-icon .medium-up-3 .columns {
+  @include breakpoint(medium) {
+    padding-bottom: 2.5rem;
+  }
+}
+
+.l-circle--industry-icon .medium-up-3 .columns:nth-last-child(-n+3) {
+  @include breakpoint(medium) {
+    padding-bottom: 0;
+  }
+}

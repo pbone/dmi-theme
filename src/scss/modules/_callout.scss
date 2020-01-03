@@ -1,0 +1,36 @@
+//
+// CALLOUT
+//
+
+// Base
+.m-callout {
+  position: relative;
+  @include flex;
+  @include flex-align(center, middle);
+}
+
+//
+// SECTIONS
+//
+
+.m-callout-inner {
+  text-align: center;
+}
+
+//
+// ELEMENTS
+//
+
+.m-callout-title {
+  position: relative;
+  margin-bottom: 0;
+  font-size: rem-calc(20px);
+  @include breakpoint(medium) { font-size: rem-calc(30px); }
+  @include breakpoint(large) { font-size: rem-calc(40px); }
+}
+
+.m-callout .m-callout-title + .m-button {
+  margin-top: 1.5rem;
+  @include breakpoint(medium) { margin-top: 1.75rem; }
+  @include breakpoint(large) { margin-top: 2rem; }
+}

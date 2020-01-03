@@ -1,0 +1,76 @@
+{#
+/**
+ * @file
+ * Theme override for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ */
+#}
+
+
+{% block content %}
+
+	{#% if site_logo %#}
+	<!-- Logo + Menu -->
+		<div class="m-header-left"> <ul
+			class="menu">
+			<!-- Logo -->
+			<li class="m-menu-logo">
+				<div>
+					<span class="visually-hidden">{{ site_name }}
+						<a class="summit-logo-link1" href="#" data-rel="logo-swap1">logo 1</a>
+						<a class="summit-logo-link" href="#" data-rel="logo-swap2">logo 2</a>
+					</span>
+					{# need language switching here - intl homepages have /home after the language prefix #}
+					<div class="logo-swap1 is-active">
+						<a
+							class="summit-logo-link1" href="#">
+							{#   <a href="{{ path('entity.node.canonical', {'node': '15536'}) }}" title="{{ 'Home'|t }}" rel="home"> #}
+							{{ get_svg('i-summita') }}
+						</a>
+					</div>
+					<div class="logo-swap2 is-hidden">
+						<a
+							class="summit-logo-link2" href="#">
+							{#  <a href="{{ path('entity.node.canonical', {'node': '15536'}) }}" title="{{ 'Home'|t }}" rel="home"> #}
+							{{ get_svg('i-summitb') }}
+						</a>
+					</div>
+					<div class="logo-swap3 is-hidden">
+						<a
+							class="summit-logo-link3" href="#">
+							{#   <a href="{{ path('entity.node.canonical', {'node': '15536'}) }}" title="{{ 'Home'|t }}" rel="home"> #}
+							{{ get_svg('i-summitc') }}
+						</a>
+					</div>
+
+
+				</div>
+			</li>
+			<!-- Menu -->
+			<li class="m-menu-hamburger">
+				<a id="mobile-nav-trigger" href="#">
+					<div class="i-hamburger">
+						<div class="i-hamburger-box">
+							<div class="i-hamburger-inner"></div>
+						</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	{#% endif %#}
+
+	{% if site_name %}
+		<a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">{{ site_name }}</a>
+	{% endif %}
+
+	{{ site_slogan }}
+
+{% endblock %}

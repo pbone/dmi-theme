@@ -1,0 +1,81 @@
+//
+// UTILITY: Typography
+//
+
+.u-text {
+
+  // Alignment
+  &-align {
+    &--left { text-align: left; }
+    &--center { text-align: center; }
+    &--right{ text-align: right; }
+  }
+
+  // Weight
+  &-weight {
+    &--lighter { font-weight: 200; }
+    &--light { font-weight: 300; }
+    &--normal { font-weight: 400; }
+    &--bold { font-weight: 600; }
+    &--bolder { font-weight: 700; }
+  }
+
+  // Color
+  &-color {
+    &--light-purple { color: $color-light-purple; }
+    &--purple { color: $color-purple; }
+    &--dark-purple { color: $color-dark-purple; }
+    &--light-blue { color: $color-light-blue; }
+    &--blue { color: $color-blue; }
+    &--dark-blue { color: $color-dark-blue; }
+    &--red { color: $color-red; }
+    &--black { color: $color-black; }
+    &--white { color: $color-white; }
+    &--grey { color: $color-grey; }
+  }
+
+  // Size
+  &-size {
+    &--small { font-size: rem-calc(14px); }
+    &--medium { font-size: 16px; }
+    &--large {
+      font-size: rem-calc(16px);
+      @include breakpoint(medium) { line-height: 1.5; font-size: rem-calc(20px); }
+    }
+    &--xlarge {
+      font-size: rem-calc(18px);
+      @include breakpoint(medium) { font-size: rem-calc(25px); }
+    }
+  }
+
+  // Style
+  &-style {
+    &--italic { font-style: italic; }
+    &--bold { font-style: bold; }
+    &--oblique { font-style: oblique; }
+  }
+
+  // Transform
+  &-transform {
+    &--uppercase { text-transform: uppercase; }
+    &--lowercase { text-transform: lowercase; }
+    &--capitalize { text-transform: capitalize; }
+  }
+
+  // Decoration
+  &-decoration {
+    &--underline { text-decoration: underline; }
+    &--overline { text-decoration: overline; }
+    &--line-through { text-decoration: line-through; }
+  }
+
+  // Layout
+  &-layout {
+    &--center {
+      max-width: 780px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+}

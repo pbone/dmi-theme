@@ -1,0 +1,114 @@
+//
+// LAYOUT: CONTENT
+//
+
+.l-content {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+}
+
+.l-content .m-image {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) {
+    margin-bottom: 0;
+  }
+}
+
+.l-content .m-button {
+  margin-top: .625rem; @include breakpoint(medium) { margin-top: 2rem; }
+}
+
+.l-content .l-content-footer .m-button {
+  margin-top: 1rem;
+  @include breakpoint(medium) { margin-top: 3rem; }
+  @include breakpoint(medium) { margin-top: 4rem; }
+}
+
+.l-content:not(.l-content--reverse) {
+  @include breakpoint(medium) {
+    .l-content-main.row .columns:first-child { padding-right: 2rem; }
+    .l-content-main.row .columns:last-child { padding-left: 2rem; }
+  }
+}
+
+.l-content.l-content--reverse {
+  @include breakpoint(medium) {
+    .l-content-main.row .columns:first-child { padding-left: 2rem; }
+    .l-content-main.row .columns:last-child { padding-right: 2rem; }
+  }
+}
+
+.l-content--reverse {
+  @include breakpoint(medium) {
+    .row .columns:first-child { order: 2; }
+    .row .columns:last-child { order: 1; }
+  }
+}
+
+// Regular Text (Default)
+
+.l-content--text .m-link {
+  flex-grow: 1;
+}
+
+.l-content--text .m-text {
+  height: 95%;
+}
+
+.l-content--text .m-text p {
+  @include breakpoint(medium) {
+    font-size: rem-calc(20px);
+    flex-grow: 1;
+  }
+}
+
+// Accordion
+
+.l-content--accordion { }
+
+// Features
+
+.l-content--features .m-text { display: block; }
+
+.l-content--features .m-text .m-text-title { @include breakpoint(medium) { margin-bottom: 1.5rem; } }
+
+// Image Edge
+
+.l-content--image-edge .m-image {
+  width: 100%;
+  @include breakpoint(medium) {
+    position: absolute;
+    min-width: 680px;
+  }
+}
+
+.l-content--image-edge .m-text {
+  @include breakpoint(medium) {
+    margin-bottom: 6rem;
+  }
+  @include breakpoint(large) {
+    margin-bottom: 8rem;
+  }
+}
+
+.l-content--image-edge:not(.l-content--reverse) .m-image { right: 0; }
+
+.l-content--image-edge.l-content--reverse .m-image { left: 0; }
+
+.l-content--image-edge .row .columns:first-child { position: relative; }
+
+// Outcome
+
+.l-content--outcome { }
+
+.l-content--outcome .m-bubble {
+  margin-bottom: 1.5rem;
+  @include breakpoint(medium) { margin-bottom: 2.5rem; }
+  @include breakpoint(large) { margin-bottom: 3rem; }
+}
+
+.l-content--outcome .m-list {
+  max-width: 500px;
+}

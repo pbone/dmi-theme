@@ -1,0 +1,43 @@
+//
+// MODULE: Pagination
+// Currently using drupal markup
+//
+
+// BASE
+
+.pager {
+  position: relative;
+  display: flex;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+}
+
+
+// SECTION
+
+.pager__item {
+  margin: 0;
+  list-style: none;
+  @include breakpoint(small only) {
+    display: inline-block !important;
+  }
+
+}
+
+
+// ELEMENTS
+
+
+//Remove button styling from pagination links on resource library view
+
+.pager__item a { //@extend .m-button;
+}
+.pagination .current {
+  background-color: rgba(3, 109, 178, 0.26);
+}
+
+#views-exposed-form-additional-resources-block-all-resources, #views-exposed-form-customer-block-all-customers {
+  padding-bottom: rem-calc(20);
+}

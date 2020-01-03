@@ -1,0 +1,272 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: Full node entity.
+ *   - id: The node ID.
+ *   - bundle: The type of the node, for example, "page" or "article".
+ *   - authorid: The user ID of the node author.
+ *   - createdtime: Time the node was published formatted in Unix timestamp.
+ *   - changedtime: Time the node was changed formatted in Unix timestamp.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ *
+ * @todo Remove the id attribute (or make it a class), because if that gets
+ *   rendered twice on a page this is invalid CSS for example: two lists
+ *   in different view modes.
+ *
+ * @ingroup themeable
+ */
+#}
+<article id="node-{{ node.id }}" {{ attributes }}>
+  <div{{ content_attributes }}>
+    <header class="m-feature m-feature--h2">
+      <div class="row">
+        <div class="column">
+
+          <div class="m-feature-bg">
+             <span>{{ get_taxonomy_icon(content.field_industry[0]['#taxonomy_term'].get('field_header_icon').value[0]['target_id']) }}</span>
+          </div>
+
+          <div class="m-feature-content">
+            <p class="m-feature-category">{{ 'Our Customers'|trans }}</p>
+            {{ title_prefix }}
+            <h1 class="m-feature-title">{{ label }}</h1>
+            {{ title_suffix }}
+            {{ content.field_location }}
+            {{ content.field_customer_description }}
+            {{ content.field_subhead }}
+          </div>
+
+        </div>
+      </div>
+    </header>
+      {% if node.field_challenge_text is not empty  %}
+    <section class="m-section m-section--bg-white-blue m-section--padding-top-large m-section--padding-bottom-large l-section">
+
+      <div class="l-section-header row">
+        <div class="column small-12">
+          <h2>{{ 'The Challenge'|trans }}</h2>
+        </div>
+      </div>
+
+      <div class="l-section-main row">
+        {% if node.field_video.value or node.field_image.value %}
+          <div class="small-12 medium-7 column">
+            {% if node.field_video.value %}
+              <div class="m-video">
+                {{ content.field_video }}
+              </div>
+            {% else %}
+              <div class="m-image m-image--full">
+                {{ content.field_image }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="small-12 medium-5 column">
+            <div class="m-wysiwyg u-text-size--large">
+              {{ content.field_challenge_text }}
+            </div>
+          </div>
+        {% else %}
+          <div class="column small-12">
+            <div class="m-wysiwyg u-text-layout--center u-text-align--center u-text-size--large">
+              {{ content.field_challenge_text }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+    </section>
+    {% endif %}
+
+
+
+      {% if node.field_strategy_text is not empty  %}
+    <section class="m-section m-section--bg-dark-purple m-section--padding-top-medium m-section--padding-bottom-large l-section">
+
+      <div class="m-section-icon">
+        {{ get_svg('i-lightbulb i-mobile') }}
+        {{ get_svg('i-lightbulb i-desktop') }}
+      </div>
+
+      <div class="l-section-header row">
+        <div class="column small-12">
+          <h2>{{ 'The Strategy'|trans }}</h2>
+        </div>
+      </div>
+
+      <div class="l-section-main row">
+        <div class="column small-12">
+          <div class="m-wysiwyg u-text-layout--center u-text-align--center u-text-size--large">
+            {{ content.field_strategy_text }}
+          </div>
+        </div>
+      </div>
+
+    </section>
+    {% endif %}
+
+    {# Quote #}
+    {% if node.field_quote is not empty  %}
+      <section class="m-section m-section--bg-white m-section--sep-btm m-section--padding-top-medium m-section--padding-bottom-medium l-section">
+        <div class="l-section-main row">
+          <div class="column small-12">
+
+            <div class="m-quote m-quote--middle">
+              <div class="m-circle m-circle--alt m-circle--fill m-circle--size-large">
+                <div class="m-circle-inner">
+                  <div class="m-circle-section">
+                    <div class="m-circle-text">
+                      {{ content.field_quote_source }}
+                      {{ content.field_quote_source_position }}
+                    </div>
+                  </div>
+                  <div class="m-circle-shape">
+                    {{ get_svg('i-circle-fill-right') }}
+                  </div>
+                </div>
+              </div>
+              <div class="m-quote-phrase">
+                {{ content.field_quote }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    {% endif %}
+      {% if node.field_result_text is not empty %}
+
+    <section class="m-section m-section--bg-light-blue m-section--padding-top-large m-section--padding-bottom-large l-section">
+
+      <div class="l-section-header row">
+        <div class="column small-12">
+          <h2>{{ 'The Outcome'|trans }}</h2>
+        </div>
+      </div>
+
+      <div class="l-section-main row l-section-header">
+        <div class="column small-12">
+          <div class="m-wysiwyg m-wysiwyg--button u-text-layout--center u-text-align--center u-text-size--large">
+            {{ content.field_result_text }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="columns small-12">
+          <div class="m-button-wrapper content-position-center">
+            {{ content.resource_file }}
+          </div>
+        </div>
+      </div>
+    </section>
+      {% endif %}
+
+    {% if node.customer_related_resources is not empty %}
+    <section class="l-section m-section m-section--bg-dark-purple m-section--padding-top-medium m-section--padding-bottom-medium m-card--border m-card--border-theme-1 m-card--image-style--large m-card--bg-white">
+
+      <div class="l-section-header row">
+        <div class="columns small-12">
+          <h2>{{ 'More from this customer'|trans }}</h2>
+        </div>
+      </div>
+
+      {{ content.customer_related_resources }}
+
+    </section>
+    {% endif %}
+
+
+
+
+
+
+      {{ content|without('customer_related_resources', 'field_result_text', 'resource_file', 'field_result_text', 'field_video', 'field_image', 'field_strategy_text', 'field_quote_source', 'field_quote_source_position', 'field_quote','title_prefix', 'label', 'title_suffix', 'field_location', 'field_customer_description', 'field_subhead', 'field_challenge_text', 'field_industry', 'field_header_icon', 'field_logo', 'field_address') }}
+
+
+      {#{ kint(node.field_get_started_block.value) }#}
+
+      {% if node.field_get_started_block.value == '0' %}
+
+        <section class="m-section--bg-white paragraph paragraph--type--page-section paragraph--view-mode--default m-section l-section m-section--padding-top-small m-section--padding-bottom-small {% if content.customer_related_resources is empty %}m-section--sep-top{% endif %}">
+          <div class="row">
+            <div class="columns small-12">
+              <div class="field-wrapper field field-paragraph--field-section-title field-name-field-section-title field-type-string field-label-hidden l-section-header">
+                <div class="row">
+                  <div class="small-12 columns">
+                    <h2>{{ 'Ready to get the Information Builders advantage?'|trans }}</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="field-wrapper field field-paragraph--field-child-elements field-name-field-child-elements field-type-entity-reference-revisions field-label-hidden l-section-main">
+                <div class="row">
+                  <div class="small-12 column">
+                    <div class="m-button-wrapper content-position-center">
+                      <a class='m-button  m-button--secondary ' href="/get-started" title="">{{ 'Get started'|trans }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endif %}
+
+  </div>
+</article>
+
+
+
+
+
+

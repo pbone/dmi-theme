@@ -1,0 +1,250 @@
+header.hero-campaign--iu {
+  .wflogo-lockup {
+    margin-top: rem-calc(30);
+    @include breakpoint(small only) {
+      display: none;
+    }
+    @include breakpoint(medium down) {
+      svg {
+        width: rem-calc(260);
+      }
+    }
+  }
+
+  h1.m-feature-title {
+    text-transform: uppercase;
+
+    @include breakpoint(medium) {
+      br {
+        content: " ";
+        display: none;
+      }
+    }
+    .headline-1 {
+      font-weight: 700;
+    }
+
+    .headline-1,
+    .headline-0 {
+      @include breakpoint(small only) {
+        color: $color-grey !important;
+      }
+    }
+  }
+  .m-feature-content {
+    @include breakpoint(medium) {
+      max-width: rem-calc(970);
+    }
+  }
+
+  .m-feature-subtitle {
+    @include breakpoint(medium) {
+      max-width: rem-calc(420);
+    }
+
+    @include breakpoint(small only) {
+      margin-bottom: rem-calc(10);
+    }
+  }
+  .m-button-group {
+    @include breakpoint(medium) {
+      margin-top: rem-calc(50);
+    }
+  }
+  .m-button {
+    background-color: $secondary-color;
+  }
+}
+
+header.hero-campaign--as {
+  .m-feature-content {
+    @include breakpoint(medium only) {
+      max-width: 550px;
+      // padding-top: 0!important;
+      padding-left: 175px !important;
+    }
+    @include breakpoint(large) {
+      max-width: rem-calc(620);
+      padding-left: 25px !important;
+    }
+  }
+  h1.m-feature-title {
+    @include breakpoint(large) {
+      font-size: rem-calc(56);
+    }
+
+    text-transform: uppercase;
+    line-height: 0.85em;
+
+    .headline-0 {
+      font-weight: 200;
+      color: rgba(65, 93, 107, 0.9);
+    }
+
+    .headline-1 {
+      font-weight: 700;
+    }
+  }
+  .m-feature-subtitle {
+    @include breakpoint(medium only) {
+      max-width: rem-calc(220);
+    }
+    @include breakpoint(large) {
+      max-width: rem-calc(285);
+      margin: 0;
+      p {
+        font-size: rem-calc(18);
+      }
+    }
+  }
+  .m-button {
+    background-color: $secondary-color;
+    @include breakpoint(medium) {
+      max-width: rem-calc(280);
+    }
+  }
+}
+
+header.hero-campaign--as2 {
+  .m-feature-bg {
+    @include breakpoint(medium only) {
+      background-position: 30% 50%;
+    }
+  }
+  @keyframes fadeMe {
+    to {
+      opacity: 1;
+    }
+  }
+  .m-feature-content {
+    @include breakpoint(medium only) {
+      max-width: 550px;
+      // padding-top: 0!important;
+      //  padding-left:175px!important;
+    }
+    @include breakpoint(large) {
+      max-width: rem-calc(620);
+      padding-left: 25px !important;
+    }
+  }
+  h1.m-feature-title {
+    @include breakpoint(large) {
+      font-size: rem-calc(56);
+    }
+    opacity: 0;
+    animation: fadeMe 0.4s 0.8s forwards;
+
+    text-transform: uppercase;
+    line-height: 0.85em;
+
+    .headline-0 {
+      font-weight: 200;
+      color: rgba(65, 93, 107, 0.9);
+    }
+
+    .headline-1 {
+      font-weight: 700;
+    }
+  }
+  .m-feature-subtitle {
+    opacity: 0;
+    animation: fadeMe 0.4s 1.6s forwards;
+
+    @include breakpoint(medium only) {
+      max-width: rem-calc(220);
+    }
+    @include breakpoint(large) {
+      max-width: rem-calc(400);
+      margin: 0;
+      p {
+        font-size: rem-calc(18);
+      }
+      h2 {
+        font-size: rem-calc(20);
+      }
+    }
+  }
+  .m-button {
+    opacity: 0;
+    animation: fadeMe 0.4s 2.6s forwards;
+    background-color: #c114c3;
+    @include breakpoint(medium) {
+      max-width: rem-calc(300);
+    }
+  }
+}
+header.hero-campaign--solutions {
+  .m-feature-bg {
+    @include breakpoint(medium only) {
+      background-position: 30% 50%;
+    }
+    @include breakpoint(xlarge) {
+      background-position: top right;
+    }
+  }
+  @keyframes fadeMe {
+    to {
+      opacity: 1;
+    }
+  }
+  .m-feature-content {
+    margin-left: 0 !important;
+    @include breakpoint(medium only) {
+      max-width: 550px;
+      // padding-top: 0!important;
+      //  padding-left:175px!important;
+    }
+    @include breakpoint(large) {
+      max-width: rem-calc(620);
+      // padding-left: 25px !important;
+    }
+  }
+  h1.m-feature-title {
+    @include breakpoint(large) {
+      font-size: rem-calc(56);
+    }
+    opacity: 0;
+    animation: fadeMe 0.4s 0.8s forwards;
+
+    text-transform: uppercase;
+    line-height: 1em;
+
+    .headline-0 {
+      font-weight: 200;
+      color: rgba(65, 93, 107, 0.9);
+    }
+
+    .headline-1 {
+      font-weight: 700;
+    }
+  }
+  .m-feature-subtitle {
+    opacity: 0;
+    animation: fadeMe 0.4s 1.6s forwards;
+    h2 {
+      line-height: 1.3em !important;
+    }
+
+    @include breakpoint(medium only) {
+      max-width: rem-calc(220);
+    }
+    @include breakpoint(large) {
+      max-width: rem-calc(400);
+      margin: 0;
+      p {
+        font-size: rem-calc(18);
+      }
+      h2 {
+        font-size: rem-calc(20);
+      }
+    }
+  }
+  .m-button {
+    opacity: 0;
+    animation: fadeMe 0.4s 2.6s forwards;
+    background-color: #c114c3;
+    @include breakpoint(medium) {
+      max-width: rem-calc(300);
+    }
+  }
+}
